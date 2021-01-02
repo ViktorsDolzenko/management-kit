@@ -1,4 +1,5 @@
 import React from 'react';
+import {headerItems} from "./headerItems";
 import Logo from "../../../svg/logo.svg"
 
 export const Header = () => {
@@ -22,11 +23,9 @@ export const Header = () => {
                </div>
              <div>
                  <ul className="navbar__list nav-list">
-                     <li className="nav-list--item"><a href="/">Tasks</a></li>
-                     <li className="nav-list--item"><a href="/">Kanban</a></li>
-                     <li className="nav-list--item"><a href="/">Activity</a></li>
-                     <li className="nav-list--item"><a href="/">Calendar</a></li>
-                     <li className="nav-list--item"><a href="/">Files</a></li>
+                     {headerItems.map((item,index) => {
+                         return <li className="nav-list--item" key={index} ><a href="/">{item}</a></li>
+                     })}
                  </ul>
              </div>
            </nav>

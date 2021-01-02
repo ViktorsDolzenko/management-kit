@@ -1,4 +1,5 @@
 import React from 'react';
+import {sideBarItemsMenu, sideBarItemsProjects, sideBarItemsTeams} from "./sideBarItems";
 
 export const SideBar = () => {
     return (
@@ -26,25 +27,31 @@ export const SideBar = () => {
                     <span className="open-tasks__title">Open Tasks</span>
                 </div>
             </div>
+            <div className="menu-container">
+            <span className="title">Menu</span>
            <ul className="sidebar__menu">
-               <li className="sidebar__menu--item title">Menu</li>
-               <li className="sidebar__menu--item">Home</li>
-               <li className="sidebar__menu--item">My Tasks</li>
-               <li className="sidebar__menu--item">Notifications</li>
+               {sideBarItemsMenu.map((item, index) => {
+                   return <li className="sidebar__menu--item" key={index}>{item}</li>
+               })}
+
            </ul>
+            </div>
+            <div className="menu-container">
+                <span className="title">Projects</span>
             <ul className="sidebar__menu">
-                <li className="sidebar__menu--item title">Projects</li>
-                <li className="sidebar__menu--item dashboard">Dashboard UI Kit</li>
-                <li className="sidebar__menu--item crm">CRM System</li>
-                <li className="sidebar__menu--item redesign">Website Redesign</li>
-                <li className="sidebar__menu--item tool">Communication Tool</li>
+                {sideBarItemsProjects.map((item,index) => {
+                    return <li className={`sidebar__menu--item ${item.classname}`} key={index}>{item.title}</li>
+                })}
             </ul>
+            </div>
+            <div className="menu-container">
+                <span className="title">Teams</span>
             <ul className="sidebar__menu">
-                <li className="sidebar__menu--item title">Teams</li>
-                <li className="sidebar__menu--item designers">Designers</li>
-                <li className="sidebar__menu--item Backend">Backend</li>
-                <li className="sidebar__menu--item Frontend">Frontend</li>
+                {sideBarItemsTeams.map((item, index) => {
+                    return <li className="sidebar__menu--item" key={index}>{item}</li>
+                })}
             </ul>
+            </div>
         </div>
     );
 };
