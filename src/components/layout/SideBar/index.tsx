@@ -38,7 +38,7 @@ export const SideBar = () => {
                     {sideBarItemsMenu.map((item, index) => {
                         return (
                             <li className='sidebar__menu--item' key={index}>
-                                {item}
+                                {item.title}
                             </li>
                         )
                     })}
@@ -49,7 +49,15 @@ export const SideBar = () => {
                 <ul className='sidebar__menu'>
                     {sideBarItemsProjects.map((item, index) => {
                         return (
-                            <li className={`sidebar__menu--item ${item.classname}`} key={index}>
+                            <li className='sidebar__menu--item' key={index}>
+                                {item.image && (
+                                    <img
+                                        src={item.image}
+                                        alt={`${item.title}`}
+                                        className='sidebar__menu--image'
+                                    />
+                                )}
+
                                 {item.title}
                             </li>
                         )
@@ -62,7 +70,7 @@ export const SideBar = () => {
                     {sideBarItemsTeams.map((item, index) => {
                         return (
                             <li className='sidebar__menu--item' key={index}>
-                                {item}
+                                {item.title}
                             </li>
                         )
                     })}

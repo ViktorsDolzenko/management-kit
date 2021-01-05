@@ -1,139 +1,130 @@
 .sidebar {
-  height: 100%;
-  width: 270px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 20px;
+    height: 100%;
+    width: 270px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 20px;
 
-  &__title {
-    color: #878787;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 30px;
-    text-transform: uppercase;
-    font-size: 12px;
-    font-weight: 700;
-  }
-
-  &__header {
-    display: flex;
-    align-items: center;
-    padding: 6px 8px 6px 0;
-    font-weight: 900;
-    font-size: 16px;
-    color: white;
-    line-height: 24px;
-    text-transform: uppercase;
-
-
-    &:before {
-      //content: url("src/svg/sidebar.svg");
-      padding-top: 6px;
-      padding-right: 13px;
-      padding-left: 30px
+    &__title {
+        color: #878787;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 30px;
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: 700;
     }
 
-    &:after {
-      //content: url("src/svg/search.svg");
-      padding-top: 4px;
-      padding-left: 50px;
-    }
-  }
+    &__header {
+        display: flex;
+        align-items: center;
+        padding: 6px 8px 6px 0;
+        font-weight: 900;
+        font-size: 16px;
+        color: white;
+        line-height: 24px;
+        text-transform: uppercase;
 
-  &__profile {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    margin-top: 30px;
-    background-color: #202020;
-    height: 80px;
-  }
+        &:before {
+            //content: url("src/svg/sidebar.svg");
+            padding-top: 6px;
+            padding-right: 13px;
+            padding-left: 30px;
+        }
+
+        &:after {
+            //content: url("src/svg/search.svg");
+            padding-top: 4px;
+            padding-left: 50px;
+        }
+    }
+
+    &__profile {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        margin-top: 30px;
+        background-color: #202020;
+        height: 80px;
+    }
+
+    &__menu {
+        &--image {
+            padding-right: 9px;
+        }
+    }
 }
 
 .sidebar__profile--img {
-  border-radius: 50%;
+    border-radius: 50%;
 }
 
 .sidebar__profile--info {
-  display: flex;
-  flex-direction: column;
-  font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    font-weight: 700;
 
-  &.name {
-    font-size: 14px;
-    color: white;
-  }
+    &.name {
+        font-size: 14px;
+        color: white;
+    }
 
-  &.vacancy {
-    font-size: 12px;
-    color: #9B9B9B;
-  }
+    &.vacancy {
+        font-size: 12px;
+        color: #9b9b9b;
+    }
 }
 
 .sidebar__tasks {
-  display: flex;
-  justify-content: space-evenly;
-  margin-top: 20px;
-  margin-right: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+    margin-right: 10px;
 }
 
-.completed, .open-tasks {
-  display: flex;
-  flex-direction: column;
-  color: white;
+.completed,
+.open-tasks {
+    display: flex;
+    flex-direction: column;
+    color: white;
 }
 
-.completed__count, .open-tasks__count {
-  font-size: 20px;
+.completed__count,
+.open-tasks__count {
+    font-size: 20px;
 }
 
-.completed__title, .open-tasks__title {
-  font-size: 12px;
-  opacity: 0.5;
+.completed__title,
+.open-tasks__title {
+    font-size: 12px;
+    opacity: 0.5;
 }
 
 .sidebar__menu {
-  padding-top: 9px;
-  padding-bottom: 9px;
-  color: white;
-  font-weight: 700;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    color: white;
+    font-weight: 700;
 }
 
 .sidebar__menu--item {
-  font-size: 14px;
-  padding-top: 10px;
-  padding-bottom: 8px;
-  padding-left: 30px;
+    font-size: 14px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    padding-left: 30px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
 
-  &:hover {
-    background-color: #202020;
-  }
-
-  &.dashboard:before, &.crm:before, &.redesign:before, &.tool:before {
-    padding-right: 9px;
-  }
-
-  &.dashboard:before {
-    //content:url("src/svg/dashboard.svg");
-  }
-
-  &.crm:before {
-    //content:url("src/svg/crm.svg");
-  }
-
-  &.redesign:before {
-    //content:url("src/svg/website-redesign.svg");
-  }
-
-  &.tool:before {
-    //content:url("src/svg/communication.svg");
-  }
+    &:hover {
+        background-color: #202020;
+    }
 }
 
 .menu-container {
-  margin-top: 30px;
+    margin-top: 30px;
 }

@@ -1,22 +1,40 @@
-export const sideBarItemsMenu = ['Home', 'My Tasks', 'Notification']
+import dashboard from './images/dashboard.svg'
+import crm from './images/crm.svg'
+import websiteRedesign from './images/website-redesign.svg'
+import communication from './images/communication.svg'
 
-export const sideBarItemsTeams = ['Designers', 'Backend', 'Frontend']
+type sidebarItemType = {
+    title: string
+    image?: string
+}
 
-export const sideBarItemsProjects = [
+export const sideBarItemsMenu: sidebarItemType[] = [
+    { title: 'Home' },
+    { title: 'My Tasks' },
+    { title: 'Notification' },
+]
+
+export const sideBarItemsTeams: sidebarItemType[] = [
+    { title: 'Designers' },
+    { title: 'Backend' },
+    { title: 'Frontend' },
+]
+
+export const sideBarItemsProjects: sidebarItemType[] = [
     {
         title: 'Dashboard UI Kit',
-        classname: 'dashboard',
+        image: dashboard,
     },
     {
         title: 'CRM System',
-        classname: 'crm',
+        image: crm,
     },
     {
         title: 'Website Redesign',
-        classname: 'redesign',
+        image: websiteRedesign,
     },
     {
         title: 'Communication Tool',
-        classname: 'tool',
+        image: communication,
     },
 ]
