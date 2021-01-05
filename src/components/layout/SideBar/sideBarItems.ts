@@ -3,10 +3,7 @@ import crm from './images/crm.svg'
 import websiteRedesign from './images/website-redesign.svg'
 import communication from './images/communication.svg'
 
-type sidebarItemType = {
-    title: string
-    image?: string
-}
+import { sidebarItemType } from '../../SidebarMenu/type'
 
 export const sideBarItemsMenu: sidebarItemType[] = [
     { title: 'Home' },
@@ -15,7 +12,7 @@ export const sideBarItemsMenu: sidebarItemType[] = [
 ]
 
 export const sideBarItemsTeams: sidebarItemType[] = [
-    { title: 'Designers' },
+    { title: 'Designers', users: [dashboard, crm] },
     { title: 'Backend' },
     { title: 'Frontend' },
 ]

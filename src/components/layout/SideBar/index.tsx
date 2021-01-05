@@ -1,6 +1,7 @@
 import React from 'react'
 import { sideBarItemsMenu, sideBarItemsProjects, sideBarItemsTeams } from './sideBarItems'
 import './sideBar.scss'
+import { SidebarMenu } from '../../SidebarMenu'
 
 export const SideBar = () => {
     return (
@@ -32,50 +33,10 @@ export const SideBar = () => {
                     <span className='open-tasks__title'>Open Tasks</span>
                 </div>
             </div>
-            <div className='menu-container'>
-                <span className='sidebar__title'>Menu</span>
-                <ul className='sidebar__menu'>
-                    {sideBarItemsMenu.map((item, index) => {
-                        return (
-                            <li className='sidebar__menu--item' key={index}>
-                                {item.title}
-                            </li>
-                        )
-                    })}
-                </ul>
-            </div>
-            <div className='menu-container'>
-                <span className='sidebar__title'>Projects</span>
-                <ul className='sidebar__menu'>
-                    {sideBarItemsProjects.map((item, index) => {
-                        return (
-                            <li className='sidebar__menu--item' key={index}>
-                                {item.image && (
-                                    <img
-                                        src={item.image}
-                                        alt={`${item.title}`}
-                                        className='sidebar__menu--image'
-                                    />
-                                )}
 
-                                {item.title}
-                            </li>
-                        )
-                    })}
-                </ul>
-            </div>
-            <div className='menu-container'>
-                <span className='sidebar__title'>Teams</span>
-                <ul className='sidebar__menu'>
-                    {sideBarItemsTeams.map((item, index) => {
-                        return (
-                            <li className='sidebar__menu--item' key={index}>
-                                {item.title}
-                            </li>
-                        )
-                    })}
-                </ul>
-            </div>
+            <SidebarMenu items={sideBarItemsMenu} title='Menu' />
+            <SidebarMenu items={sideBarItemsProjects} title='Projects' />
+            <SidebarMenu items={sideBarItemsTeams} title='Teams' />
         </div>
     )
 }
