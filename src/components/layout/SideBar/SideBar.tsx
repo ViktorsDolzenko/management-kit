@@ -1,5 +1,6 @@
 import React from 'react';
 import {sideBarItemsMenu, sideBarItemsProjects, sideBarItemsTeams} from "./sideBarItems";
+import './sideBar.scss'
 
 export const SideBar = () => {
     return (
@@ -28,7 +29,7 @@ export const SideBar = () => {
                 </div>
             </div>
             <div className="menu-container">
-            <span className="title">Menu</span>
+            <span className="sidebar__title">Menu</span>
            <ul className="sidebar__menu">
                {sideBarItemsMenu.map((item, index) => {
                    return <li className="sidebar__menu--item" key={index}>{item}</li>
@@ -37,7 +38,7 @@ export const SideBar = () => {
            </ul>
             </div>
             <div className="menu-container">
-                <span className="title">Projects</span>
+                <span className="sidebar__title">Projects</span>
             <ul className="sidebar__menu">
                 {sideBarItemsProjects.map((item,index) => {
                     return <li className={`sidebar__menu--item ${item.classname}`} key={index}>{item.title}</li>
@@ -45,7 +46,7 @@ export const SideBar = () => {
             </ul>
             </div>
             <div className="menu-container">
-                <span className="title">Teams</span>
+                <span className="sidebar__title">Teams</span>
             <ul className="sidebar__menu">
                 {sideBarItemsTeams.map((item, index) => {
                     return <li className="sidebar__menu--item" key={index}>{item}</li>
