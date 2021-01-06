@@ -39,7 +39,9 @@ export const SideBar = () => {
       </div>
       <SideBarMenu items={sideBarItemsMenu} title="Menu" />
       <SideBarMenu items={sideBarItemsProjects} title="Projects" />
+      <button className="sidebar__button button">+ Add a Project</button>
       <SideBarMenu items={sideBarItemsTeams} title="Teams" />
+      <button className="sidebar__button button">+ Add a Team</button>
     </div>
   );
 };

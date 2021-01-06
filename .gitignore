@@ -42,6 +42,7 @@ yarn-error.log*
 .env.production.local
 .idea
 .eslintcache
+prettierrc.json
 
 npm-debug.log*
 yarn-debug.log*
