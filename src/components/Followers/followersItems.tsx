@@ -1,9 +1,5 @@
-import follower_1 from "./images/follower_1.svg";
-import follower_2 from "./images/follower_2.svg";
-import follower_3 from "./images/follower_3.svg";
+import follower_1 from "./images/follower_1.png";
+import follower_2 from "./images/follower_2.png";
+import follower_3 from "./images/follower_3.png";
 
-type followersItems = {
-  followers: string[];
-};
-
-export const followers: followersItems = [follower_1, follower_2, follower_3];
+export const followers: string[] = [follower_1, follower_2, follower_3];

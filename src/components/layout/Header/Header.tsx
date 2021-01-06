@@ -2,6 +2,7 @@ import React from "react";
 import { headerItems } from "./headerItems";
 import Logo from "../../../svg/logo.svg";
 import "./header.scss";
+import { Followers } from "../../Followers/Followers";
 
 export const Header = () => {
   return (
@@ -17,6 +18,7 @@ export const Header = () => {
               <i className="fas fa-ellipsis-h" />
             </button>
           </div>
+          <Followers />
           <div>
             <button className="navbar__button share">Share</button>
             <button className="navbar__button chat">Chat</button>

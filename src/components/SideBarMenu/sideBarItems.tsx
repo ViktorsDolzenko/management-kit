@@ -2,15 +2,15 @@ import dashboard from "./images/dashboard.svg";
 import crm from "./images/crm.svg";
 import websiteRedesign from "./images/website-redesign.svg";
 import communication from "./images/communication.svg";
-import designer_1 from "./images/designer-1.svg";
-import designer_2 from "./images/designer-2.svg";
-import designer_3 from "./images/designer-3.svg";
-import backend_1 from "./images/backend-1.svg";
-import backend_2 from "./images/backend-2.svg";
-import frontend_1 from "./images/frontend-1.svg";
-import frontend_2 from "./images/frontend-2.svg";
-import frontend_3 from "./images/frontend-3.svg";
-import frontend_4 from "./images/frontend-4.svg";
+import designer_1 from "./images/designer_1.png";
+import designer_2 from "./images/designer_2.png";
+import designer_3 from "./images/designer_3.png";
+import backend_1 from "./images/backend_1.png";
+import backend_2 from "./images/backend_2.png";
+import frontend_1 from "./images/frontend_1.png";
+import frontend_2 from "./images/frontend_2.png";
+import frontend_3 from "./images/frontend_3.png";
+import frontend_4 from "./images/frontend_4.png";
 
 export type sidebarItemType = {
   title: string;
