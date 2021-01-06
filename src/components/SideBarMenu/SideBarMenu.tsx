@@ -23,6 +23,17 @@ export const SideBarMenu = ({ items, title }: SideBarMenuProps) => {
                 />
               )}
               {item.title}
+              <div className="SidebarMenu__item--team">
+                {Boolean(item.team?.length) &&
+                  item.team?.map((person) => (
+                    <img
+                      className="SidebarMenu__item--team-image"
+                      src={person}
+                      alt={person}
+                      key={person}
+                    />
+                  ))}
+              </div>
             </li>
           );
         })}
