@@ -19,7 +19,7 @@ export const Header = () => {
             </button>
           </div>
           <Followers />
-          <div>
+          <div className="navbar__buttons">
             <button className="navbar__button share">Share</button>
             <button className="navbar__button chat">Chat</button>
           </div>

@@ -1,8 +1,16 @@
 @import "button";
 body {
+  margin: 0;
+  padding: 0;
   padding-right: 1rem !important;
   padding-left: 1rem !important;
   font-family: Heebo, sans-serif;
+  background-color: #f2f2f2;
+}
+
+* {
+  padding: 0;
+  margin: 0;
 }
 
 a {
