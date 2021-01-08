@@ -1,0 +1,70 @@
+$checkbox-width: 30px;
+
+.task {
+  width: 385px;
+  height: 122px;
+  background-color: #f7f6f3;
+  border-radius: 10px;
+  margin-top: 10px;
+
+  &__container {
+    padding-right: 20px;
+    padding-left: 60px;
+  }
+
+  &__text {
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: bold;
+  }
+
+  &__tag {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+
+    &--text {
+      font-size: 12px;
+      font-weight: bold;
+      line-height: 20px;
+      padding-left: 20px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.task__checkbox--styled {
+  position: absolute; // take it out of document flow
+  opacity: 0; // hide it
+
+  & + label {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+
+    &:before {
+      display: block;
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      margin: 0px -42px 0;
+      width: $checkbox-width;
+      height: $checkbox-width;
+      background-color: white;
+      background-image: url("./images/checkbox.svg");
+      background-repeat: no-repeat;
+      background-size: 30px 12px;
+      background-position: 0;
+      opacity: 0.5;
+      border-radius: 4px;
+    }
+  }
+
+  &:checked + label {
+    &:before {
+      background-color: #cef9c6;
+      opacity: 1;
+    }
+  }
+}

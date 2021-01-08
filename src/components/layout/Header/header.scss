@@ -1,5 +1,8 @@
 .page-header {
-  margin-left: 270px;
+  background-color: white;
+  min-width: 1467px;
+  min-height: 136px;
+  overflow-x: hidden;
 }
 
 .page-header__main {
@@ -7,7 +10,7 @@
   flex-grow: 1;
   justify-content: space-between;
   align-items: center;
-  margin-top: 45px;
+  padding-top: 35px;
 }
 
 .page-header__left-wrapper {
@@ -19,6 +22,7 @@
 .nav-list {
   display: flex;
   list-style: none;
+  padding-top: 12px;
 }
 
 .nav-list--item {
@@ -32,13 +36,14 @@
     opacity: 0.7;
   }
 
-  &:hover, :focus {
+  &:hover,
+  :focus {
     opacity: 1;
     cursor: pointer;
   }
 
-  & a:hover{
-    border-bottom: solid #FFC200;
+  & a:hover {
+    border-bottom: solid #ffc200;
     padding-bottom: 20px;
     border-width: 1px 2px 2px;
     opacity: 1;
@@ -55,7 +60,10 @@
 }
 
 .page-header__logo {
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
 }
 
-
+.navbar__buttons {
+  padding-right: 30px;
+}

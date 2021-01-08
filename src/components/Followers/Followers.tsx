@@ -7,7 +7,12 @@ export const Followers = () => {
     <div className="followers">
       {Boolean(followers.length) &&
         followers.map((follower) => (
-          <img className="followers__img" src={follower} alt={follower} />
+          <img
+            className="followers__img"
+            src={follower}
+            alt={follower}
+            key={follower}
+          />
         ))}
     </div>
   );
