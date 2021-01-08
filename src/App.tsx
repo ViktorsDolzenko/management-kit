@@ -6,10 +6,18 @@ import { Tasks } from "./components/Tasks/Tasks";
 
 export const App = () => {
   return (
-    <div>
-      <Header />
-      <SideBar />
-      <Tasks />
+    <div className="App">
+      <div className="App__sidebar">
+        <SideBar />
+      </div>
+
+      <div className="App__header">
+        <Header />
+      </div>
+
+      <div className="App__content">
+        <Tasks />
+      </div>
     </div>
   );
 };

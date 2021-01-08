@@ -10,17 +10,19 @@ export const TasksList = ({ items }: tasksListItemsType) => {
   return (
     <div>
       {items.map((item) => {
+        const taskId = item.id.toString();
+
         return (
           <div className="task" key={item.id}>
             <div className="task__container">
               <div className="task__checkbox">
                 <input
                   className="task__checkbox--styled"
-                  id={item.id}
+                  id={taskId}
                   type="checkbox"
                   defaultChecked={item.checkbox}
                 />
-                <label htmlFor={item.id} />
+                <label htmlFor={taskId} />
               </div>
               <span className="task__text">{item.task}</span>
               <div className="task__tag">

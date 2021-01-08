@@ -7,7 +7,7 @@ export type taskItemsType = {
   task: string;
   image: string;
   tag: string;
-  id: any;
+  id: number;
 };
 
 export const backLog: taskItemsType[] = [
@@ -27,6 +27,20 @@ export const backLog: taskItemsType[] = [
   },
   {
     id: 103,
+    checkbox: false,
+    task: "Two-factor authentication to make my private data more secure",
+    image: photo_3,
+    tag: "Design",
+  },
+  {
+    id: 104,
+    checkbox: false,
+    task: "Find top 5 customers and get reviews from them",
+    image: photo_2,
+    tag: "Marketing",
+  },
+  {
+    id: 105,
     checkbox: false,
     task: "Two-factor authentication to make my private data more secure",
     image: photo_3,

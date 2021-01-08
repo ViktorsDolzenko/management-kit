@@ -1,14 +1,14 @@
 .tasks {
-  margin-left: 300px;
-  margin-top: 30px;
   width: 445px;
   border-radius: 8px;
   background-color: white;
 
   &__container {
-    padding-left: 30px;
-    padding-right: 30px;
-    padding-top: 30px;
+    padding: 30px;
+
+    & + & {
+      padding-top: 0;
+    }
   }
 
   &__header {
