@@ -3,6 +3,8 @@ import { headerItems } from "./headerItems";
 import Logo from "../../../svg/logo.svg";
 import "./header.scss";
 import { Followers } from "../../Followers/Followers";
+import { CustomButton } from "../../CustomButton/CustomButton";
+import { ButtonType } from "../../CustomButton/buttonProps";
 
 export const Header = () => {
   return (
@@ -14,14 +16,12 @@ export const Header = () => {
               <img className="page-header__img" src={Logo} alt="logo" />
               <span className="page-header__title">WebSite</span>
             </a>
-            <button className="navbar__button showmore">
-              <i className="fas fa-ellipsis-h" />
-            </button>
+            <CustomButton type={ButtonType.showmore} />
           </div>
           <Followers />
           <div className="navbar__buttons">
-            <button className="navbar__button share">Share</button>
-            <button className="navbar__button chat">Chat</button>
+            <CustomButton type={ButtonType.share} title="share" />
+            <CustomButton type={ButtonType.chat} title="chat" />
           </div>
         </div>
         <div>

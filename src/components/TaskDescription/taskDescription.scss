@@ -1,0 +1,66 @@
+.task-description {
+  width: 635px;
+  border-radius: 8px;
+  background-color: white;
+
+  &__container {
+    padding: 30px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+
+    &--title {
+      width: 350px;
+      padding-bottom: 10px;
+    }
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 0;
+  }
+
+  &__data {
+    display: flex;
+    flex-direction: column;
+
+    &--title {
+      text-transform: uppercase;
+      padding-bottom: 10px;
+      font-weight: bold;
+    }
+  }
+
+  &__assign {
+    display: flex;
+    align-items: center;
+
+    &--img {
+      padding-right: 5px;
+    }
+  }
+
+  &__divider {
+    border: 1px solid #ececec;
+  }
+
+  &__description {
+    &--title {
+      text-transform: uppercase;
+      padding-top: 30px;
+      padding-bottom: 20px;
+    }
+
+    &--text {
+      line-height: 26px;
+    }
+  }
+
+  &__tag {
+    text-transform: uppercase;
+  }
+}

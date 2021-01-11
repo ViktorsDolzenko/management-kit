@@ -3,6 +3,7 @@ import { Header } from "./components/layout/Header";
 import { SideBar } from "./components/layout/SideBar";
 import { Tasks } from "./components/Tasks";
 import "./scss/styles.scss";
+import { TaskDescription } from "./components/TaskDescription";
 
 export const App = () => {
   return (
@@ -16,7 +17,12 @@ export const App = () => {
       </div>
 
       <div className="App__content">
-        <Tasks />
+        <div className="App__content--taskList">
+          <Tasks />
+        </div>
+        <div className="App__content--task">
+          <TaskDescription />
+        </div>
       </div>
     </div>
   );

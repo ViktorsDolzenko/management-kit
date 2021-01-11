@@ -1,12 +1,5 @@
-button {
+.custom-button {
   cursor: pointer;
-
-  &:focus {
-    outline: 0;
-  }
-}
-
-.navbar__button {
   border-style: none;
   text-align: center;
   height: 30px;

@@ -39,9 +39,24 @@ ul {
   }
 
   &__content {
+    display: grid;
+    grid-template-columns: 445px 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0 10px;
+    grid-template-areas:
+      "taskList task"
+      "taskList task";
     grid-area: content;
     padding-left: 30px;
     padding-right: 30px;
     padding-bottom: 30px;
+
+    &--taskList {
+      grid-area: taskList;
+    }
+
+    &--task {
+      grid-area: task;
+    }
   }
 }

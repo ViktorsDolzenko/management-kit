@@ -1,0 +1,37 @@
+$checkbox-width: 30px;
+
+.checkbox__input {
+  position: absolute; // take it out of document flow
+  opacity: 0; // hide it
+
+  & + label {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+
+    &:before {
+      display: block;
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      margin: 0px -42px 0;
+      width: $checkbox-width;
+      height: $checkbox-width;
+      background-color: white;
+      background-image: url("./svg/checkbox.svg");
+      background-repeat: no-repeat;
+      background-size: 30px 12px;
+      background-position: 0;
+      opacity: 0.5;
+      border-radius: 4px;
+    }
+  }
+
+  &:checked + label {
+    &:before {
+      background-color: #cef9c6;
+      opacity: 1;
+    }
+  }
+}

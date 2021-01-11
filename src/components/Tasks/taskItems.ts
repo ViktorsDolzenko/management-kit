@@ -8,6 +8,9 @@ export type taskItemsType = {
   image: string;
   tag: string;
   id: number;
+  date?: string;
+  assign?: string;
+  description?: string;
 };
 
 export const backLog: taskItemsType[] = [
@@ -24,6 +27,10 @@ export const backLog: taskItemsType[] = [
     title: "Find top 5 customers and get reviews from them",
     image: photo_2,
     tag: "Marketing",
+    date: "Tue, Dec 25",
+    assign: "Linzell Bowman",
+    description:
+      "Task Descriptions are used during project planning, project execution and project control. During project planning the task descriptions are used for scope planning and creating estimates. During project execution the task description is used by those doing the activities to ensure they are doing the work correctly.",
   },
   {
     id: 103,

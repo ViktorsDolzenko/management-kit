@@ -1,6 +1,7 @@
 import React from "react";
 import "./taskList.scss";
 import { taskItemsType } from "../Tasks/taskItems";
+import { CheckBox } from "../CheckBox/CheckBox";
 
 interface tasksListItemsType {
   items: taskItemsType[];
@@ -14,15 +15,7 @@ export const TasksList = ({ items }: tasksListItemsType) => {
         return (
           <div className="taskList" key={item.id}>
             <div className="taskList__container">
-              <div className="taskList__checkbox">
-                <input
-                  className="taskList__checkbox--input"
-                  id={taskId}
-                  type="checkbox"
-                  defaultChecked={item.done}
-                />
-                <label htmlFor={taskId} />
-              </div>
+              <CheckBox id={taskId} />
               <span className="taskList__text">{item.title}</span>
               <div className="taskList__tag">
                 <img src={item.image} alt={item.image} />
