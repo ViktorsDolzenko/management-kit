@@ -1,10 +1,10 @@
 import React from "react";
 import { headerItems } from "./headerItems";
+import { Button, BUTTON_TYPE } from "components/Button";
+
 import Logo from "../../../svg/logo.svg";
 import "./header.scss";
 import { Followers } from "../../Followers/Followers";
-import { CustomButton } from "../../CustomButton/CustomButton";
-import { ButtonType } from "../../CustomButton/buttonProps";
 
 export const Header = () => {
   return (
@@ -16,12 +16,12 @@ export const Header = () => {
               <img className="page-header__img" src={Logo} alt="logo" />
               <span className="page-header__title">WebSite</span>
             </a>
-            <CustomButton type={ButtonType.showmore} />
+            <Button type={BUTTON_TYPE.showmore} />
           </div>
           <Followers />
           <div className="navbar__buttons">
-            <CustomButton type={ButtonType.share} title="share" />
-            <CustomButton type={ButtonType.chat} title="chat" />
+            <Button type={BUTTON_TYPE.share} title="share" />
+            <Button type={BUTTON_TYPE.chat} title="chat" />
           </div>
         </div>
         <div>
