@@ -30,7 +30,7 @@ export const backLog: taskItemsType[] = [
     date: "Tue, Dec 25",
     assign: "Linzell Bowman",
     description:
-      "Task Descriptions are used during project planning, project execution and project control. During project planning the task descriptions are used for scope planning and creating estimates. During project execution the task description is used by those doing the activities to ensure they are doing the work correctly.",
+        "Task Descriptions are used during project planning, project execution and project control. During project planning the task descriptions are used for scope planning and creating estimates. During project execution the task description is used by those doing the activities to ensure they are doing the work correctly.",
   },
   {
     id: 103,
@@ -60,7 +60,7 @@ export const toDo: taskItemsType[] = [
     id: 203,
     done: false,
     title:
-      "Listing on Product Hunt so that we can reach as many potential users",
+        "Listing on Product Hunt so that we can reach as many potential users",
     image: photo_3,
     tag: "Design",
   },
