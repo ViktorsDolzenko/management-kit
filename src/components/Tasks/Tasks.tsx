@@ -1,6 +1,6 @@
 import React from "react";
 import "./tasks.scss";
-import { TasksList } from "../TasksList/TasksList";
+import { TasksList } from "../TasksList";
 import { backLog, toDo } from "./taskItems";
 
 export const Tasks = () => {

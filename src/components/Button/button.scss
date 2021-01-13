@@ -1,0 +1,37 @@
+.button {
+  cursor: pointer;
+  border-style: none;
+  text-align: center;
+  height: 30px;
+  font-weight: bold;
+  transition: 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  padding: 0 15px;
+
+  &:hover {
+    box-shadow: 0 8px 15px #888888;
+    transition: 0.3s ease;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+
+  &__icon {
+    margin-right: 5px;
+  }
+
+  &.showmore {
+  }
+
+  &.share {
+  }
+
+  &.chat {
+    color: #ffc200;
+    background-color: #fff8dd;
+  }
+}

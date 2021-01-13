@@ -1,6 +1,9 @@
 import React from "react";
 import { headerItems } from "./headerItems";
+import { Button, BUTTON_TYPE } from "components/Button";
+
 import Logo from "../../../svg/logo.svg";
+import chatIcon from "svg/chat-button.svg";
 import "./header.scss";
 import { Followers } from "../../Followers/Followers";
 
@@ -14,14 +17,12 @@ export const Header = () => {
               <img className="page-header__img" src={Logo} alt="logo" />
               <span className="page-header__title">WebSite</span>
             </a>
-            <button className="navbar__button showmore">
-              <i className="fas fa-ellipsis-h" />
-            </button>
+            <Button type={BUTTON_TYPE.showmore} />
           </div>
           <Followers />
           <div className="navbar__buttons">
-            <button className="navbar__button share">Share</button>
-            <button className="navbar__button chat">Chat</button>
+            <Button title="share" />
+            <Button type={BUTTON_TYPE.chat} title="chat" icon={chatIcon} />
           </div>
         </div>
         <div>
