@@ -3,7 +3,3 @@ export enum ButtonType {
   share = "share",
   chat = "chat",
 }
-
-export type buttonProps = {
-  type: ButtonType;
-};

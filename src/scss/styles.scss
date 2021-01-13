@@ -51,11 +51,11 @@ ul {
     padding-right: 30px;
     padding-bottom: 30px;
 
-    &--taskList {
+    &-taskList {
       grid-area: taskList;
     }
 
-    &--task {
+    &-task {
       grid-area: task;
     }
   }

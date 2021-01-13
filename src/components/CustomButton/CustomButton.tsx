@@ -1,9 +1,9 @@
 import React from "react";
-import { buttonProps } from "./buttonProps";
+import { ButtonType } from "./buttonProps";
 import "../../scss/button.scss";
 
 interface customButtonType {
-  type: buttonProps;
+  type: ButtonType;
   title?: string;
 }
 

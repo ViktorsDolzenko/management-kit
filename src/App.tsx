@@ -17,10 +17,10 @@ export const App = () => {
       </div>
 
       <div className="App__content">
-        <div className="App__content--taskList">
+        <div className="App__content-taskList">
           <Tasks />
         </div>
-        <div className="App__content--task">
+        <div className="App__content-task">
           <TaskDescription />
         </div>
       </div>
