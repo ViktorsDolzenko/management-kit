@@ -3,6 +3,7 @@ import { headerItems } from "./headerItems";
 import { Button, BUTTON_TYPE } from "components/Button";
 
 import Logo from "../../../svg/logo.svg";
+import chatIcon from "svg/chat-button.svg";
 import "./header.scss";
 import { Followers } from "../../Followers/Followers";
 
@@ -20,8 +21,8 @@ export const Header = () => {
           </div>
           <Followers />
           <div className="navbar__buttons">
-            <Button type={BUTTON_TYPE.share} title="share" />
-            <Button type={BUTTON_TYPE.chat} title="chat" />
+            <Button title="share" />
+            <Button type={BUTTON_TYPE.chat} title="chat" icon={chatIcon} />
           </div>
         </div>
         <div>

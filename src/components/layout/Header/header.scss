@@ -66,4 +66,9 @@
 
 .navbar__buttons {
   padding-right: 30px;
+  display: flex;
+
+  button + button {
+    margin-left: 10px;
+  }
 }
