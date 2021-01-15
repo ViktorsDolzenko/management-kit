@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Followers } from "components/Followers";
 import "./taskDescription.scss";
 import { CheckBox } from "components/CheckBox";
@@ -11,16 +11,21 @@ import { NewComment } from "../NewComment/NewComment";
 import { Comments } from "../Comment/Comment";
 
 import fileMock from "./images/Base.png";
+import { StorageContext } from "../../contex/storage";
 
 const data = backLog[1];
 
 export const TaskDescription = () => {
+  const { state, dispatch } = useContext(StorageContext);
+
   return (
     <div className="task-description">
       <div className="task-description__container">
         <div className="task-description__header">
           <div>
-            <h2 className="task-description__header_title">{data.title}</h2>
+            <h2 className="task-description__header_title">
+              {state.taskForView?.title}
+            </h2>
             <span>Added by Kristin A. yesterday at 12:41pm</span>
           </div>
           <div className="task-description__header_misc misc">
