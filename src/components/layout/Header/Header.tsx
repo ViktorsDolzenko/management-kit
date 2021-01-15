@@ -5,7 +5,8 @@ import { Button, BUTTON_TYPE } from "components/Button";
 import Logo from "../../../svg/logo.svg";
 import chatIcon from "svg/chat-button.svg";
 import "./header.scss";
-import { Followers } from "../../Followers/Followers";
+import { Followers } from "components/Followers";
+import { simpleIcon } from "../../../const";
 
 export const Header = () => {
   return (
@@ -17,12 +18,12 @@ export const Header = () => {
               <img className="page-header__img" src={Logo} alt="logo" />
               <span className="page-header__title">WebSite</span>
             </a>
-            <Button type={BUTTON_TYPE.showmore} />
+            <Button type={BUTTON_TYPE.simple} titleIcon={simpleIcon} />
           </div>
           <Followers />
           <div className="navbar__buttons">
             <Button title="share" />
-            <Button type={BUTTON_TYPE.chat} title="chat" icon={chatIcon} />
+            <Button type={BUTTON_TYPE.warning} title="chat" icon={chatIcon} />
           </div>
         </div>
         <div>

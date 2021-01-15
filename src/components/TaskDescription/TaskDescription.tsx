@@ -1,8 +1,14 @@
 import React from "react";
-import { Followers } from "../Followers/Followers";
+import { Followers } from "components/Followers";
 import "./taskDescription.scss";
-import { CheckBox } from "../CheckBox/CheckBox";
-import { backLog } from "../Tasks/taskItems";
+import { CheckBox } from "components/CheckBox";
+import { backLog } from "components/Tasks/taskItems";
+import { Button, BUTTON_TYPE } from "components/Button";
+import { simpleIcon } from "../../const";
+import { Tag } from "components/Tag";
+import { File } from "../File/File";
+import { NewComment } from "../NewComment/NewComment";
+import { Comment } from "../Comment/Comment";
 
 const data = backLog[1];
 
@@ -12,45 +18,55 @@ export const TaskDescription = () => {
       <div className="task-description__container">
         <div className="task-description__header">
           <div>
-            <h2 className="task-description__header--title">{data.title}</h2>
+            <h2 className="task-description__header_title">{data.title}</h2>
             <span>Added by Kristin A. yesterday at 12:41pm</span>
           </div>
-          <div className="task-description__header--misc misc">
+          <div className="task-description__header_misc misc">
             <CheckBox id="description" />
-            <button>Button</button>
+            <Button type={BUTTON_TYPE.simple} titleIcon={simpleIcon} />
           </div>
         </div>
         <div className="task-description__info">
           <div className="task-description__data">
-            <span className="task-description__data--title">Assign to</span>
+            <span className="task-description__data_title">Assign to</span>
             <div className="task-description__assign">
               <img
                 src={data.image}
                 alt="img"
-                className="task-description__assign--img"
+                className="task-description__assign_img"
               />
               <span>{data.assign}</span>
             </div>
           </div>
           <div className="task-description__data">
-            <span className="task-description__data--title">Due on</span>
+            <span className="task-description__data_title">Due on</span>
             <span>{data.date}</span>
           </div>
           <div className="task-description__data">
-            <span className="task-description__data--title">Tag</span>
-            <span className="task-description__tag">{data.tag}</span>
+            <span className="task-description__data_title">Tag</span>
+            <Tag type={data.tagType} title={data.tag} />
           </div>
           <div className="task-description__data">
-            <span className="task-description__data--title">Followers</span>
+            <span className="task-description__data_title">Followers</span>
             <Followers />
           </div>
         </div>
         <hr className="task-description__divider" />
         <div className="task-description__description">
-          <h4 className="task-description__description--title">Description</h4>
-          <p className="task-description__description--text">
+          <h4 className="task-description__description_title">Description</h4>
+          <p className="task-description__description_text">
             {data.description}
           </p>
+        </div>
+        <div className="task-description__file">
+          <File />
+          <File />
+        </div>
+        <hr className="task-description__divider" />
+        <div className="task-description__discussion">
+          <h4 className="task-description__discussion_title">Discussion</h4>
+          <NewComment />
+          <Comment comments={data.comments} />
         </div>
       </div>
     </div>

@@ -1,0 +1,29 @@
+.file {
+  margin: 30px 0;
+  font-size: 14px;
+
+  &__img {
+    position: absolute;
+  }
+
+  &__title {
+    margin-left: 50px;
+    font-weight: bold;
+  }
+
+  &__misc {
+    margin-top: 5px;
+    margin-left: 50px;
+
+    &_size {
+      margin-right: 10px;
+      opacity: 0.7;
+      text-transform: uppercase;
+    }
+
+    &_delete {
+      color: #ff1000;
+      font-weight: bold;
+    }
+  }
+}

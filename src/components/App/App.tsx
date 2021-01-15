@@ -1,9 +1,9 @@
 import React from "react";
-import { Header } from "./components/layout/Header";
-import { SideBar } from "./components/layout/SideBar";
-import { Tasks } from "./components/Tasks";
-import "./scss/styles.scss";
-import { TaskDescription } from "./components/TaskDescription";
+import { Header } from "../layout/Header";
+import { SideBar } from "../layout/SideBar";
+import { Tasks } from "../Tasks";
+import "./app.scss";
+import { TaskDescription } from "components/TaskDescription";
 
 export const App = () => {
   return (

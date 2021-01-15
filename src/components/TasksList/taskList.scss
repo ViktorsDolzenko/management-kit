@@ -21,12 +21,8 @@
     align-items: center;
     margin-top: 8px;
 
-    &--text {
-      font-size: 12px;
-      font-weight: bold;
-      line-height: 20px;
-      padding-left: 20px;
-      text-transform: uppercase;
+    &_img {
+      padding-right: 10px;
     }
   }
 }

@@ -4,8 +4,10 @@ import {
   sideBarItemsProjects,
   sideBarItemsTeams,
 } from "../../SideBarMenu/sideBarItems";
-import { SideBarMenu } from "../../SideBarMenu/SideBarMenu";
+import { SideBarMenu } from "../../SideBarMenu";
 import "./sideBar.scss";
+import { Button, BUTTON_TYPE } from "../../Button";
+import { simpleIcon } from "../../../const";
 
 export const SideBar = () => {
   return (
@@ -23,9 +25,7 @@ export const SideBar = () => {
           <span className="sidebar__profile--info name">Name Surname</span>
           <span className="sidebar__profile--info vacancy">Product Owner</span>
         </div>
-        <button className="sidebar__profile--showmore button">
-          <i className="fas fa-ellipsis-h" />
-        </button>
+        <Button type={BUTTON_TYPE.clear} titleIcon={simpleIcon} />
       </div>
       <div className="sidebar__tasks">
         <div className="sidebar__tasks completed">
@@ -39,9 +39,9 @@ export const SideBar = () => {
       </div>
       <SideBarMenu items={sideBarItemsMenu} title="Menu" />
       <SideBarMenu items={sideBarItemsProjects} title="Projects" />
-      <button className="sidebar__button button">+ Add a Project</button>
+      <Button type={BUTTON_TYPE.danger} title="+ Add a Project" />
       <SideBarMenu items={sideBarItemsTeams} title="Teams" />
-      <button className="sidebar__button button">+ Add a Team</button>
+      <Button type={BUTTON_TYPE.danger} title="+ Add a Team" />
     </div>
   );
 };
