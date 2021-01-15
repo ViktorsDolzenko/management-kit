@@ -6,9 +6,11 @@ import { backLog } from "components/Tasks/taskItems";
 import { Button, BUTTON_TYPE } from "components/Button";
 import { simpleIcon } from "../../const";
 import { Tag } from "components/Tag";
-import { File } from "../File/File";
+import { File, FILE_TYPE } from "../File/File";
 import { NewComment } from "../NewComment/NewComment";
 import { Comments } from "../Comment/Comment";
+
+import fileMock from "./images/Base.png";
 
 const data = backLog[1];
 
@@ -59,8 +61,18 @@ export const TaskDescription = () => {
           </p>
         </div>
         <div className="task-description__file">
-          <File />
-          <File />
+          <File
+            fileName="Redesign Brief 2019.pdf"
+            fileSize="159 KB"
+            fileType={FILE_TYPE.PFD}
+            onDelete={() => {}}
+          />
+          <File
+            image={fileMock}
+            fileName="Header.png"
+            onDelete={() => {}}
+            fileSize="129 KB"
+          />
         </div>
         <hr className="task-description__divider" />
         <div className="task-description__discussion">
