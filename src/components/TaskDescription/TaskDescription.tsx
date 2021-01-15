@@ -8,7 +8,7 @@ import { simpleIcon } from "../../const";
 import { Tag } from "components/Tag";
 import { File } from "../File/File";
 import { NewComment } from "../NewComment/NewComment";
-import { Comment } from "../Comment/Comment";
+import { Comments } from "../Comment/Comment";
 
 const data = backLog[1];
 
@@ -66,7 +66,7 @@ export const TaskDescription = () => {
         <div className="task-description__discussion">
           <h4 className="task-description__discussion_title">Discussion</h4>
           <NewComment />
-          <Comment comments={data.comments} />
+          {data?.comments && <Comments comments={data.comments} />}
         </div>
       </div>
     </div>

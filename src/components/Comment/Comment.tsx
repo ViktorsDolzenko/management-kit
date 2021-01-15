@@ -5,7 +5,7 @@ interface CommentProps {
   comments: commentType[];
 }
 
-export const Comment = ({ comments }: CommentProps) => {
+export const Comments = ({ comments }: CommentProps) => {
   return (
     <div>
       {comments.map(({ author, vacancy, createDate, text }) => {
