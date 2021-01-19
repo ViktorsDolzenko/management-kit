@@ -1,6 +1,8 @@
 import photo_1 from "./images/photo-1.png";
 import photo_2 from "./images/photo-2.png";
 import photo_3 from "./images/photo-3.png";
+import commentPhoto_1 from "components/Comment/images/commentPhoto1.png";
+import commentPhoto_2 from "components/Comment/images/commentPhoto2.png";
 import { TAG_TYPE } from "../Tag/tagProps";
 
 export type commentType = {
@@ -8,7 +10,14 @@ export type commentType = {
   createDate: string;
   text: string;
   vacancy: string;
+  id: number;
+  photo: string;
 };
+
+export enum TASK_TYPE {
+  TODO = "toDo",
+  BACKLOG = "backLog",
+}
 
 export type taskItemsType = {
   done: boolean;
@@ -21,6 +30,7 @@ export type taskItemsType = {
   description?: string;
   tagType?: TAG_TYPE;
   comments?: commentType[];
+  type?: TASK_TYPE;
 };
 
 export const backLog: taskItemsType[] = [
@@ -31,6 +41,7 @@ export const backLog: taskItemsType[] = [
     image: photo_1,
     tag: "Development",
     tagType: TAG_TYPE.primary,
+    type: TASK_TYPE.BACKLOG,
   },
   {
     id: 102,
@@ -43,20 +54,25 @@ export const backLog: taskItemsType[] = [
     assign: "Linzell Bowman",
     description:
       "Task Descriptions are used during project planning, project execution and project control. During project planning the task descriptions are used for scope planning and creating estimates. During project execution the task description is used by those doing the activities to ensure they are doing the work correctly.",
+    type: TASK_TYPE.BACKLOG,
     comments: [
       {
+        id: 201,
         author: "Helena Brauer",
         createDate: "Yesterday at 12:37",
         text:
           "During a project build, it is necessary to evaluate the product design and development against project requirements and outcomes",
         vacancy: "Designer",
+        photo: commentPhoto_1,
       },
       {
+        id: 202,
         author: "Prescott MacCaffery",
         createDate: "Yesterday at 12:37",
         text:
           "@Helena Software quality assurance activity in which one or several humans check a program mainly",
         vacancy: "Developer",
+        photo: commentPhoto_2,
       },
     ],
   },
@@ -67,6 +83,7 @@ export const backLog: taskItemsType[] = [
     image: photo_3,
     tag: "Design",
     tagType: TAG_TYPE.simple,
+    type: TASK_TYPE.BACKLOG,
   },
 ];
 
@@ -78,6 +95,7 @@ export const toDo: taskItemsType[] = [
     image: photo_1,
     tag: "Design",
     tagType: TAG_TYPE.simple,
+    type: TASK_TYPE.TODO,
   },
   {
     id: 202,
@@ -86,6 +104,7 @@ export const toDo: taskItemsType[] = [
     image: photo_2,
     tag: "Marketing",
     tagType: TAG_TYPE.secondary,
+    type: TASK_TYPE.TODO,
   },
   {
     id: 203,
@@ -95,5 +114,6 @@ export const toDo: taskItemsType[] = [
     image: photo_3,
     tag: "Design",
     tagType: TAG_TYPE.simple,
+    type: TASK_TYPE.TODO,
   },
 ];

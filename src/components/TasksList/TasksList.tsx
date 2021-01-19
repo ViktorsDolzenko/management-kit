@@ -6,17 +6,33 @@ import { Tag } from "components/Tag";
 
 interface tasksListItemsType {
   items: taskItemsType[];
+  onTaskSelect: (task: taskItemsType) => void;
+  onDoneChecked: (id: number, value: boolean) => void;
 }
 
-export const TasksList = ({ items }: tasksListItemsType) => {
+export const TasksList = ({
+  items,
+  onTaskSelect,
+  onDoneChecked,
+}: tasksListItemsType) => {
   return (
     <div>
       {items.map((item) => {
         const taskId = item.id.toString();
         return (
-          <div className="taskList" key={item.id}>
+          <div
+            className="taskList"
+            key={item.id}
+            onClick={() => onTaskSelect(item)}
+          >
             <div className="taskList__container">
-              <CheckBox id={taskId} />
+              <CheckBox
+                id={taskId}
+                isChecked={item.done}
+                onChange={(currentValue) =>
+                  onDoneChecked(item.id, currentValue)
+                }
+              />
               <span className="taskList__text">{item.title}</span>
               <div className="taskList__tag">
                 <img

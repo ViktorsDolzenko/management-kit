@@ -16,7 +16,7 @@ export const Button = ({
   titleIcon,
 }: ButtonProps) => {
   return (
-    <button className={`button ${type}`}>
+    <button className={`button button_${type}`}>
       {icon && <img src={icon} alt="icon button" className="button__icon" />}
       {title}
       {titleIcon}

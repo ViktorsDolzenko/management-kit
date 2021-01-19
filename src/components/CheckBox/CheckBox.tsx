@@ -3,16 +3,19 @@ import "./checkbox.scss";
 
 interface checkboxType {
   id: string;
+  isChecked: boolean;
+  onChange: (checked: boolean) => void;
 }
 
-export const CheckBox = ({ id }: checkboxType) => {
+export const CheckBox = ({ id, isChecked, onChange }: checkboxType) => {
   return (
     <div className="checkbox">
       <input
         className="checkbox__input"
         id={id}
         type="checkbox"
-        defaultChecked={false}
+        checked={isChecked}
+        onChange={(evt) => onChange(evt.target.checked)}
       />
       <label htmlFor={id} />
     </div>
