@@ -15,6 +15,7 @@ import { taskIsChecked } from "../../context/actions";
 
 export const TaskDescription = () => {
   const { state, dispatch } = useContext(StorageContext);
+
   return (
     <>
       {state.taskForView ? (

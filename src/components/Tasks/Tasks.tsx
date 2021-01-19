@@ -4,7 +4,7 @@ import { TasksList } from "components/TasksList";
 import { Button, BUTTON_TYPE } from "../Button";
 import { StorageContext } from "../../context/storage";
 import { setTaskForView, taskIsChecked } from "../../context/actions";
-import { TASK_TYPE } from "./taskItems";
+import { TASK_TYPE, taskItemsType } from "./taskItems";
 
 export const Tasks = () => {
   const { state, dispatch } = useContext(StorageContext);
@@ -16,6 +16,15 @@ export const Tasks = () => {
   const preparedToDoTasks = state.tasks.filter(
     (task) => task.type === TASK_TYPE.TODO
   );
+
+  const doneTaskHandler = (task: taskItemsType): void => {
+    dispatch(taskIsChecked(task.id));
+
+    if (state?.taskForView?.id === task.id) {
+      dispatch(setTaskForView({ ...task, done: !task.done }));
+    }
+  };
+
   return (
     <div className="tasks">
       <div className="tasks__container">
@@ -26,7 +35,7 @@ export const Tasks = () => {
         <TasksList
           items={preparedBackLogTasks}
           onTaskSelect={(task) => dispatch(setTaskForView(task))}
-          onDoneChecked={(id) => dispatch(taskIsChecked(id))}
+          onDoneChecked={(task) => doneTaskHandler(task)}
         />
       </div>
       <div className="tasks__container">
@@ -37,7 +46,7 @@ export const Tasks = () => {
         <TasksList
           items={preparedToDoTasks}
           onTaskSelect={(task) => dispatch(setTaskForView(task))}
-          onDoneChecked={(id, value) => dispatch(taskIsChecked(id))}
+          onDoneChecked={(task) => doneTaskHandler(task)}
         />
       </div>
     </div>
