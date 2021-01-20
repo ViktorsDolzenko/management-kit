@@ -11,10 +11,24 @@ import { Comment } from "../Comment/Comment";
 
 import fileMock from "./images/Base.png";
 import { StorageContext } from "../../context/storage";
-import { taskIsChecked } from "../../context/actions";
+import {
+  addComment,
+  setTaskForView,
+  taskIsChecked,
+} from "../../context/actions";
+import { commentType, taskItemsType } from "../Tasks/taskItems";
 
 export const TaskDescription = () => {
   const { state, dispatch } = useContext(StorageContext);
+
+  const doneTaskHandler = (task: taskItemsType): void => {
+    dispatch(taskIsChecked(task.id));
+
+    if (state.taskForView?.id === task.id) {
+      dispatch(setTaskForView({ ...task, done: !task.done }));
+    }
+  };
+
   return (
     <>
       {state.taskForView ? (
@@ -32,9 +46,7 @@ export const TaskDescription = () => {
                   id="description"
                   isChecked={state.taskForView?.done}
                   onChange={() => {
-                    if (state.taskForView?.id) {
-                      dispatch(taskIsChecked(state.taskForView?.id));
-                    }
+                    state.taskForView && doneTaskHandler(state.taskForView);
                   }}
                 />
                 <Button type={BUTTON_TYPE.simple} titleIcon={simpleIcon} />
@@ -92,7 +104,15 @@ export const TaskDescription = () => {
             <hr className="task-description__divider" />
             <div className="task-description__discussion">
               <h4 className="task-description__discussion_title">Discussion</h4>
-              <NewComment />
+              {state.taskForView?.comments && (
+                <NewComment
+                  addComment={(comment: commentType, taskId: number) =>
+                    dispatch(addComment(comment, taskId))
+                  }
+                  taskId={state.taskForView.id}
+                  comments={state.taskForView.comments}
+                />
+              )}
               {state.taskForView?.comments && (
                 <Comment comments={state.taskForView?.comments} />
               )}

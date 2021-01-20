@@ -42,6 +42,7 @@ export const backLog: taskItemsType[] = [
     tag: "Development",
     tagType: TAG_TYPE.primary,
     type: TASK_TYPE.BACKLOG,
+    comments: [],
   },
   {
     id: 102,
@@ -84,6 +85,7 @@ export const backLog: taskItemsType[] = [
     tag: "Design",
     tagType: TAG_TYPE.simple,
     type: TASK_TYPE.BACKLOG,
+    comments: [],
   },
 ];
 
@@ -96,6 +98,7 @@ export const toDo: taskItemsType[] = [
     tag: "Design",
     tagType: TAG_TYPE.simple,
     type: TASK_TYPE.TODO,
+    comments: [],
   },
   {
     id: 202,
@@ -105,6 +108,7 @@ export const toDo: taskItemsType[] = [
     tag: "Marketing",
     tagType: TAG_TYPE.secondary,
     type: TASK_TYPE.TODO,
+    comments: [],
   },
   {
     id: 203,
@@ -115,5 +119,6 @@ export const toDo: taskItemsType[] = [
     tag: "Design",
     tagType: TAG_TYPE.simple,
     type: TASK_TYPE.TODO,
+    comments: [],
   },
 ];

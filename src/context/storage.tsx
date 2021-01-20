@@ -1,11 +1,17 @@
 import React, { createContext, Dispatch, useReducer } from "react";
-import { backLog, taskItemsType, toDo } from "../components/Tasks/taskItems";
+import {
+  backLog,
+  commentType,
+  taskItemsType,
+  toDo,
+} from "../components/Tasks/taskItems";
 import { ActionType } from "./actions";
-import { toggleTaskCompleteById } from "../reducers/tasks";
+import { addNewComments, toggleTaskCompleteById } from "../reducers/tasks";
 
 type StoreType = {
   tasks: taskItemsType[];
   taskForView?: taskItemsType;
+  comments?: commentType[];
 };
 
 type Action = {
@@ -16,6 +22,7 @@ type Action = {
 const initialState: StoreType = {
   tasks: [...backLog, ...toDo],
   taskForView: undefined,
+  comments: [],
 };
 
 const StorageContext = createContext<{
@@ -36,12 +43,18 @@ const reducer = (state: StoreType, { type, payload }: Action) => {
       return { ...state, taskForView: payload };
     case ActionType.TOGGLE_TASK_COMPLETE:
       return { ...state, tasks: toggleTaskCompleteById(state.tasks, payload) };
+    case ActionType.ADD_COMMENT:
+      return {
+        ...state,
+        comments: addNewComments(state.tasks, payload.taskId, payload.comment),
+      };
     default:
       return { ...state };
   }
 };
 
 const StorageProvider = ({ children }: StorageProviderProps) => {
+  // @ts-ignore
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
