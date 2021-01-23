@@ -5,14 +5,13 @@ import { CheckBox } from "components/CheckBox";
 import { Button, BUTTON_TYPE } from "components/Button";
 import { simpleIcon } from "../../const";
 import { Tag } from "components/Tag";
-import { File, FILE_TYPE } from "../File/File";
+import { File } from "../File/File";
 import { NewComment } from "../NewComment/NewComment";
 import { Comment } from "../Comment/Comment";
-
-import fileMock from "./images/Base.png";
 import { StorageContext } from "../../context/storage";
 import {
   addComment,
+  deleteFile,
   setTaskForView,
   taskIsChecked,
 } from "../../context/actions";
@@ -23,15 +22,12 @@ export const TaskDescription = () => {
 
   const doneTaskHandler = (task: taskItemsType): void => {
     dispatch(taskIsChecked(task.id));
-
-    if (state.taskForView?.id === task.id) {
-      dispatch(setTaskForView({ ...task, done: !task.done }));
-    }
+    dispatch(setTaskForView({ ...task, done: !task.done }));
   };
 
   return (
     <>
-      {state.taskForView ? (
+      {state.taskForView && (
         <div className="task-description">
           <div className="task-description__container">
             <div className="task-description__header">
@@ -90,16 +86,13 @@ export const TaskDescription = () => {
               </p>
             </div>
             <div className="task-description__file">
-              <File
-                fileType={FILE_TYPE.PDF}
-                fileName={"Redesign Brief 2019.pdf"}
-                fileSize={"159 KB"}
-              />
-              <File
-                image={fileMock}
-                fileName={"Header.png"}
-                fileSize={"129 KB"}
-              />
+              {state.taskForView.files && (
+                <File
+                  files={state.taskForView.files}
+                  onDelete={(id, task) => dispatch(deleteFile(id, task))}
+                  task={state.taskForView}
+                />
+              )}
             </div>
             <hr className="task-description__divider" />
             <div className="task-description__discussion">
@@ -119,7 +112,7 @@ export const TaskDescription = () => {
             </div>
           </div>
         </div>
-      ) : null}
+      )}
     </>
   );
 };

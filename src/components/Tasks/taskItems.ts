@@ -4,6 +4,8 @@ import photo_3 from "./images/photo-3.png";
 import commentPhoto_1 from "components/Comment/images/commentPhoto1.png";
 import commentPhoto_2 from "components/Comment/images/commentPhoto2.png";
 import { TAG_TYPE } from "../Tag/tagProps";
+import { FILE_TYPE, FileItemsTypes } from "components/File/fileType";
+import fileMock from "components/TaskDescription/images/Base.png";
 
 export type commentType = {
   author: string;
@@ -31,6 +33,7 @@ export type taskItemsType = {
   tagType?: TAG_TYPE;
   comments?: commentType[];
   type?: TASK_TYPE;
+  files?: FileItemsTypes[];
 };
 
 export const backLog: taskItemsType[] = [
@@ -74,6 +77,20 @@ export const backLog: taskItemsType[] = [
           "@Helena Software quality assurance activity in which one or several humans check a program mainly",
         vacancy: "Developer",
         photo: commentPhoto_2,
+      },
+    ],
+    files: [
+      {
+        id: 501,
+        fileType: FILE_TYPE.PDF,
+        fileName: "Redesign Brief 2019.pdf",
+        fileSize: "159 KB",
+      },
+      {
+        id: 502,
+        image: fileMock,
+        fileName: "Header.png",
+        fileSize: "129 KB",
       },
     ],
   },

@@ -6,7 +6,9 @@ import {
   toDo,
 } from "../components/Tasks/taskItems";
 import { ActionType } from "./actions";
-import { addNewComments, toggleTaskCompleteById } from "../reducers/tasks";
+import { toggleTaskCompleteById } from "../reducers/tasks";
+import { addNewComments } from "../reducers/comments";
+import { removeFile } from "../reducers/Files";
 
 type StoreType = {
   tasks: taskItemsType[];
@@ -48,6 +50,12 @@ const reducer = (state: StoreType, { type, payload }: Action) => {
         ...state,
         comments: addNewComments(state.tasks, payload.taskId, payload.comment),
       };
+    case ActionType.DELETE_FILE:
+      return {
+        ...state,
+        taskForView: removeFile(payload.fileId, payload.task),
+      };
+
     default:
       return { ...state };
   }

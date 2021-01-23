@@ -10,6 +10,7 @@
     position: absolute;
     left: -3%;
     top: 18%;
+    border-radius: 50%;
   }
 
   &__header {
@@ -28,6 +29,9 @@
 
     &_author {
       font-weight: bold;
+    }
+    &_vacancy {
+      padding-left: 5px;
     }
   }
 }
