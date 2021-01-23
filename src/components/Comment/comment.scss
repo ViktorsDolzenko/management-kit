@@ -1,0 +1,33 @@
+.comment {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: #f7f6f3;
+  padding: 30px 20px 30px 40px;
+  border-radius: 10px;
+  position: relative;
+
+  &__img {
+    position: absolute;
+    left: -3%;
+    top: 18%;
+  }
+
+  &__header {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+
+    &_container {
+      padding-bottom: 5px;
+    }
+
+    &_date {
+      font-size: 12px;
+      opacity: 0.7;
+    }
+
+    &_author {
+      font-weight: bold;
+    }
+  }
+}

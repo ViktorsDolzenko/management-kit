@@ -16,22 +16,54 @@
     transition: 0.3s ease;
   }
 
+  &_warning {
+    color: #ffc200;
+    background-color: #fff8dd;
+  }
+
+  &_simple {
+    padding: 0 9px;
+    width: 30px;
+    height: 30px;
+  }
+
+  &_primary {
+    background: #cef9c6;
+    border-radius: 20px;
+    font-size: 14px;
+    padding: 20px 20px;
+  }
+
+  &_danger {
+    border: none;
+    background: none;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 22px;
+    color: #ffc200;
+    padding-left: 30px;
+
+    &:hover {
+      box-shadow: none;
+      letter-spacing: 1px;
+    }
+  }
+
+  &_clear {
+    border: none;
+    background: none;
+    color: #d8d8d8;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+
   &:focus {
     outline: 0;
   }
 
   &__icon {
     margin-right: 5px;
-  }
-
-  &.showmore {
-  }
-
-  &.share {
-  }
-
-  &.chat {
-    color: #ffc200;
-    background-color: #fff8dd;
   }
 }

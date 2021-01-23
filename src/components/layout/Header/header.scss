@@ -22,7 +22,7 @@
 .nav-list {
   display: flex;
   list-style: none;
-  padding-top: 12px;
+  padding-top: 11px;
 }
 
 .nav-list--item {
@@ -62,6 +62,7 @@
 .page-header__logo {
   display: flex;
   align-items: center;
+  padding-right: 150px;
 }
 
 .navbar__buttons {

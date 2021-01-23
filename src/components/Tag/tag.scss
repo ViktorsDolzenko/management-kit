@@ -1,0 +1,22 @@
+.tag {
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 10px;
+  padding: 4px 15px;
+
+  &.primary {
+    background-color: #fff1e2;
+    color: #ed6400;
+  }
+
+  &.secondary {
+    background-color: #f5f0ff;
+    color: #764ced;
+  }
+
+  &.simple {
+    background-color: #e3efff;
+    color: #1975d0;
+  }
+}

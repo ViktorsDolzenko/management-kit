@@ -6,17 +6,20 @@ interface ButtonProps {
   type?: BUTTON_TYPE;
   title?: string;
   icon?: string;
+  titleIcon?: React.ReactNode;
 }
 
 export const Button = ({
-  type = BUTTON_TYPE.share,
+  type = BUTTON_TYPE.default,
   title,
   icon,
+  titleIcon,
 }: ButtonProps) => {
   return (
-    <button className={`button ${type}`}>
+    <button className={`button button_${type}`}>
       {icon && <img src={icon} alt="icon button" className="button__icon" />}
       {title}
+      {titleIcon}
     </button>
   );
 };
