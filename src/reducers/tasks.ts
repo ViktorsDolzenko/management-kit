@@ -1,4 +1,5 @@
-import { commentType, taskItemsType } from "../components/Tasks/taskItems";
+import { taskItemsType } from "../components/Tasks/taskItems";
+import { taskExtend } from "../context/storage";
 
 export const toggleTaskCompleteById = (
   allTasks: taskItemsType[],
@@ -15,15 +16,11 @@ export const toggleTaskCompleteById = (
   });
 };
 
-export const addNewComments = (
-  tasks: taskItemsType[],
-  taskId: number,
-  newComment: commentType
-) => {
-  return tasks.map((task) => {
-    if (task.id === taskId && task.comments) {
-      return [...task.comments, newComment];
-    }
-    return task.comments;
+export const openTask = (allTasks: taskExtend[], taskId: number) => {
+  return allTasks.map((task) => {
+    return {
+      ...task,
+      isOpened: taskId === task.id,
+    };
   });
 };

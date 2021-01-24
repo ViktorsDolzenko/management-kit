@@ -2,7 +2,8 @@ import React from "react";
 import "./newComment.scss";
 import { useForm } from "react-hook-form";
 import { commentType } from "../Tasks/taskItems";
-import { getNewId } from "../utils";
+import { getNewId } from "../../utils";
+import moment from "moment";
 
 interface newCommentProps {
   addComment: (comment: commentType, taskId: number) => void;
@@ -22,7 +23,7 @@ export const NewComment = ({
       {
         id: getNewId(comments),
         author: "random",
-        createDate: Date(),
+        createDate: moment().format(" MMMM Do [at] HH:mm"),
         text: data.text,
         vacancy: "Developer",
         photo: "https://via.placeholder.com/48",

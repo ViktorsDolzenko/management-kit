@@ -8,7 +8,6 @@ import { TASK_TYPE, taskItemsType } from "./taskItems";
 
 export const Tasks = () => {
   const { state, dispatch } = useContext(StorageContext);
-  console.log(state);
   const preparedBackLogTasks = state.tasks.filter(
     (task) => task.type === TASK_TYPE.BACKLOG
   );
@@ -19,10 +18,6 @@ export const Tasks = () => {
 
   const doneTaskHandler = (task: taskItemsType): void => {
     dispatch(taskIsChecked(task.id));
-
-    if (state.taskForView?.id === task.id) {
-      dispatch(setTaskForView({ ...task, done: !task.done }));
-    }
   };
 
   return (
@@ -34,7 +29,7 @@ export const Tasks = () => {
         </div>
         <TasksList
           items={preparedBackLogTasks}
-          onTaskSelect={(task) => dispatch(setTaskForView(task))}
+          onTaskSelect={(taskId) => dispatch(setTaskForView(taskId))}
           onDoneChecked={(task) => doneTaskHandler(task)}
         />
       </div>
@@ -45,7 +40,7 @@ export const Tasks = () => {
         </div>
         <TasksList
           items={preparedToDoTasks}
-          onTaskSelect={(task) => dispatch(setTaskForView(task))}
+          onTaskSelect={(taskId) => dispatch(setTaskForView(taskId))}
           onDoneChecked={(task) => doneTaskHandler(task)}
         />
       </div>

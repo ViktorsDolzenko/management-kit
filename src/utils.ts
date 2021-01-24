@@ -1,4 +1,6 @@
-export const getNewId = (comments) => {
+import { commentType } from "./components/Tasks/taskItems";
+
+export const getNewId = (comments: commentType[]) => {
   const sortedArray = comments
     .map((comment) => comment.id)
     .sort((a, b) => a - b);
@@ -6,7 +8,5 @@ export const getNewId = (comments) => {
   if (lastId) {
     return lastId + 1;
   }
-  if (!comments.id) {
-    return Math.floor(Math.random() * (500 - 100) + 100);
-  }
+  return Math.floor(Math.random() * (500 - 100) + 100);
 };
