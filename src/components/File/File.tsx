@@ -1,15 +1,14 @@
 import React from "react";
 import "./file.scss";
 import { FileItemsTypes } from "./fileType";
-import { taskItemsType } from "../Tasks/taskItems";
 
 interface FileProps {
   files: FileItemsTypes[];
-  onDelete: (id: number, task: taskItemsType) => void;
-  task: taskItemsType;
+  onDelete: (fileId: number, taskId: number) => void;
+  taskId: number;
 }
 
-export const File = ({ files, onDelete, task }: FileProps) => {
+export const File = ({ files, onDelete, taskId }: FileProps) => {
   return (
     <div className="files">
       {files.map(({ id, fileType, image, fileName, fileSize }) => {
@@ -29,7 +28,7 @@ export const File = ({ files, onDelete, task }: FileProps) => {
                 <span className="file__misc_size">{fileSize}</span>
                 <button
                   className="file__misc_delete"
-                  onClick={() => onDelete(id, task)}
+                  onClick={() => onDelete(id, taskId)}
                 >
                   {fileName && "Delete"}
                 </button>

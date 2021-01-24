@@ -6,13 +6,16 @@ import {
   toDo,
 } from "../components/Tasks/taskItems";
 import { ActionType } from "./actions";
-import { toggleTaskCompleteById } from "../reducers/tasks";
+import { openTask, toggleTaskCompleteById } from "../reducers/tasks";
 import { addNewComments } from "../reducers/comments";
-import { removeFile } from "../reducers/Files";
+import { removeFile } from "../reducers/files";
+
+export interface taskExtend extends taskItemsType {
+  isOpened?: number;
+}
 
 type StoreType = {
-  tasks: taskItemsType[];
-  taskForView?: taskItemsType;
+  tasks: taskExtend[];
   comments?: commentType[];
 };
 
@@ -23,7 +26,6 @@ type Action = {
 
 const initialState: StoreType = {
   tasks: [...backLog, ...toDo],
-  taskForView: undefined,
   comments: [],
 };
 
@@ -42,7 +44,7 @@ interface StorageProviderProps {
 const reducer = (state: StoreType, { type, payload }: Action) => {
   switch (type) {
     case ActionType.SET_TASK_FOR_VIEW:
-      return { ...state, taskForView: payload };
+      return { ...state, tasks: openTask(state.tasks, payload) };
     case ActionType.TOGGLE_TASK_COMPLETE:
       return { ...state, tasks: toggleTaskCompleteById(state.tasks, payload) };
     case ActionType.ADD_COMMENT:
@@ -53,7 +55,7 @@ const reducer = (state: StoreType, { type, payload }: Action) => {
     case ActionType.DELETE_FILE:
       return {
         ...state,
-        taskForView: removeFile(payload.fileId, payload.task),
+        tasks: removeFile(payload.fileId, state.tasks, payload.taskId),
       };
 
     default:

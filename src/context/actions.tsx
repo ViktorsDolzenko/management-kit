@@ -7,9 +7,9 @@ export const ActionType = {
   DELETE_FILE: "DELETE_FILE",
 };
 
-export const setTaskForView = (task: any) => ({
+export const setTaskForView = (taskId: any) => ({
   type: ActionType.SET_TASK_FOR_VIEW,
-  payload: task,
+  payload: taskId,
 });
 
 export const taskIsChecked = (taskId: number) => ({
@@ -25,10 +25,10 @@ export const addComment = (comment: commentType, taskId: number) => ({
   },
 });
 
-export const deleteFile = (fileId: number, task: any) => ({
+export const deleteFile = (fileId: number, taskId: number) => ({
   type: ActionType.DELETE_FILE,
   payload: {
     fileId,
-    task,
+    taskId,
   },
 });

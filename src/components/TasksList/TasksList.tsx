@@ -6,7 +6,7 @@ import { Tag } from "components/Tag";
 
 interface tasksListItemsType {
   items: taskItemsType[];
-  onTaskSelect: (task: taskItemsType) => void;
+  onTaskSelect: (taskId: number) => void;
   onDoneChecked: (task: taskItemsType) => void;
 }
 
@@ -27,7 +27,7 @@ export const TasksList = ({
                 isChecked={item.done}
                 onChange={() => onDoneChecked(item)}
               />
-              <div onClick={() => onTaskSelect(item)}>
+              <div onClick={() => onTaskSelect(item.id)}>
                 <span className="taskList__text">{item.title}</span>
                 <div className="taskList__tag">
                   <img
