@@ -11,7 +11,8 @@
   border-radius: 15px;
   padding: 0 15px;
 
-  &:hover {
+  &:hover,
+  &:focus {
     box-shadow: 0 8px 15px #888888;
     transition: 0.3s ease;
   }
@@ -32,6 +33,14 @@
     border-radius: 20px;
     font-size: 14px;
     padding: 20px 20px;
+  }
+
+  &_basic {
+    background: #cef9c6;
+    border-radius: 20px;
+    font-size: 14px;
+    padding: 25px 20px;
+    width: 100%;
   }
 
   &_danger {

@@ -1,10 +1,11 @@
-import { commentType } from "../components/Tasks/taskItems";
+import { commentType, taskItemsType } from "../components/Tasks/taskItems";
 
 export const ActionType = {
   SET_TASK_FOR_VIEW: "SET_TASK_FOR_VIEW",
   TOGGLE_TASK_COMPLETE: "TOGGLE_TASK_COMPLETE",
   ADD_COMMENT: "ADD_COMMENT",
   DELETE_FILE: "DELETE_FILE",
+  ADD_NEW_TASK: "ADD_NEW_TASK",
 };
 
 export const setTaskForView = (taskId: any) => ({
@@ -31,4 +32,9 @@ export const deleteFile = (fileId: number, taskId: number) => ({
     fileId,
     taskId,
   },
+});
+
+export const addNewTask = (newTask: taskItemsType) => ({
+  type: ActionType.ADD_NEW_TASK,
+  payload: newTask,
 });

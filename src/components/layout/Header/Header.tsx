@@ -1,12 +1,13 @@
 import React from "react";
 import { headerItems } from "./headerItems";
-import { Button, BUTTON_TYPE } from "components/Button";
+import { Button, BUTTON_CATEGORY } from "components/Button";
 
 import Logo from "../../../svg/logo.svg";
 import chatIcon from "svg/chat-button.svg";
 import "./header.scss";
 import { Followers } from "components/Followers";
 import { simpleIcon } from "../../../const";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   return (
@@ -18,12 +19,16 @@ export const Header = () => {
               <img className="page-header__img" src={Logo} alt="logo" />
               <span className="page-header__title">WebSite</span>
             </a>
-            <Button type={BUTTON_TYPE.simple} titleIcon={simpleIcon} />
+            <Button category={BUTTON_CATEGORY.simple} titleIcon={simpleIcon} />
           </div>
           <Followers />
           <div className="navbar__buttons">
             <Button title="share" />
-            <Button type={BUTTON_TYPE.warning} title="chat" icon={chatIcon} />
+            <Button
+              category={BUTTON_CATEGORY.warning}
+              title="chat"
+              icon={chatIcon}
+            />
           </div>
         </div>
         <div>
@@ -31,7 +36,7 @@ export const Header = () => {
             {headerItems.map((item) => {
               return (
                 <li className="nav-list--item" key={item.title}>
-                  <a href="/">{item.title}</a>
+                  <Link to={item.link}>{item.title}</Link>
                 </li>
               );
             })}

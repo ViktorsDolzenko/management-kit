@@ -1,2 +1,2 @@
 export { Button } from "./Button";
-export { BUTTON_TYPE } from "./buttonProps";
+export { BUTTON_CATEGORY } from "./buttonProps";

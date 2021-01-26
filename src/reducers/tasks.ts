@@ -24,3 +24,10 @@ export const openTask = (allTasks: taskExtend[], taskId: number) => {
     };
   });
 };
+
+export const addNewTask = (
+  allTasks: taskItemsType[],
+  newTask: taskItemsType
+) => {
+  return [...allTasks, newTask];
+};

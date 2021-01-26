@@ -6,7 +6,11 @@ import {
   toDo,
 } from "../components/Tasks/taskItems";
 import { ActionType } from "./actions";
-import { openTask, toggleTaskCompleteById } from "../reducers/tasks";
+import {
+  addNewTask,
+  openTask,
+  toggleTaskCompleteById,
+} from "../reducers/tasks";
 import { addNewComments } from "../reducers/comments";
 import { removeFile } from "../reducers/files";
 
@@ -56,6 +60,11 @@ const reducer = (state: StoreType, { type, payload }: Action) => {
       return {
         ...state,
         tasks: removeFile(payload.fileId, state.tasks, payload.taskId),
+      };
+    case ActionType.ADD_NEW_TASK:
+      return {
+        ...state,
+        tasks: addNewTask(state.tasks, payload),
       };
 
     default:

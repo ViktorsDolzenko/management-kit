@@ -2,10 +2,10 @@ import React, { useContext } from "react";
 import { Followers } from "components/Followers";
 import "./taskDescription.scss";
 import { CheckBox } from "components/CheckBox";
-import { Button, BUTTON_TYPE } from "components/Button";
+import { Button, BUTTON_CATEGORY } from "components/Button";
 import { simpleIcon } from "../../const";
 import { Tag } from "components/Tag";
-import { File } from "../File/File";
+import { Files } from "../Files/Files";
 import { NewComment } from "../NewComment/NewComment";
 import { Comment } from "../Comment/Comment";
 import { StorageContext } from "../../context/storage";
@@ -40,7 +40,10 @@ export const TaskDescription = () => {
                     taskForView && doneTaskHandler(taskForView);
                   }}
                 />
-                <Button type={BUTTON_TYPE.simple} titleIcon={simpleIcon} />
+                <Button
+                  category={BUTTON_CATEGORY.simple}
+                  titleIcon={simpleIcon}
+                />
               </div>
             </div>
             <div className="task-description__info">
@@ -79,7 +82,7 @@ export const TaskDescription = () => {
             </div>
             <div className="task-description__file">
               {taskForView.files && (
-                <File
+                <Files
                   files={taskForView.files}
                   onDelete={(fileId, taskId) =>
                     dispatch(deleteFile(fileId, taskId))

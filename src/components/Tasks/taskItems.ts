@@ -4,7 +4,7 @@ import photo_3 from "./images/photo-3.png";
 import commentPhoto_1 from "components/Comment/images/commentPhoto1.png";
 import commentPhoto_2 from "components/Comment/images/commentPhoto2.png";
 import { TAG_TYPE } from "../Tag/tagProps";
-import { FILE_TYPE, FileItemsTypes } from "components/File/fileType";
+import { FILE_TYPE, FileItemsTypes } from "components/Files/fileType";
 import fileMock from "components/TaskDescription/images/Base.png";
 
 export type commentType = {
@@ -43,8 +43,11 @@ export const backLog: taskItemsType[] = [
     title: "E-mail after registration so that I can confirm my address",
     image: photo_1,
     tag: "Development",
+    date: "Mon, Dec 24",
     tagType: TAG_TYPE.primary,
     type: TASK_TYPE.BACKLOG,
+    description:
+      "Task Descriptions are used during project planning, project execution and project control. During project planning the task descriptions are used for scope planning and creating estimates. During project execution the task description is used by those doing the activities to ensure they are doing the work correctly.",
     comments: [],
   },
   {
@@ -97,11 +100,14 @@ export const backLog: taskItemsType[] = [
   {
     id: 103,
     done: false,
+    date: "Mon, Dec 24",
     title: "Two-factor authentication to make my private data more secure",
     image: photo_3,
     tag: "Design",
     tagType: TAG_TYPE.simple,
     type: TASK_TYPE.BACKLOG,
+    description:
+      "Task Descriptions are used during project planning, project execution and project control. During project planning the task descriptions are used for scope planning and creating estimates. During project execution the task description is used by those doing the activities to ensure they are doing the work correctly.",
     comments: [],
   },
 ];
@@ -113,23 +119,30 @@ export const toDo: taskItemsType[] = [
     title: "An option to search in current projects or in all projects",
     image: photo_1,
     tag: "Design",
+    date: "Mon, Dec 24",
     tagType: TAG_TYPE.simple,
     type: TASK_TYPE.TODO,
     comments: [],
+    description:
+      "Task Descriptions are used during project planning, project execution and project control. During project planning the task descriptions are used for scope planning and creating estimates. During project execution the task description is used by those doing the activities to ensure they are doing the work correctly.",
   },
   {
     id: 202,
     done: false,
+    date: "Mon, Dec 24",
     title: "Account for teams and personal in bottom style",
     image: photo_2,
     tag: "Marketing",
     tagType: TAG_TYPE.secondary,
     type: TASK_TYPE.TODO,
     comments: [],
+    description:
+      "Task Descriptions are used during project planning, project execution and project control. During project planning the task descriptions are used for scope planning and creating estimates. During project execution the task description is used by those doing the activities to ensure they are doing the work correctly.",
   },
   {
     id: 203,
     done: false,
+    date: "Mon, Dec 24",
     title:
       "Listing on Product Hunt so that we can reach as many potential users",
     image: photo_3,
@@ -137,5 +150,7 @@ export const toDo: taskItemsType[] = [
     tagType: TAG_TYPE.simple,
     type: TASK_TYPE.TODO,
     comments: [],
+    description:
+      "Task Descriptions are used during project planning, project execution and project control. During project planning the task descriptions are used for scope planning and creating estimates. During project execution the task description is used by those doing the activities to ensure they are doing the work correctly.",
   },
 ];
