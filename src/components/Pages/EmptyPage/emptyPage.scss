@@ -1,0 +1,34 @@
+.emptyPage {
+  position: absolute;
+  background-color: #facc6b;
+  background-image: linear-gradient(315deg, #facc6b 0%, #fabc3c 74%);
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 25px;
+
+  &__title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  &__text {
+    cursor: pointer;
+    transition: 1s ease;
+    color: white;
+
+    &:hover {
+      font-size: 50px;
+    }
+  }
+  &__divider {
+    margin: auto;
+    width: 40%;
+  }
+}

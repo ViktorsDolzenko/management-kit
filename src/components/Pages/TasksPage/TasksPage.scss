@@ -1,0 +1,39 @@
+.TasksPage {
+  display: grid;
+  grid-template-columns: 270px 1fr;
+  grid-template-rows: 136px 1fr;
+  gap: 30px 0;
+  grid-template-areas:
+    "sidebar header"
+    "sidebar content";
+
+  &__header {
+    grid-area: header;
+  }
+
+  &__sidebar {
+    grid-area: sidebar;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: 445px 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0 10px;
+    grid-template-areas:
+      "taskList task"
+      "taskList task";
+    grid-area: content;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+
+    &-taskList {
+      grid-area: taskList;
+    }
+
+    &-task {
+      grid-area: task;
+    }
+  }
+}

@@ -21,7 +21,7 @@ export type sidebarItemType = {
 
 export const sideBarItemsMenu: sidebarItemType[] = [
   { title: "Home" },
-  { title: "My Tasks" },
+  { title: "My TasksPage" },
   { title: "Notification" },
 ];
 

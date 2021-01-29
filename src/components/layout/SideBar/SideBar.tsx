@@ -6,7 +6,7 @@ import {
 } from "../../SideBarMenu/sideBarItems";
 import { SideBarMenu } from "../../SideBarMenu";
 import "./sideBar.scss";
-import { Button, BUTTON_TYPE } from "../../Button";
+import { Button, BUTTON_CATEGORY } from "../../Button";
 import { simpleIcon } from "../../../const";
 
 export const SideBar = () => {
@@ -25,7 +25,7 @@ export const SideBar = () => {
           <span className="sidebar__profile--info name">Name Surname</span>
           <span className="sidebar__profile--info vacancy">Product Owner</span>
         </div>
-        <Button type={BUTTON_TYPE.clear} titleIcon={simpleIcon} />
+        <Button category={BUTTON_CATEGORY.clear} titleIcon={simpleIcon} />
       </div>
       <div className="sidebar__tasks">
         <div className="sidebar__tasks completed">
@@ -39,9 +39,9 @@ export const SideBar = () => {
       </div>
       <SideBarMenu items={sideBarItemsMenu} title="Menu" />
       <SideBarMenu items={sideBarItemsProjects} title="Projects" />
-      <Button type={BUTTON_TYPE.danger} title="+ Add a Project" />
+      <Button category={BUTTON_CATEGORY.danger} title="+ Add a Project" />
       <SideBarMenu items={sideBarItemsTeams} title="Teams" />
-      <Button type={BUTTON_TYPE.danger} title="+ Add a Team" />
+      <Button category={BUTTON_CATEGORY.danger} title="+ Add a Team" />
     </div>
   );
 };

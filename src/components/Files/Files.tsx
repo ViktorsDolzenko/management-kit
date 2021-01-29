@@ -1,5 +1,5 @@
 import React from "react";
-import "./file.scss";
+import "./files.scss";
 import { FileItemsTypes } from "./fileType";
 
 interface FileProps {
@@ -8,7 +8,7 @@ interface FileProps {
   taskId: number;
 }
 
-export const File = ({ files, onDelete, taskId }: FileProps) => {
+export const Files = ({ files, onDelete, taskId }: FileProps) => {
   return (
     <div className="files">
       {files.map(({ id, fileType, image, fileName, fileSize }) => {

@@ -4,6 +4,13 @@
   background-color: #f7f6f3;
   border-radius: 10px;
   margin-top: 10px;
+  cursor: pointer;
+  transition: ease 1s;
+
+  &:hover {
+    background-color: #111;
+    color: white;
+  }
 
   &__container {
     padding-right: 20px;

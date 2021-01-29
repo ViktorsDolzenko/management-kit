@@ -1,12 +1,16 @@
 import React, { useContext } from "react";
 import "./tasks.scss";
 import { TasksList } from "components/TasksList";
-import { Button, BUTTON_TYPE } from "../Button";
+import { Button, BUTTON_CATEGORY } from "../Button";
 import { StorageContext } from "../../context/storage";
 import { setTaskForView, taskIsChecked } from "../../context/actions";
 import { TASK_TYPE, taskItemsType } from "./taskItems";
 
-export const Tasks = () => {
+interface tasksProps {
+  onClickOpen: () => void;
+}
+
+export const Tasks = ({ onClickOpen }: tasksProps) => {
   const { state, dispatch } = useContext(StorageContext);
   const preparedBackLogTasks = state.tasks.filter(
     (task) => task.type === TASK_TYPE.BACKLOG
@@ -25,7 +29,11 @@ export const Tasks = () => {
       <div className="tasks__container">
         <div className="tasks__header">
           <h2 className="tasks__title">Backlog</h2>
-          <Button type={BUTTON_TYPE.primary} title="+ Add Task" />
+          <Button
+            category={BUTTON_CATEGORY.primary}
+            title="+ Add Task"
+            onClickOpen={onClickOpen}
+          />
         </div>
         <TasksList
           items={preparedBackLogTasks}
@@ -36,7 +44,11 @@ export const Tasks = () => {
       <div className="tasks__container">
         <div className="tasks__header">
           <h2 className="tasks__title">To Do</h2>
-          <Button type={BUTTON_TYPE.primary} title="+ Add Task" />
+          <Button
+            category={BUTTON_CATEGORY.primary}
+            title="+ Add Task"
+            onClickOpen={onClickOpen}
+          />
         </div>
         <TasksList
           items={preparedToDoTasks}
