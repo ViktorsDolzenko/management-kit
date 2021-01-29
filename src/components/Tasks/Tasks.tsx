@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./tasks.scss";
 import { TasksList } from "components/TasksList";
 import { Button, BUTTON_CATEGORY } from "../Button";
@@ -24,6 +24,16 @@ export const Tasks = ({ onClickOpen }: tasksProps) => {
     dispatch(taskIsChecked(task.id));
   };
 
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(state.tasks));
+  }, [state.tasks]);
+
+  useEffect(() => {
+    const data = localStorage.getItem("tasks");
+    if (data) {
+      JSON.parse(data);
+    }
+  }, []);
   return (
     <div className="tasks">
       <div className="tasks__container">
