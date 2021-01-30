@@ -1,5 +1,7 @@
 import React from "react";
+
 import { BUTTON_CATEGORY, BUTTON_TYPE } from "./buttonProps";
+
 import "./button.scss";
 
 interface ButtonProps {
@@ -7,7 +9,7 @@ interface ButtonProps {
   title?: string;
   icon?: string;
   titleIcon?: React.ReactNode;
-  onClickOpen?: () => void;
+  onClick?: () => void;
   type?: BUTTON_TYPE;
 }
 
@@ -16,13 +18,13 @@ export const Button = ({
   title,
   icon,
   titleIcon,
-  onClickOpen,
+  onClick,
   type,
 }: ButtonProps) => {
   return (
     <button
       className={`button button_${category}`}
-      onClick={onClickOpen}
+      onClick={onClick}
       type={type}
     >
       {icon && <img src={icon} alt="icon button" className="button__icon" />}

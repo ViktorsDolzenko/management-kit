@@ -1,16 +1,18 @@
-import React, { useContext } from "react";
-import "./tasks.scss";
+import React, { useContext, useEffect } from "react";
+
 import { TasksList } from "components/TasksList";
-import { Button, BUTTON_CATEGORY } from "../Button";
-import { StorageContext } from "../../context/storage";
-import { setTaskForView, taskIsChecked } from "../../context/actions";
+import { Button, BUTTON_CATEGORY } from "components/Button";
+import { StorageContext, TASKS_STORAGE_KEY } from "context/storage";
+import { setTaskForView, taskIsChecked } from "context/actions";
 import { TASK_TYPE, taskItemsType } from "./taskItems";
 
+import "./tasks.scss";
+
 interface tasksProps {
-  onClickOpen: () => void;
+  onAddTaskClick: (taskType: TASK_TYPE) => void;
 }
 
-export const Tasks = ({ onClickOpen }: tasksProps) => {
+export const Tasks = ({ onAddTaskClick }: tasksProps) => {
   const { state, dispatch } = useContext(StorageContext);
   const preparedBackLogTasks = state.tasks.filter(
     (task) => task.type === TASK_TYPE.BACKLOG
@@ -24,6 +26,10 @@ export const Tasks = ({ onClickOpen }: tasksProps) => {
     dispatch(taskIsChecked(task.id));
   };
 
+  useEffect(() => {
+    localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(state.tasks));
+  }, [state.tasks]);
+
   return (
     <div className="tasks">
       <div className="tasks__container">
@@ -32,7 +38,7 @@ export const Tasks = ({ onClickOpen }: tasksProps) => {
           <Button
             category={BUTTON_CATEGORY.primary}
             title="+ Add Task"
-            onClickOpen={onClickOpen}
+            onClick={() => onAddTaskClick(TASK_TYPE.BACKLOG)}
           />
         </div>
         <TasksList
@@ -47,7 +53,7 @@ export const Tasks = ({ onClickOpen }: tasksProps) => {
           <Button
             category={BUTTON_CATEGORY.primary}
             title="+ Add Task"
-            onClickOpen={onClickOpen}
+            onClick={() => onAddTaskClick(TASK_TYPE.TODO)}
           />
         </div>
         <TasksList
