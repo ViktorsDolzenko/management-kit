@@ -18,6 +18,8 @@ export interface taskExtend extends taskItemsType {
   isOpened?: number;
 }
 
+export const TASKS_STORAGE_KEY = "tasks";
+
 type StoreType = {
   tasks: taskExtend[];
   comments?: commentType[];
@@ -28,8 +30,16 @@ type Action = {
   payload: any;
 };
 
+const getTasks = () => {
+  const tasksFromLocalStorage = localStorage.getItem(TASKS_STORAGE_KEY);
+  if (tasksFromLocalStorage) {
+    return JSON.parse(tasksFromLocalStorage);
+  }
+  return [...backLog, ...toDo];
+};
+
 const initialState: StoreType = {
-  tasks: [...backLog, ...toDo],
+  tasks: getTasks(),
   comments: [],
 };
 

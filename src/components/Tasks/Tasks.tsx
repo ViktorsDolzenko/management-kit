@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import "./tasks.scss";
 import { TasksList } from "components/TasksList";
 import { Button, BUTTON_CATEGORY } from "../Button";
-import { StorageContext } from "../../context/storage";
+import { StorageContext, TASKS_STORAGE_KEY } from "../../context/storage";
 import { setTaskForView, taskIsChecked } from "../../context/actions";
 import { TASK_TYPE, taskItemsType } from "./taskItems";
 
@@ -12,6 +12,7 @@ interface tasksProps {
 
 export const Tasks = ({ onClickOpen }: tasksProps) => {
   const { state, dispatch } = useContext(StorageContext);
+
   const preparedBackLogTasks = state.tasks.filter(
     (task) => task.type === TASK_TYPE.BACKLOG
   );
@@ -25,15 +26,9 @@ export const Tasks = ({ onClickOpen }: tasksProps) => {
   };
 
   useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(state.tasks));
+    localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(state.tasks));
   }, [state.tasks]);
 
-  useEffect(() => {
-    const data = localStorage.getItem("tasks");
-    if (data) {
-      JSON.parse(data);
-    }
-  }, []);
   return (
     <div className="tasks">
       <div className="tasks__container">

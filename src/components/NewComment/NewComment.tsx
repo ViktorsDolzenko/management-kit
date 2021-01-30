@@ -16,7 +16,7 @@ export const NewComment = ({
   taskId,
   comments,
 }: newCommentProps) => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = (data: any) => {
     addComment(
@@ -30,6 +30,7 @@ export const NewComment = ({
       },
       taskId
     );
+    reset();
   };
 
   return (
