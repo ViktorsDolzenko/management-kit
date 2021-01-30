@@ -13,8 +13,9 @@ import { TAG_TYPE } from "../Tag/tagProps";
 
 interface AddNewTaskProps {
   onClickClose: () => void;
+  taskType: TASK_TYPE;
 }
-export const AddNewTask = ({ onClickClose }: AddNewTaskProps) => {
+export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
   const { register, handleSubmit } = useForm();
   const { state, dispatch } = useContext(StorageContext);
 
@@ -30,7 +31,7 @@ export const AddNewTask = ({ onClickClose }: AddNewTaskProps) => {
         date: moment().format(" MMMM Do"),
         assign: "Random Random",
         description: data.description,
-        type: TASK_TYPE.BACKLOG,
+        type: taskType,
         comments: [],
         files: [],
       })
