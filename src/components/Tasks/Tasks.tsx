@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 
 import { TasksList } from "components/TasksList";
-import { Button, BUTTON_CATEGORY } from "components/Button";
+import { Button, BUTTON_STYLE } from "components/Button";
 import { StorageContext, TASKS_STORAGE_KEY } from "context/storage";
 import { setTaskForView, taskIsChecked } from "context/actions";
 import { TASK_TYPE, taskItemsType } from "./taskItems";
@@ -36,7 +36,7 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
         <div className="tasks__header">
           <h2 className="tasks__title">Backlog</h2>
           <Button
-            category={BUTTON_CATEGORY.primary}
+            category={BUTTON_STYLE.primary}
             title="+ Add Task"
             onClick={() => onAddTaskClick(TASK_TYPE.BACKLOG)}
           />
@@ -51,7 +51,7 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
         <div className="tasks__header">
           <h2 className="tasks__title">To Do</h2>
           <Button
-            category={BUTTON_CATEGORY.primary}
+            category={BUTTON_STYLE.primary}
             title="+ Add Task"
             onClick={() => onAddTaskClick(TASK_TYPE.TODO)}
           />

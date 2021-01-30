@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { headerItems } from "./headerItems";
-import { Button, BUTTON_CATEGORY } from "components/Button";
+import { Button, BUTTON_STYLE } from "components/Button";
 import Logo from "svg/logo.svg";
 import chatIcon from "svg/chat-button.svg";
 import { Followers } from "components/Followers";
@@ -20,13 +20,13 @@ export const Header = () => {
               <img className="page-header__img" src={Logo} alt="logo" />
               <span className="page-header__title">WebSite</span>
             </a>
-            <Button category={BUTTON_CATEGORY.simple} titleIcon={simpleIcon} />
+            <Button category={BUTTON_STYLE.simple} titleIcon={simpleIcon} />
           </div>
           <Followers />
           <div className="navbar__buttons">
             <Button title="share" />
             <Button
-              category={BUTTON_CATEGORY.warning}
+              category={BUTTON_STYLE.warning}
               title="chat"
               icon={chatIcon}
             />

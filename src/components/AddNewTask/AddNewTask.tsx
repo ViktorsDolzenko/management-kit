@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import moment from "moment";
 import { useForm } from "react-hook-form";
 
-import { Button, BUTTON_CATEGORY } from "components/Button";
+import { Button, BUTTON_STYLE } from "components/Button";
 import photo_1 from "components/Tasks/images/photo-1.png";
 import { TASK_TYPE } from "components/Tasks/taskItems";
 import { TAG_TYPE } from "components/Tag/tagProps";
@@ -17,6 +17,7 @@ interface AddNewTaskProps {
   onClickClose: () => void;
   taskType: TASK_TYPE;
 }
+
 export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
   const { register, handleSubmit } = useForm();
   const { state, dispatch } = useContext(StorageContext);
@@ -70,7 +71,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
             />
           </div>
           <Button
-            category={BUTTON_CATEGORY.basic}
+            category={BUTTON_STYLE.basic}
             title="Add Task"
             type={BUTTON_TYPE.submit}
           />

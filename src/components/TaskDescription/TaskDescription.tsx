@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 
 import { Followers } from "components/Followers";
 import { CheckBox } from "components/CheckBox";
-import { Button, BUTTON_CATEGORY } from "components/Button";
+import { Button, BUTTON_STYLE } from "components/Button";
 import { simpleIcon } from "const";
 import { Tag } from "components/Tag";
 import { Files } from "components/Files";
@@ -42,10 +42,7 @@ export const TaskDescription = () => {
                     taskForView && doneTaskHandler(taskForView);
                   }}
                 />
-                <Button
-                  category={BUTTON_CATEGORY.simple}
-                  titleIcon={simpleIcon}
-                />
+                <Button category={BUTTON_STYLE.simple} titleIcon={simpleIcon} />
               </div>
             </div>
             <div className="task-description__info">
