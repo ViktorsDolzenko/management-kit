@@ -1,23 +1,20 @@
 import React, { useContext } from "react";
-import moment from "moment";
-import { useForm } from "react-hook-form";
-
-import { Button, BUTTON_CATEGORY } from "components/Button";
-import photo_1 from "components/Tasks/images/photo-1.png";
-import { TASK_TYPE } from "components/Tasks/taskItems";
-import { TAG_TYPE } from "components/Tag/tagProps";
-import { BUTTON_TYPE } from "components/Button/buttonProps";
-import { StorageContext } from "context/storage";
-import { addNewTask } from "context/actions";
-import { getTaskNewId } from "utils";
-
 import "./addNewTask.scss";
+import { Button, BUTTON_CATEGORY } from "../Button";
+import { useForm } from "react-hook-form";
+import { BUTTON_TYPE } from "../Button/buttonProps";
+import { StorageContext } from "../../context/storage";
+import { addNewTask } from "../../context/actions";
+import { getTaskNewId } from "../../utils";
+import photo_1 from "components/Tasks/images/photo-1.png";
+import moment from "moment";
+import { TASK_TYPE } from "../Tasks/taskItems";
+import { TAG_TYPE } from "../Tag/tagProps";
 
 interface AddNewTaskProps {
   onClickClose: () => void;
-  taskType: TASK_TYPE;
 }
-export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
+export const AddNewTask = ({ onClickClose }: AddNewTaskProps) => {
   const { register, handleSubmit } = useForm();
   const { state, dispatch } = useContext(StorageContext);
 
@@ -33,7 +30,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
         date: moment().format(" MMMM Do"),
         assign: "Random Random",
         description: data.description,
-        type: taskType,
+        type: TASK_TYPE.BACKLOG,
         comments: [],
         files: [],
       })

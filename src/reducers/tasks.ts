@@ -1,5 +1,5 @@
-import { taskItemsType } from "components/Tasks/taskItems";
-import { taskExtend } from "context/storage";
+import { taskItemsType } from "../components/Tasks/taskItems";
+import { taskExtend } from "../context/storage";
 
 export const toggleTaskCompleteById = (
   allTasks: taskItemsType[],

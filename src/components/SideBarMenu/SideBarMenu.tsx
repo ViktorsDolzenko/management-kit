@@ -1,7 +1,5 @@
 import React from "react";
-
 import { sidebarItemType } from "./sideBarItems";
-
 import "./sideBarMenu.scss";
 
 interface SideBarMenuProps {

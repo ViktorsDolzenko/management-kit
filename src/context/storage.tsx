@@ -1,15 +1,18 @@
 import React, { createContext, Dispatch, useReducer } from "react";
-
 import {
   backLog,
   commentType,
   taskItemsType,
   toDo,
-} from "components/Tasks/taskItems";
+} from "../components/Tasks/taskItems";
 import { ActionType } from "./actions";
-import { addNewTask, openTask, toggleTaskCompleteById } from "reducers/tasks";
-import { addNewComments } from "reducers/comments";
-import { removeFile } from "reducers/files";
+import {
+  addNewTask,
+  openTask,
+  toggleTaskCompleteById,
+} from "../reducers/tasks";
+import { addNewComments } from "../reducers/comments";
+import { removeFile } from "../reducers/files";
 
 export interface taskExtend extends taskItemsType {
   isOpened?: number;
@@ -25,18 +28,8 @@ type Action = {
   payload: any;
 };
 
-export const TASKS_STORAGE_KEY = "tasks";
-
-const getTasks = () => {
-  const tasksFromLocalStorage = localStorage.getItem(TASKS_STORAGE_KEY);
-  if (tasksFromLocalStorage) {
-    return JSON.parse(tasksFromLocalStorage);
-  }
-  return [...backLog, ...toDo];
-};
-
 const initialState: StoreType = {
-  tasks: getTasks(),
+  tasks: [...backLog, ...toDo],
   comments: [],
 };
 

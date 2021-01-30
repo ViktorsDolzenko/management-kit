@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
-import { countDownFunc } from "utils";
-
 import "./emptyPage.scss";
+import { countDownFunc } from "../../../utils";
 
 export const EmptyPage = () => {
   const [timer, setTimer] = useState("");

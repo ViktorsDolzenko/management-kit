@@ -1,11 +1,9 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-
-import { TasksPage } from "components/Pages/TasksPage/TasksPage";
-import { EmptyPage } from "components/Pages/EmptyPage/EmptyPage";
-import { NotFoundPage } from "components/Pages/NotFoundPage/NotFoundPage";
-
+import { TasksPage } from "../Pages/TasksPage/TasksPage";
 import "./app.scss";
+import { EmptyPage } from "../Pages/EmptyPage/EmptyPage";
+import { NotFoundPage } from "../Pages/NotFoundPage/NotFoundPage";
 
 export const App = () => {
   return (

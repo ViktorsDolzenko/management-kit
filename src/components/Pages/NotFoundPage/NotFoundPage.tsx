@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 import "./notFoundPage.scss";
 
 export const NotFoundPage = () => {

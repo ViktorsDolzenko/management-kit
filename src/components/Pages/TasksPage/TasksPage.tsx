@@ -1,24 +1,13 @@
 import React, { useState } from "react";
-
-import { SideBar } from "components/layout/SideBar";
-import { Header } from "components//layout/Header";
-import { Tasks } from "components/Tasks";
-import { TaskDescription } from "components/TaskDescription";
-import { AddNewTask } from "components/AddNewTask/AddNewTask";
-import { TASK_TYPE } from "components/Tasks/taskItems";
-
+import { SideBar } from "../../layout/SideBar";
+import { Header } from "../../layout/Header";
+import { Tasks } from "../../Tasks";
+import { TaskDescription } from "../../TaskDescription";
+import { AddNewTask } from "../../AddNewTask/AddNewTask";
 import "./TasksPage.scss";
 
 export const TasksPage = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [taskTypeForCreation, setTaskTypeForCreation] = useState<TASK_TYPE>(
-    TASK_TYPE.BACKLOG
-  );
-
-  const taskCreationHandler = (taskType: TASK_TYPE) => {
-    setTaskTypeForCreation(taskType);
-    open();
-  };
 
   const open = () => {
     setIsOpen(true);
@@ -40,15 +29,13 @@ export const TasksPage = () => {
 
       <div className="TasksPage__content">
         <div className="TasksPage__content-taskList">
-          <Tasks onAddTaskClick={(taskType) => taskCreationHandler(taskType)} />
+          <Tasks onClickOpen={open} />
         </div>
         <div className="TasksPage__content-task">
           <TaskDescription />
         </div>
       </div>
-      {isOpen && (
-        <AddNewTask onClickClose={close} taskType={taskTypeForCreation} />
-      )}
+      {isOpen && <AddNewTask onClickClose={close} />}
     </div>
   );
 };

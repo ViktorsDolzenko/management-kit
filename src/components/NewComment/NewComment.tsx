@@ -1,8 +1,8 @@
 import React from "react";
 import "./newComment.scss";
 import { useForm } from "react-hook-form";
-import { commentType } from "components/Tasks/taskItems";
-import { getNewId } from "utils";
+import { commentType } from "../Tasks/taskItems";
+import { getNewId } from "../../utils";
 import moment from "moment";
 
 interface newCommentProps {
@@ -16,7 +16,7 @@ export const NewComment = ({
   taskId,
   comments,
 }: newCommentProps) => {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = (data: any) => {
     addComment(
@@ -30,7 +30,6 @@ export const NewComment = ({
       },
       taskId
     );
-    reset();
   };
 
   return (

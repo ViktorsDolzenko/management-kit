@@ -1,7 +1,5 @@
 import React from "react";
-
 import { commentType } from "components/Tasks/taskItems";
-
 import "./comment.scss";
 
 interface CommentProps {

@@ -1,10 +1,8 @@
 import React from "react";
-
+import "./taskList.scss";
 import { taskItemsType } from "components/Tasks/taskItems";
 import { CheckBox } from "components/CheckBox";
 import { Tag } from "components/Tag";
-
-import "./taskList.scss";
 
 interface tasksListItemsType {
   items: taskItemsType[];

@@ -1,18 +1,16 @@
 import React, { useContext } from "react";
-
 import { Followers } from "components/Followers";
+import "./taskDescription.scss";
 import { CheckBox } from "components/CheckBox";
 import { Button, BUTTON_CATEGORY } from "components/Button";
-import { simpleIcon } from "const";
+import { simpleIcon } from "../../const";
 import { Tag } from "components/Tag";
-import { Files } from "components/Files";
-import { NewComment } from "components/NewComment";
-import { Comment } from "components/Comment";
-import { StorageContext } from "context/storage";
-import { addComment, deleteFile, taskIsChecked } from "context/actions";
-import { commentType, taskItemsType } from "components/Tasks/taskItems";
-
-import "./taskDescription.scss";
+import { Files } from "../Files/Files";
+import { NewComment } from "../NewComment/NewComment";
+import { Comment } from "../Comment/Comment";
+import { StorageContext } from "../../context/storage";
+import { addComment, deleteFile, taskIsChecked } from "../../context/actions";
+import { commentType, taskItemsType } from "../Tasks/taskItems";
 
 export const TaskDescription = () => {
   const { state, dispatch } = useContext(StorageContext);

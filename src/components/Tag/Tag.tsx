@@ -1,7 +1,5 @@
 import React from "react";
-
 import { TAG_TYPE } from "./tagProps";
-
 import "./tag.scss";
 
 interface tagProps {
