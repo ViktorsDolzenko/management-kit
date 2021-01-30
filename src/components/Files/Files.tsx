@@ -1,6 +1,8 @@
 import React from "react";
-import "./files.scss";
+
 import { FileItemsTypes } from "./fileType";
+
+import "./files.scss";
 
 interface FileProps {
   files: FileItemsTypes[];

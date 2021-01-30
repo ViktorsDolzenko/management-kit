@@ -1,13 +1,15 @@
 import React from "react";
+
 import {
   sideBarItemsMenu,
   sideBarItemsProjects,
   sideBarItemsTeams,
-} from "../../SideBarMenu/sideBarItems";
-import { SideBarMenu } from "../../SideBarMenu";
+} from "components/SideBarMenu/sideBarItems";
+import { SideBarMenu } from "components/SideBarMenu";
+import { Button, BUTTON_CATEGORY } from "components/Button";
+import { simpleIcon } from "const";
+
 import "./sideBar.scss";
-import { Button, BUTTON_CATEGORY } from "../../Button";
-import { simpleIcon } from "../../../const";
 
 export const SideBar = () => {
   return (

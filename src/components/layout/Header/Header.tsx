@@ -1,13 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import { headerItems } from "./headerItems";
 import { Button, BUTTON_CATEGORY } from "components/Button";
-
-import Logo from "../../../svg/logo.svg";
+import Logo from "svg/logo.svg";
 import chatIcon from "svg/chat-button.svg";
-import "./header.scss";
 import { Followers } from "components/Followers";
-import { simpleIcon } from "../../../const";
-import { Link } from "react-router-dom";
+import { simpleIcon } from "const";
+
+import "./header.scss";
 
 export const Header = () => {
   return (

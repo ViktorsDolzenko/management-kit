@@ -1,5 +1,7 @@
 import React from "react";
+
 import { followers } from "./followersItems";
+
 import "./followers.scss";
 
 export const Followers = () => {
