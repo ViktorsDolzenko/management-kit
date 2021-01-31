@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { Followers } from "components/Followers";
 import { CheckBox } from "components/CheckBox";
@@ -13,8 +13,15 @@ import { addComment, deleteFile, taskIsChecked } from "context/actions";
 import { commentType, taskItemsType } from "components/Tasks/taskItems";
 
 import "./taskDescription.scss";
+import { auth } from "../../firebase";
 
 export const TaskDescription = () => {
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  useEffect(() => {
+    auth.onAuthStateChanged(setCurrentUser);
+  }, []);
+
   const { state, dispatch } = useContext(StorageContext);
 
   const doneTaskHandler = (task: taskItemsType): void => {
@@ -93,13 +100,14 @@ export const TaskDescription = () => {
             <hr className="task-description__divider" />
             <div className="task-description__discussion">
               <h4 className="task-description__discussion_title">Discussion</h4>
-              {taskForView?.comments && (
+              {taskForView?.comments && currentUser && (
                 <NewComment
                   addComment={(comment: commentType, taskId: number) =>
                     dispatch(addComment(comment, taskId))
                   }
                   taskId={taskForView.id}
                   comments={taskForView.comments}
+                  username={currentUser.email}
                 />
               )}
               {taskForView?.comments && (

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { TasksList } from "components/TasksList";
 import { Button, BUTTON_STYLE } from "components/Button";
@@ -7,12 +7,19 @@ import { setTaskForView, taskIsChecked } from "context/actions";
 import { TASK_TYPE, taskItemsType } from "./taskItems";
 
 import "./tasks.scss";
+import { auth } from "../../firebase";
 
 interface tasksProps {
   onAddTaskClick: (taskType: TASK_TYPE) => void;
 }
 
 export const Tasks = ({ onAddTaskClick }: tasksProps) => {
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  useEffect(() => {
+    auth.onAuthStateChanged(setCurrentUser);
+  }, []);
+
   const { state, dispatch } = useContext(StorageContext);
   const preparedBackLogTasks = state.tasks.filter(
     (task) => task.type === TASK_TYPE.BACKLOG
@@ -35,11 +42,13 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
       <div className="tasks__container">
         <div className="tasks__header">
           <h2 className="tasks__title">Backlog</h2>
-          <Button
-            category={BUTTON_STYLE.primary}
-            title="+ Add Task"
-            onClick={() => onAddTaskClick(TASK_TYPE.BACKLOG)}
-          />
+          {currentUser && (
+            <Button
+              category={BUTTON_STYLE.primary}
+              title="+ Add Task"
+              onClick={() => onAddTaskClick(TASK_TYPE.BACKLOG)}
+            />
+          )}
         </div>
         <TasksList
           items={preparedBackLogTasks}
@@ -50,11 +59,13 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
       <div className="tasks__container">
         <div className="tasks__header">
           <h2 className="tasks__title">To Do</h2>
-          <Button
-            category={BUTTON_STYLE.primary}
-            title="+ Add Task"
-            onClick={() => onAddTaskClick(TASK_TYPE.TODO)}
-          />
+          {currentUser && (
+            <Button
+              category={BUTTON_STYLE.primary}
+              title="+ Add Task"
+              onClick={() => onAddTaskClick(TASK_TYPE.TODO)}
+            />
+          )}
         </div>
         <TasksList
           items={preparedToDoTasks}

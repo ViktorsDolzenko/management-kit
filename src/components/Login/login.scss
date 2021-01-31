@@ -83,4 +83,14 @@
       margin-left: 10px;
     }
   }
+
+  &__error {
+    margin: 0 13px 13px 13px;
+    text-align: center;
+
+    &_message {
+      font-weight: bold;
+      color: #c00003;
+    }
+  }
 }

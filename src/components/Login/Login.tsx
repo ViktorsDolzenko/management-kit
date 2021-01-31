@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button, BUTTON_STYLE } from "../Button";
@@ -15,12 +15,19 @@ interface LoginProps {
 export const Login = ({ onClickClose, onSignUpClick }: LoginProps) => {
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = (data: any) => {
+  const [loginError, setLoginError] = useState("");
+
+  const onSubmit = (data: any, evt: any) => {
     const email = data.email;
     const password = data.password;
 
-    auth.signInWithEmailAndPassword(email, password);
-    onClickClose();
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then(() => onClickClose())
+      .catch((error) => {
+        const errorMessage = error.message;
+        setLoginError(errorMessage);
+      });
   };
 
   return (
@@ -52,6 +59,15 @@ export const Login = ({ onClickClose, onSignUpClick }: LoginProps) => {
               ref={register}
             />
           </div>
+
+          {loginError && (
+            <div className="login__error">
+              <span className="login__error_message">
+                Wrong email or password
+              </span>
+            </div>
+          )}
+
           <div className="login__buttons">
             <Button
               category={BUTTON_STYLE.basic}
