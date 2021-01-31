@@ -12,7 +12,7 @@ const app = firebase.initializeApp({
 });
 
 export const actionCodeSettings = {
-  url: "https://management-kit-dqupuyeuz.vercel.app/",
+  url: "https://management-kit-2jgjni8tl.vercel.app/",
   handleCodeInApp: true,
   iOS: {
     bundleId: "com.example.ios",
