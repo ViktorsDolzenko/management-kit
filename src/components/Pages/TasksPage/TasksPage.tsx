@@ -6,32 +6,35 @@ import { Tasks } from "components/Tasks";
 import { TaskDescription } from "components/TaskDescription";
 import { AddNewTask } from "components/AddNewTask/AddNewTask";
 import { TASK_TYPE } from "components/Tasks/taskItems";
+import { Login } from "../../Login";
+import { open } from "utils";
+import { close } from "utils";
 
 import "./TasksPage.scss";
+import { SignUp } from "../../SignUp";
 
 export const TasksPage = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenAddNewTask, setIsOpenAddNewTask] = useState(false);
+  const [isOpenLogin, setIsOpenLogin] = useState(false);
+  const [isOpenSignUp, setIsOpenSignUp] = useState(false);
   const [taskTypeForCreation, setTaskTypeForCreation] = useState<TASK_TYPE>(
     TASK_TYPE.BACKLOG
   );
 
   const taskCreationHandler = (taskType: TASK_TYPE) => {
     setTaskTypeForCreation(taskType);
-    open();
+    open(setIsOpenAddNewTask);
   };
 
-  const open = () => {
-    setIsOpen(true);
-  };
-
-  const close = () => {
-    setIsOpen(false);
+  const openSignUp = () => {
+    close(setIsOpenLogin);
+    open(setIsOpenSignUp);
   };
 
   return (
     <div className="TasksPage">
       <div className="TasksPage__sidebar">
-        <SideBar />
+        <SideBar onLoginClick={() => open(setIsOpenLogin)} />
       </div>
 
       <div className="TasksPage__header">
@@ -46,9 +49,19 @@ export const TasksPage = () => {
           <TaskDescription />
         </div>
       </div>
-      {isOpen && (
-        <AddNewTask onClickClose={close} taskType={taskTypeForCreation} />
+      {isOpenAddNewTask && (
+        <AddNewTask
+          onClickClose={() => close(setIsOpenAddNewTask)}
+          taskType={taskTypeForCreation}
+        />
       )}
+      {isOpenLogin && (
+        <Login
+          onClickClose={() => close(setIsOpenLogin)}
+          onSignUpClick={openSignUp}
+        />
+      )}
+      {isOpenSignUp && <SignUp onClickClose={() => close(setIsOpenSignUp)} />}
     </div>
   );
 };

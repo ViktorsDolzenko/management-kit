@@ -38,3 +38,11 @@ export const countDownFunc = (timeLeft: any) => {
     timeLeft("Expired");
   }, 100);
 };
+
+export const open = (setOpen: (value: boolean) => void) => {
+  return setOpen(true);
+};
+
+export const close = (setClose: (value: boolean) => void) => {
+  return setClose(false);
+};

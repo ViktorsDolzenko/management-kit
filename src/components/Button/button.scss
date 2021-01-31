@@ -77,4 +77,19 @@
   &__icon {
     margin-right: 5px;
   }
+
+  &_important {
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    transition: 0.5s ease;
+    border: none;
+    background: none;
+
+    &:hover,
+    &:focus {
+      font-size: 25px;
+      box-shadow: none;
+    }
+  }
 }
