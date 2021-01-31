@@ -1,4 +1,4 @@
-export enum BUTTON_CATEGORY {
+export enum BUTTON_STYLE {
   simple = "simple",
   default = "default",
   warning = "warning",

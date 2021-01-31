@@ -1,11 +1,11 @@
 import React from "react";
 
-import { BUTTON_CATEGORY, BUTTON_TYPE } from "./buttonProps";
+import { BUTTON_STYLE, BUTTON_TYPE } from "./buttonProps";
 
 import "./button.scss";
 
 interface ButtonProps {
-  category?: BUTTON_CATEGORY;
+  category?: BUTTON_STYLE;
   title?: string;
   icon?: string;
   titleIcon?: React.ReactNode;
@@ -14,7 +14,7 @@ interface ButtonProps {
 }
 
 export const Button = ({
-  category = BUTTON_CATEGORY.default,
+  category = BUTTON_STYLE.default,
   title,
   icon,
   titleIcon,

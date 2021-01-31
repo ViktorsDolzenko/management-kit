@@ -6,7 +6,7 @@ import { countDownFunc } from "utils";
 import "./emptyPage.scss";
 
 export const EmptyPage = () => {
-  const [timer, setTimer] = useState("");
+  const [timer, setTimer] = useState<string>("");
 
   countDownFunc(setTimer);
 

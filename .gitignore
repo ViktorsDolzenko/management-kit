@@ -24,6 +24,10 @@ yarn-error.log*
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 .idea
-.eslintcache
 prettierrc.json
+
+
+# cache
+.eslintcache
+.cache
 
