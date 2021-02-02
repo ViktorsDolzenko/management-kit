@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button, BUTTON_STYLE } from "../Button";
@@ -14,16 +14,29 @@ interface SignUpProps {
 export const SignUp = ({ onClickClose }: SignUpProps) => {
   const { register, handleSubmit } = useForm();
 
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
   const onSubmit = (data: any) => {
     const email = data.email;
     const password = data.password;
+    const username = data.username;
 
-    auth.createUserWithEmailAndPassword(email, password).then(() => {
-      auth.sendSignInLinkToEmail(email, actionCodeSettings).then(() => {
-        window.localStorage.setItem("emailForSignIn", email);
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        result.user?.updateProfile({
+          displayName: username,
+        });
+        // auth
+        //   .sendSignInLinkToEmail(email, actionCodeSettings)
+        //   .then(() => {
+        //     window.localStorage.setItem("emailForSignIn", email);
+        onClickClose();
+        window.location.reload();
+      })
+      .catch((error) => {
+        setErrorMessage(error.message);
       });
-      onClickClose();
-    });
   };
 
   return (
@@ -35,6 +48,16 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
         </div>
         <hr className="signUp__divider" />
         <form className="signUp__form" onSubmit={handleSubmit(onSubmit)}>
+          <div className="signUp__input-wrapper">
+            <label className="signUp__label">Username</label>
+            <input
+              className="signUp__input"
+              type="text"
+              required={true}
+              name="username"
+              ref={register}
+            />
+          </div>
           <div className="signUp__input-wrapper">
             <label className="signUp__label">Email</label>
             <input
@@ -55,6 +78,13 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
               ref={register}
             />
           </div>
+          {errorMessage && (
+            <div className="signUp__error">
+              <span className="signUp__error_message">
+                This email already registered
+              </span>
+            </div>
+          )}
           <Button
             category={BUTTON_STYLE.basic}
             title="Sign Up"

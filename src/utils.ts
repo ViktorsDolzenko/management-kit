@@ -18,25 +18,22 @@ export const getTaskNewId = (tasks: taskItemsType[]) => {
 };
 
 export const countDownFunc = (timeLeft: any) => {
-  const countDownDate = new Date("Feb 26, 2021 13:57").getTime();
-  const countDown = setInterval(() => {
-    const now = new Date().getTime();
-    const distance = countDownDate - now;
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  const countDownDate = new Date("Feb 27, 2021 10:37").getTime();
+  const now = new Date().getTime();
+  const distance = countDownDate - now;
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor(
+    (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    if (distance > 0) {
-      return timeLeft(
-        days + "d " + hours + "h " + minutes + "m " + seconds + "s "
-      );
-    }
-    clearInterval(countDown);
-    timeLeft("Expired");
-  }, 100);
+  if (distance > 0) {
+    return timeLeft(
+      days + "d " + hours + "h " + minutes + "m " + seconds + "s "
+    );
+  }
+  timeLeft("Expired");
 };
 
 export const open = (setOpen: (value: boolean) => void) => {

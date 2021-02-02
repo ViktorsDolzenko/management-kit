@@ -32,20 +32,20 @@ export const TasksPage = () => {
   };
 
   return (
-    <div className="TasksPage">
-      <div className="TasksPage__sidebar">
+    <div className="page-container">
+      <div className="page-container__sidebar">
         <SideBar onLoginClick={() => open(setIsOpenLogin)} />
       </div>
 
-      <div className="TasksPage__header">
+      <div className="page-container__header">
         <Header />
       </div>
 
-      <div className="TasksPage__content">
-        <div className="TasksPage__content-taskList">
+      <div className="page-container__content">
+        <div className="page-container__content-taskList">
           <Tasks onAddTaskClick={(taskType) => taskCreationHandler(taskType)} />
         </div>
-        <div className="TasksPage__content-task">
+        <div className="page-container__content-task">
           <TaskDescription />
         </div>
       </div>

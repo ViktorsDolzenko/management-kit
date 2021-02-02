@@ -48,7 +48,7 @@ export const SideBar = ({ onLoginClick }: SidebarProps) => {
           />
           <div className="sidebar__profile--info">
             <span className="sidebar__profile--info name">
-              {currentUser.email}
+              {currentUser.displayName}
             </span>
             <span className="sidebar__profile--info vacancy">
               Product Owner

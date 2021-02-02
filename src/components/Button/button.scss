@@ -92,4 +92,16 @@
       box-shadow: none;
     }
   }
+
+  &_critical {
+    color: #c00003;
+    border: none;
+    background: none;
+    padding: 0;
+
+    &:hover,
+    &:focus {
+      box-shadow: none;
+    }
+  }
 }

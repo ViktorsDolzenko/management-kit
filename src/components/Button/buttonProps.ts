@@ -7,6 +7,7 @@ export enum BUTTON_STYLE {
   clear = "clear",
   basic = "basic",
   important = "important",
+  critical = "critical",
 }
 
 export enum BUTTON_TYPE {
