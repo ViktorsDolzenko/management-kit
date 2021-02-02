@@ -32,7 +32,9 @@ export const SideBar = ({ onLoginClick }: SidebarProps) => {
   };
 
   useEffect(() => {
-    auth.onAuthStateChanged(setCurrentUser);
+    auth.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+    });
   }, []);
 
   return (
