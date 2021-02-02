@@ -26,8 +26,8 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
         result.user?.updateProfile({
           displayName: username,
         });
-        onClickClose();
         window.location.reload();
+        onClickClose();
       })
       .catch((error) => {
         setErrorMessage(error.message);

@@ -25,6 +25,7 @@ export const TaskDescription = () => {
 
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
+    auth.currentUser?.reload();
   }, []);
 
   const { state, dispatch } = useContext(StorageContext);
