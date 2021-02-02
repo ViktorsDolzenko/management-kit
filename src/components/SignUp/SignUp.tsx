@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import { Button, BUTTON_STYLE } from "../Button";
 import { BUTTON_TYPE } from "../Button/buttonProps";
-import { actionCodeSettings, auth } from "../../firebase";
+import { auth } from "../../firebase";
 
 import "./signUp.scss";
 
