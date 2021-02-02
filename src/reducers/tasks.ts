@@ -31,7 +31,3 @@ export const addNewTask = (
 ) => {
   return [...allTasks, newTask];
 };
-
-export const deleteTask = (allTasks: taskExtend[], taskId: number) => {
-  return allTasks.filter((task) => task.id !== taskId);
-};

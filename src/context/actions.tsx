@@ -6,7 +6,6 @@ export const ActionType = {
   ADD_COMMENT: "ADD_COMMENT",
   DELETE_FILE: "DELETE_FILE",
   ADD_NEW_TASK: "ADD_NEW_TASK",
-  DELETE_TASK: "DELETE_TASK",
 };
 
 export const setTaskForView = (taskId: any) => ({
@@ -38,9 +37,4 @@ export const deleteFile = (fileId: number, taskId: number) => ({
 export const addNewTask = (newTask: taskItemsType) => ({
   type: ActionType.ADD_NEW_TASK,
   payload: newTask,
-});
-
-export const deleteTask = (taskId: number) => ({
-  type: ActionType.DELETE_TASK,
-  payload: taskId,
 });

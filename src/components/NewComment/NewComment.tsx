@@ -9,14 +9,12 @@ interface newCommentProps {
   addComment: (comment: commentType, taskId: number) => void;
   taskId: number;
   comments: commentType[];
-  username: string;
 }
 
 export const NewComment = ({
   addComment,
   taskId,
   comments,
-  username,
 }: newCommentProps) => {
   const { register, handleSubmit, reset } = useForm();
 
@@ -24,7 +22,7 @@ export const NewComment = ({
     addComment(
       {
         id: getNewId(comments),
-        author: username,
+        author: "random",
         createDate: moment().format(" MMMM Do [at] HH:mm"),
         text: data.text,
         vacancy: "Developer",

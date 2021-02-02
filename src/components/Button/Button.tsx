@@ -10,8 +10,6 @@ interface ButtonProps {
   icon?: string;
   titleIcon?: React.ReactNode;
   onClick?: () => void;
-  onMouseLeave?: () => void;
-  onMouseEnter?: () => void;
   type?: BUTTON_TYPE;
 }
 
@@ -21,17 +19,13 @@ export const Button = ({
   icon,
   titleIcon,
   onClick,
-  onMouseLeave,
   type,
-  onMouseEnter,
 }: ButtonProps) => {
   return (
     <button
       className={`button button_${category}`}
       onClick={onClick}
       type={type}
-      onMouseLeave={onMouseLeave}
-      onMouseEnter={onMouseEnter}
     >
       {icon && <img src={icon} alt="icon button" className="button__icon" />}
       {title}
