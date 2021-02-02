@@ -81,4 +81,18 @@
       text-transform: uppercase;
     }
   }
+
+  &__showMore {
+    position: relative;
+    &_hidden {
+      visibility: hidden;
+      position: absolute;
+      width: 75px;
+      right: -77%;
+    }
+
+    &:hover &_hidden {
+      visibility: visible;
+    }
+  }
 }

@@ -7,7 +7,12 @@ import {
   toDo,
 } from "components/Tasks/taskItems";
 import { ActionType } from "./actions";
-import { addNewTask, openTask, toggleTaskCompleteById } from "reducers/tasks";
+import {
+  addNewTask,
+  deleteTask,
+  openTask,
+  toggleTaskCompleteById,
+} from "reducers/tasks";
 import { addNewComments } from "reducers/comments";
 import { removeFile } from "reducers/files";
 
@@ -72,6 +77,11 @@ const reducer = (state: StoreType, { type, payload }: Action) => {
       return {
         ...state,
         tasks: addNewTask(state.tasks, payload),
+      };
+    case ActionType.DELETE_TASK:
+      return {
+        ...state,
+        tasks: deleteTask(state.tasks, payload),
       };
 
     default:

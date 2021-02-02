@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { Followers } from "components/Followers";
 import { CheckBox } from "components/CheckBox";
@@ -9,12 +9,24 @@ import { Files } from "components/Files";
 import { NewComment } from "components/NewComment";
 import { Comment } from "components/Comment";
 import { StorageContext } from "context/storage";
-import { addComment, deleteFile, taskIsChecked } from "context/actions";
+import {
+  addComment,
+  deleteFile,
+  deleteTask,
+  taskIsChecked,
+} from "context/actions";
 import { commentType, taskItemsType } from "components/Tasks/taskItems";
 
 import "./taskDescription.scss";
+import { auth } from "../../firebase";
 
 export const TaskDescription = () => {
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  useEffect(() => {
+    auth.onAuthStateChanged(setCurrentUser);
+  }, []);
+
   const { state, dispatch } = useContext(StorageContext);
 
   const doneTaskHandler = (task: taskItemsType): void => {
@@ -34,7 +46,7 @@ export const TaskDescription = () => {
                 </h2>
                 <span>Added by Kristin A. yesterday at 12:41pm</span>
               </div>
-              <div className="task-description__header_misc misc">
+              <div className="task-description__header_misc">
                 <CheckBox
                   id="description"
                   isChecked={taskForView?.done}
@@ -42,7 +54,21 @@ export const TaskDescription = () => {
                     taskForView && doneTaskHandler(taskForView);
                   }}
                 />
-                <Button category={BUTTON_STYLE.simple} titleIcon={simpleIcon} />
+                {currentUser && (
+                  <div className="task-description__showMore">
+                    <Button
+                      category={BUTTON_STYLE.simple}
+                      titleIcon={simpleIcon}
+                    />
+                    <div className="task-description__showMore_hidden">
+                      <Button
+                        category={BUTTON_STYLE.critical}
+                        title="Delete Task"
+                        onClick={() => dispatch(deleteTask(taskForView?.id))}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <div className="task-description__info">
@@ -93,13 +119,14 @@ export const TaskDescription = () => {
             <hr className="task-description__divider" />
             <div className="task-description__discussion">
               <h4 className="task-description__discussion_title">Discussion</h4>
-              {taskForView?.comments && (
+              {taskForView?.comments && currentUser && (
                 <NewComment
                   addComment={(comment: commentType, taskId: number) =>
                     dispatch(addComment(comment, taskId))
                   }
                   taskId={taskForView.id}
                   comments={taskForView.comments}
+                  username={currentUser.displayName}
                 />
               )}
               {taskForView?.comments && (

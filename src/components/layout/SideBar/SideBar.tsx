@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   sideBarItemsMenu,
@@ -7,28 +7,84 @@ import {
 } from "components/SideBarMenu/sideBarItems";
 import { SideBarMenu } from "components/SideBarMenu";
 import { Button, BUTTON_STYLE } from "components/Button";
-import { simpleIcon } from "const";
+import { BUTTON_TYPE } from "../../Button/buttonProps";
+import { auth } from "../../../firebase";
+import { simpleIcon } from "../../../const";
 
 import "./sideBar.scss";
 
-export const SideBar = () => {
+interface SidebarProps {
+  onLoginClick: () => void;
+}
+export const SideBar = ({ onLoginClick }: SidebarProps) => {
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [showLogout, setShowLogout] = useState(false);
+
+  const showLogoutButton = () => {
+    setShowLogout(!showLogout);
+  };
+  const hideLogOutButton = () => {
+    setShowLogout(false);
+  };
+
+  const signOut = () => {
+    auth.signOut().then();
+  };
+
+  useEffect(() => {
+    auth.onAuthStateChanged(setCurrentUser);
+  }, []);
   return (
     <div className="sidebar">
       <div>
         <span className="sidebar__header">Projectus</span>
       </div>
-      <div className="sidebar__profile">
-        <img
-          className="sidebar__profile--img"
-          src="https://via.placeholder.com/48"
-          alt="avatar"
-        />
-        <div className="sidebar__profile--info">
-          <span className="sidebar__profile--info name">Name Surname</span>
-          <span className="sidebar__profile--info vacancy">Product Owner</span>
+      {currentUser && (
+        <div className="sidebar__profile">
+          <img
+            className="sidebar__profile--img"
+            src="https://via.placeholder.com/48"
+            alt="avatar"
+          />
+          <div className="sidebar__profile--info">
+            <span className="sidebar__profile--info name">
+              {currentUser.displayName}
+            </span>
+            <span className="sidebar__profile--info vacancy">
+              Product Owner
+            </span>
+          </div>
+
+          {!showLogout && (
+            <Button
+              category={BUTTON_STYLE.clear}
+              titleIcon={simpleIcon}
+              onMouseEnter={showLogoutButton}
+              type={BUTTON_TYPE.default}
+            />
+          )}
+          {showLogout && (
+            <Button
+              onMouseLeave={hideLogOutButton}
+              title="Sign Out"
+              type={BUTTON_TYPE.default}
+              category={BUTTON_STYLE.clear}
+              onClick={signOut}
+            />
+          )}
         </div>
-        <Button category={BUTTON_STYLE.clear} titleIcon={simpleIcon} />
-      </div>
+      )}
+      {!currentUser && (
+        <div className="sidebar__profile">
+          <Button
+            category={BUTTON_STYLE.important}
+            onClick={onLoginClick}
+            type={BUTTON_TYPE.default}
+            title="Login"
+          />
+        </div>
+      )}
+      )
       <div className="sidebar__tasks">
         <div className="sidebar__tasks completed">
           <span className="completed__count">372</span>
