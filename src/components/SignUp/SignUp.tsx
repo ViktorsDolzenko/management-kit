@@ -20,17 +20,12 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
     const email = data.email;
     const password = data.password;
     const username = data.username;
-
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
         result.user?.updateProfile({
           displayName: username,
         });
-        // auth
-        //   .sendSignInLinkToEmail(email, actionCodeSettings)
-        //   .then(() => {
-        //     window.localStorage.setItem("emailForSignIn", email);
         onClickClose();
         window.location.reload();
       })
