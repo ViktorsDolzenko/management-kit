@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button, BUTTON_STYLE } from "../Button";
@@ -14,17 +14,24 @@ interface SignUpProps {
 export const SignUp = ({ onClickClose }: SignUpProps) => {
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = async (data: any) => {
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const onSubmit = (data: any) => {
     const email = data.email;
     const password = data.password;
     const username = data.username;
-    const result = await auth.createUserWithEmailAndPassword(email, password);
-
-    await result.user?.updateProfile({
-      displayName: username,
-    });
-    console.log(username);
-    onClickClose();
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        result.user
+          ?.updateProfile({
+            displayName: username,
+          })
+          .then(() => onClickClose());
+      })
+      .catch((error) => {
+        setErrorMessage(error.message);
+      });
   };
 
   return (
@@ -66,13 +73,13 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
               ref={register}
             />
           </div>
-
-          <div className="signUp__error">
-            <span className="signUp__error_message">
-              This email already registered
-            </span>
-          </div>
-
+          {errorMessage && (
+            <div className="signUp__error">
+              <span className="signUp__error_message">
+                This email is already registered
+              </span>
+            </div>
+          )}
           <Button
             category={BUTTON_STYLE.basic}
             title="Sign Up"
