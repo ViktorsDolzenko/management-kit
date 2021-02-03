@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 
 import { Button, BUTTON_STYLE } from "../Button";
@@ -13,8 +13,6 @@ interface SignUpProps {
 
 export const SignUp = ({ onClickClose }: SignUpProps) => {
   const { register, handleSubmit } = useForm();
-
-  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const onSubmit = async (data: any) => {
     const email = data.email;
@@ -68,13 +66,13 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
               ref={register}
             />
           </div>
-          {errorMessage && (
-            <div className="signUp__error">
-              <span className="signUp__error_message">
-                This email already registered
-              </span>
-            </div>
-          )}
+
+          <div className="signUp__error">
+            <span className="signUp__error_message">
+              This email already registered
+            </span>
+          </div>
+
           <Button
             category={BUTTON_STYLE.basic}
             title="Sign Up"
