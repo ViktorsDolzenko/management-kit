@@ -51,6 +51,7 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
               required={true}
               name="username"
               ref={register}
+              maxLength={20}
             />
           </div>
           <div className="signUp__input-wrapper">
