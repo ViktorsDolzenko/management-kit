@@ -39,23 +39,25 @@ export const EmptyPage = () => {
       <div className="page-container__header">
         <Header />
       </div>
-      <div className="emptyPage">
-        <div className="emptyPage__title">
-          <h1>COMING SOON</h1>
-          <hr className="emptyPage__divider" />
-          <p>{timer}</p>
-          <Link to="/" className="emptyPage__text">
-            Back To HomePage
-          </Link>
+      <div className="page-container__emptyContent">
+        <div className="emptyPage">
+          <div className="emptyPage__title">
+            <h1>COMING SOON</h1>
+            <hr className="emptyPage__divider" />
+            <p>{timer}</p>
+            <Link to="/" className="emptyPage__text">
+              Back To HomePage
+            </Link>
+          </div>
         </div>
+        {isOpenLogin && (
+          <Login
+            onClickClose={() => close(setIsOpenLogin)}
+            onSignUpClick={openSignUp}
+          />
+        )}
+        {isOpenSignUp && <SignUp onClickClose={() => close(setIsOpenSignUp)} />}
       </div>
-      {isOpenLogin && (
-        <Login
-          onClickClose={() => close(setIsOpenLogin)}
-          onSignUpClick={openSignUp}
-        />
-      )}
-      {isOpenSignUp && <SignUp onClickClose={() => close(setIsOpenSignUp)} />}
     </div>
   );
 };

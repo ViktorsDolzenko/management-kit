@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import { Button, BUTTON_STYLE } from "../Button";
 import { BUTTON_TYPE } from "../Button/buttonProps";
-import { actionCodeSettings, auth } from "../../firebase";
+import { auth } from "../../firebase";
 
 import "./signUp.scss";
 
@@ -20,19 +20,14 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
     const email = data.email;
     const password = data.password;
     const username = data.username;
-
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        result.user?.updateProfile({
-          displayName: username,
-        });
-        // auth
-        //   .sendSignInLinkToEmail(email, actionCodeSettings)
-        //   .then(() => {
-        //     window.localStorage.setItem("emailForSignIn", email);
-        onClickClose();
-        window.location.reload();
+        result.user
+          ?.updateProfile({
+            displayName: username,
+          })
+          .then(() => onClickClose());
       })
       .catch((error) => {
         setErrorMessage(error.message);
@@ -81,7 +76,7 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
           {errorMessage && (
             <div className="signUp__error">
               <span className="signUp__error_message">
-                This email already registered
+                This email is already registered
               </span>
             </div>
           )}
