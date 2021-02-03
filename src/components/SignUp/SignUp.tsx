@@ -16,22 +16,17 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
 
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     const email = data.email;
     const password = data.password;
     const username = data.username;
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        result.user?.updateProfile({
-          displayName: username,
-        });
-        window.location.reload();
-        onClickClose();
-      })
-      .catch((error) => {
-        setErrorMessage(error.message);
-      });
+    const result = await auth.createUserWithEmailAndPassword(email, password);
+
+    await result.user?.updateProfile({
+      displayName: username,
+    });
+    console.log(username);
+    onClickClose();
   };
 
   return (

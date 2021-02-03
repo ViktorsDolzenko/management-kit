@@ -32,10 +32,9 @@ export const SideBar = ({ onLoginClick }: SidebarProps) => {
   };
 
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
-    });
-  }, []);
+    auth.onAuthStateChanged(setCurrentUser);
+    console.log(currentUser);
+  }, [currentUser]);
 
   return (
     <div className="sidebar">
