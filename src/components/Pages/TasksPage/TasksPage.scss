@@ -12,6 +12,8 @@
   }
 
   &__sidebar {
+    position: fixed;
+    height: 100%;
     grid-area: sidebar;
   }
 
@@ -35,5 +37,9 @@
     &-task {
       grid-area: task;
     }
+  }
+
+  &__emptyContent {
+    grid-area: content;
   }
 }
