@@ -11,11 +11,16 @@
   &__wrapper {
     padding: 35px 30px 0 30px;
     background-color: white;
-    min-width: 500px;
+    min-width: 300px;
     min-height: 400px;
     left: 50%;
     top: 50%;
     border-radius: 10px;
+
+    @media (min-width: 1150px) {
+      min-width: 500px;
+      min-height: 400px;
+    }
   }
 
   &__header {

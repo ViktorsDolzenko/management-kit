@@ -11,6 +11,9 @@ import "./emptyPage.scss";
 
 export const EmptyPage = () => {
   const [timer, setTimer] = useState<string>("");
+  const [isOpenLogin, setIsOpenLogin] = useState(false);
+  const [isOpenSignUp, setIsOpenSignUp] = useState(false);
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   useEffect(() => {
     let interval: any;
@@ -22,9 +25,6 @@ export const EmptyPage = () => {
     return () => clearInterval(interval);
   }, [timer]);
 
-  const [isOpenLogin, setIsOpenLogin] = useState(false);
-  const [isOpenSignUp, setIsOpenSignUp] = useState(false);
-
   const openSignUp = () => {
     close(setIsOpenLogin);
     open(setIsOpenSignUp);
@@ -33,11 +33,17 @@ export const EmptyPage = () => {
   return (
     <div className="page-container">
       <div className="page-container__sidebar">
-        <SideBar onLoginClick={() => open(setIsOpenLogin)} />
+        <SideBar
+          onLoginClick={() => open(setIsOpenLogin)}
+          isOpenMenu={isOpenMenu}
+        />
       </div>
 
       <div className="page-container__header">
-        <Header />
+        <Header
+          onMenuClick={() => setIsOpenMenu(!isOpenMenu)}
+          isOpenMenu={isOpenMenu}
+        />
       </div>
       <div className="page-container__emptyContent">
         <div className="emptyPage">

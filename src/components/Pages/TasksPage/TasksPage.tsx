@@ -17,6 +17,7 @@ export const TasksPage = () => {
   const [isOpenAddNewTask, setIsOpenAddNewTask] = useState(false);
   const [isOpenLogin, setIsOpenLogin] = useState(false);
   const [isOpenSignUp, setIsOpenSignUp] = useState(false);
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [taskTypeForCreation, setTaskTypeForCreation] = useState<TASK_TYPE>(
     TASK_TYPE.BACKLOG
   );
@@ -33,14 +34,19 @@ export const TasksPage = () => {
 
   return (
     <div className="page-container">
-      <div className="page-container__sidebar">
-        <SideBar onLoginClick={() => open(setIsOpenLogin)} />
-      </div>
-
       <div className="page-container__header">
-        <Header />
+        <Header
+          onMenuClick={() => setIsOpenMenu(!isOpenMenu)}
+          isOpenMenu={isOpenMenu}
+        />
       </div>
 
+      <div className="page-container__sidebar">
+        <SideBar
+          onLoginClick={() => open(setIsOpenLogin)}
+          isOpenMenu={isOpenMenu}
+        />
+      </div>
       <div className="page-container__content">
         <div className="page-container__content-taskList">
           <Tasks onAddTaskClick={(taskType) => taskCreationHandler(taskType)} />

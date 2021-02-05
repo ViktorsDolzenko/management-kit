@@ -1,31 +1,50 @@
 .SidebarMenu {
   margin-top: 30px;
+  text-align: center;
+  @media (min-width: 1150px) {
+    text-align: left;
+  }
 
   &__title {
     color: #878787;
     padding-top: 10px;
     padding-bottom: 10px;
-    padding-left: 30px;
     text-transform: uppercase;
     font-size: 12px;
     font-weight: 700;
+
+    @media (min-width: 1150px) {
+      padding-left: 30px;
+    }
   }
 
   &__items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     padding-top: 9px;
     padding-bottom: 9px;
     color: white;
     font-weight: 700;
+
+    @media (min-width: 1150px) {
+      display: block;
+    }
   }
 
   &__item {
+    display: none;
     font-size: 14px;
     padding-top: 10px;
     padding-bottom: 8px;
-    padding-left: 30px;
-    display: flex;
     align-items: center;
     cursor: pointer;
+
+    @media (min-width: 1150px) {
+      display: flex;
+      padding-left: 30px;
+    }
 
     &:hover {
       background-color: #202020;
@@ -44,4 +63,8 @@
       }
     }
   }
+}
+
+.sideBar-opened {
+  display: flex;
 }

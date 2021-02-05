@@ -1,45 +1,59 @@
 .page-container {
   display: grid;
-  grid-template-columns: 270px 1fr;
-  grid-template-rows: 136px 1fr;
-  gap: 30px 0;
   grid-template-areas:
-    "sidebar header"
-    "sidebar content";
+    "sheader"
+    "header"
+    "content";
+  overflow-x: hidden;
 
-  &__header {
-    grid-area: header;
-  }
-
-  &__sidebar {
-    position: fixed;
-    height: 100%;
-    grid-area: sidebar;
-  }
-
-  &__content {
-    display: grid;
-    grid-template-columns: 445px 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 0 10px;
+  @media (min-width: 1150px) {
     grid-template-areas:
-      "taskList task"
-      "taskList task";
-    grid-area: content;
-    padding-left: 30px;
-    padding-right: 30px;
-    padding-bottom: 30px;
+      "sidebar header"
+      "sidebar content";
+    grid-template-columns: 270px 1fr;
+    grid-template-rows: 136px 1fr;
+    gap: 30px 0;
 
-    &-taskList {
-      grid-area: taskList;
+    &__header {
+      grid-area: header;
     }
 
-    &-task {
-      grid-area: task;
+    &__sidebar {
+      position: fixed;
+      height: 100%;
+      grid-area: sidebar;
     }
-  }
 
-  &__emptyContent {
-    grid-area: content;
+    &__content {
+      display: grid;
+      grid-template-columns: 445px 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 0 10px;
+      grid-template-areas:
+        "taskList"
+        "task";
+      grid-area: content;
+      padding-left: 30px;
+      padding-right: 30px;
+      padding-bottom: 30px;
+
+      @media (min-width: 1150px) {
+        grid-template-areas:
+          "taskList task"
+          "taskList task";
+      }
+
+      &-taskList {
+        grid-area: taskList;
+      }
+
+      &-task {
+        grid-area: task;
+      }
+    }
+
+    &__emptyContent {
+      grid-area: content;
+    }
   }
 }

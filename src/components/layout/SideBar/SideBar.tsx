@@ -12,11 +12,13 @@ import { auth } from "../../../firebase";
 import { simpleIcon } from "../../../const";
 
 import "./sideBar.scss";
+import { useMediaQuery } from "react-responsive";
 
 interface SidebarProps {
   onLoginClick: () => void;
+  isOpenMenu: boolean;
 }
-export const SideBar = ({ onLoginClick }: SidebarProps) => {
+export const SideBar = ({ onLoginClick, isOpenMenu }: SidebarProps) => {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [showLogout, setShowLogout] = useState(false);
 
@@ -33,14 +35,23 @@ export const SideBar = ({ onLoginClick }: SidebarProps) => {
 
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
-    console.log(currentUser);
   }, [currentUser]);
 
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-device-width: 1224px)",
+  });
+
   return (
-    <div className="sidebar">
-      <div>
-        <span className="sidebar__header">Projectus</span>
-      </div>
+    <div
+      className={`sidebar ${
+        !isDesktopOrLaptop && isOpenMenu ? "sidebar-opened" : ""
+      } `}
+    >
+      {isDesktopOrLaptop && (
+        <div>
+          <span className="sidebar__header">Projectus</span>
+        </div>
+      )}
       {currentUser && (
         <div className="sidebar__profile">
           <img
@@ -56,7 +67,6 @@ export const SideBar = ({ onLoginClick }: SidebarProps) => {
               Product Owner
             </span>
           </div>
-
           {!showLogout && (
             <Button
               category={BUTTON_STYLE.clear}
@@ -86,7 +96,6 @@ export const SideBar = ({ onLoginClick }: SidebarProps) => {
           />
         </div>
       )}
-      )
       <div className="sidebar__tasks">
         <div className="sidebar__tasks completed">
           <span className="completed__count">372</span>
@@ -99,9 +108,13 @@ export const SideBar = ({ onLoginClick }: SidebarProps) => {
       </div>
       <SideBarMenu items={sideBarItemsMenu} title="Menu" />
       <SideBarMenu items={sideBarItemsProjects} title="Projects" />
-      <Button category={BUTTON_STYLE.danger} title="+ Add a Project" />
+      {isDesktopOrLaptop && (
+        <Button category={BUTTON_STYLE.danger} title="+ Add a Project" />
+      )}
       <SideBarMenu items={sideBarItemsTeams} title="Teams" />
-      <Button category={BUTTON_STYLE.danger} title="+ Add a Team" />
+      {isDesktopOrLaptop && (
+        <Button category={BUTTON_STYLE.danger} title="+ Add a Team" />
+      )}
     </div>
   );
 };
