@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import {
   sideBarItemsMenu,
@@ -13,6 +13,7 @@ import { simpleIcon } from "../../../const";
 
 import "./sideBar.scss";
 import { useMediaQuery } from "react-responsive";
+import { StorageContext } from "../../../context/storage";
 
 interface SidebarProps {
   onLoginClick: () => void;
@@ -21,6 +22,7 @@ interface SidebarProps {
 export const SideBar = ({ onLoginClick, isOpenMenu }: SidebarProps) => {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [showLogout, setShowLogout] = useState(false);
+  const { state } = useContext(StorageContext);
 
   const showLogoutButton = () => {
     setShowLogout(!showLogout);
@@ -40,6 +42,8 @@ export const SideBar = ({ onLoginClick, isOpenMenu }: SidebarProps) => {
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-device-width: 1224px)",
   });
+
+  const getDoneTasksLength = state.tasks.filter((tasks) => tasks.done).length;
 
   return (
     <div
@@ -67,7 +71,7 @@ export const SideBar = ({ onLoginClick, isOpenMenu }: SidebarProps) => {
               Product Owner
             </span>
           </div>
-          {!showLogout && (
+          {!showLogout && isDesktopOrLaptop && (
             <Button
               category={BUTTON_STYLE.clear}
               titleIcon={simpleIcon}
@@ -76,6 +80,16 @@ export const SideBar = ({ onLoginClick, isOpenMenu }: SidebarProps) => {
             />
           )}
           {showLogout && (
+            <Button
+              onMouseLeave={hideLogOutButton}
+              title="Sign Out"
+              type={BUTTON_TYPE.default}
+              category={BUTTON_STYLE.clear}
+              onClick={signOut}
+            />
+          )}
+
+          {!isDesktopOrLaptop && (
             <Button
               onMouseLeave={hideLogOutButton}
               title="Sign Out"
@@ -98,11 +112,11 @@ export const SideBar = ({ onLoginClick, isOpenMenu }: SidebarProps) => {
       )}
       <div className="sidebar__tasks">
         <div className="sidebar__tasks completed">
-          <span className="completed__count">372</span>
+          <span className="completed__count">{getDoneTasksLength}</span>
           <span className="completed__title">Completed Tasks</span>
         </div>
         <div className="sidebar__tasks open-tasks">
-          <span className="open-tasks__count">11</span>
+          <span className="open-tasks__count">{state.tasks.length}</span>
           <span className="open-tasks__title">Open Tasks</span>
         </div>
       </div>

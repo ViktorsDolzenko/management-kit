@@ -12,6 +12,7 @@ import { close } from "utils";
 
 import "./TasksPage.scss";
 import { SignUp } from "../../SignUp";
+import { useMediaQuery } from "react-responsive";
 
 export const TasksPage = () => {
   const [isOpenAddNewTask, setIsOpenAddNewTask] = useState(false);
@@ -21,6 +22,10 @@ export const TasksPage = () => {
   const [taskTypeForCreation, setTaskTypeForCreation] = useState<TASK_TYPE>(
     TASK_TYPE.BACKLOG
   );
+
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-device-width: 1224px)",
+  });
 
   const taskCreationHandler = (taskType: TASK_TYPE) => {
     setTaskTypeForCreation(taskType);
@@ -51,6 +56,8 @@ export const TasksPage = () => {
         <div className="page-container__content-taskList">
           <Tasks onAddTaskClick={(taskType) => taskCreationHandler(taskType)} />
         </div>
+
+        {!isDesktopOrLaptop && <div className="page-container__divider" />}
         <div className="page-container__content-task">
           <TaskDescription />
         </div>

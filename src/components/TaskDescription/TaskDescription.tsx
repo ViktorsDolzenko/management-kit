@@ -118,7 +118,14 @@ export const TaskDescription = () => {
             </div>
             <hr className="task-description__divider" />
             <div className="task-description__discussion">
-              <h4 className="task-description__discussion_title">Discussion</h4>
+              <div className="task-description__discussion_title">
+                <h4 className="task-description__discussion_title-text">
+                  Discussion
+                </h4>
+                <span className="task-description__discussion_count">
+                  comments: {taskForView?.comments?.length}
+                </span>
+              </div>
               {taskForView?.comments && currentUser && (
                 <NewComment
                   addComment={(comment: commentType, taskId: number) =>
@@ -128,6 +135,11 @@ export const TaskDescription = () => {
                   comments={taskForView.comments}
                   username={currentUser.displayName}
                 />
+              )}
+              {!currentUser && (
+                <p className="task-description__discussion_noUser">
+                  Sign in to leave comments
+                </p>
               )}
               {taskForView?.comments && (
                 <Comment comments={taskForView?.comments} />

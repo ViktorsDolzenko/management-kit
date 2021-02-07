@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
 import { useForm } from "react-hook-form";
 
@@ -12,6 +12,7 @@ import { addNewTask } from "context/actions";
 import { getTaskNewId } from "utils";
 
 import "./addNewTask.scss";
+import { auth } from "../../firebase";
 
 interface AddNewTaskProps {
   onClickClose: () => void;
@@ -21,6 +22,11 @@ interface AddNewTaskProps {
 export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
   const { register, handleSubmit } = useForm();
   const { state, dispatch } = useContext(StorageContext);
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  useEffect(() => {
+    auth.onAuthStateChanged(setCurrentUser);
+  }, [currentUser]);
 
   const onSubmit = (data: any) => {
     dispatch(
@@ -32,7 +38,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
         tag: "Development",
         tagType: TAG_TYPE.primary,
         date: moment().format(" MMMM Do"),
-        assign: "Random Random",
+        assign: currentUser.displayName,
         description: data.description,
         type: taskType,
         comments: [],

@@ -5,10 +5,11 @@
 
   @media (min-width: 1150px) {
     width: 445px;
+    height: 100%;
   }
 
   &__container {
-    padding-left: 10px;
+    padding: 10px;
 
     @media (min-width: 1150px) {
       padding: 30px;
