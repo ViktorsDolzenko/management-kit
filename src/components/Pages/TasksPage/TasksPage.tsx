@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import { updateTasks } from "context/actions";
+import { getTasks } from "context/storage";
+import React, { useEffect, useState } from "react";
 
 import { SideBar } from "components/layout/SideBar";
 import { Header } from "components//layout/Header";
@@ -36,6 +38,16 @@ export const TasksPage = () => {
     close(setIsOpenLogin);
     open(setIsOpenSignUp);
   };
+
+  const getAllTasks = async () => {
+    const tasks = await getTasks();
+    // dispatch(updateTasks([...state.tasks, ...tasks]));
+  };
+
+  // TODO: getAllTasks and update
+  // useEffect(() => {
+  //   getAllTasks();
+  // }, []);
 
   return (
     <div className="page-container">
