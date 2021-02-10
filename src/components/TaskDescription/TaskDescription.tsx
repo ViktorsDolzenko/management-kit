@@ -19,6 +19,7 @@ import { commentType, taskItemsType } from "components/Tasks/taskItems";
 
 import "./taskDescription.scss";
 import { auth } from "../../firebase";
+import moment from "moment";
 
 export const TaskDescription = () => {
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -44,7 +45,10 @@ export const TaskDescription = () => {
                 <h2 className="task-description__header_title">
                   {taskForView?.title}
                 </h2>
-                <span>Added by Kristin A. yesterday at 12:41pm</span>
+                <span>
+                  Added by {currentUser?.displayName} at
+                  {moment().format(" MMMM Do HH:MM")}
+                </span>
               </div>
               <div className="task-description__header_misc">
                 <CheckBox

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import { Button, BUTTON_STYLE } from "../Button";
 import { BUTTON_TYPE } from "../Button/buttonProps";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 
 import "./signUp.scss";
 
@@ -27,7 +27,14 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
           ?.updateProfile({
             displayName: username,
           })
-          .then(() => onClickClose());
+          .then(() => {
+            db.collection("users")
+              .doc(result.user?.uid)
+              .set({
+                userName: username,
+              })
+              .then(() => onClickClose());
+          });
       })
       .catch((error) => {
         setErrorMessage(error.message);

@@ -7,12 +7,12 @@ import photo_1 from "components/Tasks/images/photo-1.png";
 import { TASK_TYPE } from "components/Tasks/taskItems";
 import { TAG_TYPE } from "components/Tag/tagProps";
 import { BUTTON_TYPE } from "components/Button/buttonProps";
-import { StorageContext } from "context/storage";
-import { addNewTask } from "context/actions";
+import { getTasks, StorageContext } from "context/storage";
+import { addNewTask, updateTasks } from "context/actions";
 import { getTaskNewId } from "utils";
 
 import "./addNewTask.scss";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 
 interface AddNewTaskProps {
   onClickClose: () => void;
@@ -28,23 +28,29 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
     auth.onAuthStateChanged(setCurrentUser);
   }, [currentUser]);
 
-  const onSubmit = (data: any) => {
-    dispatch(
-      addNewTask({
-        done: false,
-        image: photo_1,
-        title: data.title,
-        id: getTaskNewId(state.tasks),
-        tag: "Development",
-        tagType: TAG_TYPE.primary,
-        date: moment().format(" MMMM Do"),
-        assign: currentUser.displayName,
-        description: data.description,
-        type: taskType,
-        comments: [],
-        files: [],
-      })
-    );
+  const onSubmit = async (data: any) => {
+    const key = getTaskNewId(state.tasks);
+    await db
+      .collection("tasks-collection")
+      .doc("tasks")
+      .set({
+        [key]: {
+          done: false,
+          image: photo_1,
+          title: data.title,
+          id: getTaskNewId(state.tasks),
+          tag: "Development",
+          tagType: TAG_TYPE.primary,
+          date: moment().format(" MMMM Do"),
+          assign: data.assignTo,
+          description: data.description,
+          type: taskType,
+          comments: [],
+          files: [],
+        },
+      });
+    const tasks = await getTasks();
+    dispatch(updateTasks(tasks));
     onClickClose();
   };
   return (
@@ -74,6 +80,16 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
               ref={register}
               required={true}
               name="description"
+            />
+          </div>
+          <div className="addNewTask__input-wrapper">
+            <label className="addNewTask__label">Assign To</label>
+            <input
+              className="addNewTask__input"
+              type="text"
+              ref={register}
+              required={true}
+              name="assignTo"
             />
           </div>
           <Button

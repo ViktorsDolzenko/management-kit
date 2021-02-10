@@ -12,6 +12,9 @@ export const getNewId = (comments: commentType[]) => {
 };
 
 export const getTaskNewId = (tasks: taskItemsType[]) => {
+  if (tasks.length === 0) {
+    return Math.floor(Math.random() * (500 - 100) + 100);
+  }
   const sortedArray = tasks.map((task) => task.id).sort((a, b) => a - b);
   const lastId = sortedArray[sortedArray.length - 1];
   return lastId + 1;

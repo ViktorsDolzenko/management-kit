@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { TasksList } from "components/TasksList";
 import { Button, BUTTON_STYLE } from "components/Button";
-import { StorageContext, TASKS_STORAGE_KEY } from "context/storage";
+import { StorageContext } from "context/storage";
 import { setTaskForView, taskIsChecked } from "context/actions";
 import { TASK_TYPE, taskItemsType } from "./taskItems";
 
 import "./tasks.scss";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 
 interface tasksProps {
   onAddTaskClick: (taskType: TASK_TYPE) => void;
@@ -32,10 +32,6 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
   const doneTaskHandler = (task: taskItemsType): void => {
     dispatch(taskIsChecked(task.id));
   };
-
-  useEffect(() => {
-    localStorage.setItem(TASKS_STORAGE_KEY, JSON.stringify(state.tasks));
-  }, [state.tasks]);
 
   return (
     <div className="tasks">

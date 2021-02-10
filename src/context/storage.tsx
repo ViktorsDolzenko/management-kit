@@ -15,6 +15,7 @@ import {
 } from "reducers/tasks";
 import { addNewComments } from "reducers/comments";
 import { removeFile } from "reducers/files";
+import { db } from "../firebase";
 
 export interface taskExtend extends taskItemsType {
   isOpened?: number;
@@ -24,24 +25,30 @@ type StoreType = {
   tasks: taskExtend[];
   comments?: commentType[];
 };
-
 type Action = {
   type: string;
   payload: any;
 };
 
-export const TASKS_STORAGE_KEY = "tasks";
+export const getTasks = async (): Promise<taskItemsType[]> => {
+  const tasksDb = await db.collection("tasks-collection").doc("tasks");
+  const tasksData = await tasksDb.get();
+  const tasks = tasksData.data();
 
-const getTasks = () => {
-  const tasksFromLocalStorage = localStorage.getItem(TASKS_STORAGE_KEY);
-  if (tasksFromLocalStorage) {
-    return JSON.parse(tasksFromLocalStorage);
-  }
-  return [...backLog, ...toDo];
+  const preparedTasks = Object.keys(tasks ? tasks : {}).map((taskId) => {
+    if (tasks) {
+      return tasks[taskId];
+    }
+    return [];
+  });
+
+  console.log(preparedTasks);
 };
 
+getTasks();
+
 const initialState: StoreType = {
-  tasks: getTasks(),
+  tasks: [...backLog, ...toDo],
   comments: [],
 };
 
@@ -82,6 +89,11 @@ const reducer = (state: StoreType, { type, payload }: Action) => {
       return {
         ...state,
         tasks: deleteTask(state.tasks, payload),
+      };
+    case ActionType.UPDATE_TASKS:
+      return {
+        ...state,
+        tasks: payload,
       };
 
     default:
