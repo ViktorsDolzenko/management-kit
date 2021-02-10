@@ -11,7 +11,7 @@ export const getNewId = (comments: commentType[]) => {
   return Math.floor(Math.random() * (500 - 100) + 100);
 };
 
-export const getTaskNewId = (tasks: taskItemsType[]) => {
+export const getTaskNewId = (tasks: taskItemsType[]): number => {
   if (tasks.length === 0) {
     return Math.floor(Math.random() * (500 - 100) + 100);
   }

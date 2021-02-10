@@ -33,7 +33,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
     await db
       .collection("tasks-collection")
       .doc("tasks")
-      .set({
+      .update({
         [key]: {
           done: false,
           image: photo_1,

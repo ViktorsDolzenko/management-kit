@@ -1,21 +1,20 @@
-import React, { createContext, Dispatch, useReducer } from "react";
-
 import {
   backLog,
   commentType,
   taskItemsType,
   toDo,
 } from "components/Tasks/taskItems";
-import { ActionType } from "./actions";
+import React, { createContext, Dispatch, useReducer } from "react";
+import { addNewComments } from "reducers/comments";
+import { removeFile } from "reducers/files";
 import {
   addNewTask,
   deleteTask,
   openTask,
   toggleTaskCompleteById,
 } from "reducers/tasks";
-import { addNewComments } from "reducers/comments";
-import { removeFile } from "reducers/files";
 import { db } from "../firebase";
+import { ActionType } from "./actions";
 
 export interface taskExtend extends taskItemsType {
   isOpened?: number;
@@ -35,17 +34,13 @@ export const getTasks = async (): Promise<taskItemsType[]> => {
   const tasksData = await tasksDb.get();
   const tasks = tasksData.data();
 
-  const preparedTasks = Object.keys(tasks ? tasks : {}).map((taskId) => {
+  return Object.keys(tasks ? tasks : {}).map((taskId) => {
     if (tasks) {
       return tasks[taskId];
     }
-    return [];
+    return taskId;
   });
-
-  console.log(preparedTasks);
 };
-
-getTasks();
 
 const initialState: StoreType = {
   tasks: [...backLog, ...toDo],
