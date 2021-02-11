@@ -15,6 +15,7 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
   const { register, handleSubmit } = useForm();
 
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
 
   const onSubmit = (data: any) => {
     const email = data.email;
@@ -33,7 +34,18 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
               .set({
                 userName: username,
               })
-              .then(() => onClickClose());
+              .then(() => {
+                result.user
+                  ?.sendEmailVerification()
+                  .then(() => {
+                    setSuccessMessage(
+                      "A verification link has been sent to your email"
+                    );
+                  })
+                  .catch((error) => {
+                    setErrorMessage(error.message);
+                  });
+              });
           });
       })
       .catch((error) => {
@@ -86,11 +98,18 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
               ref={register}
             />
           </div>
-          {errorMessage && (
-            <div className="signUp__error">
-              <span className="signUp__error_message">{errorMessage}</span>
+          {(successMessage || errorMessage) && (
+            <div className="signUp__message">
+              <span
+                className={`signUp__message_${
+                  successMessage ? "success" : "error"
+                }`}
+              >
+                {successMessage || errorMessage}
+              </span>
             </div>
           )}
+
           <Button
             category={BUTTON_STYLE.basic}
             title="Sign Up"

@@ -33,6 +33,7 @@ export const TaskDescription = () => {
   const doneTaskHandler = (task: taskItemsType): void => {
     dispatch(taskIsChecked(task.id));
   };
+
   const taskForView = state.tasks.find((task) => task.isOpened);
 
   return (
@@ -58,7 +59,7 @@ export const TaskDescription = () => {
                     taskForView && doneTaskHandler(taskForView);
                   }}
                 />
-                {currentUser && (
+                {currentUser?.emailVerified && (
                   <div className="task-description__showMore">
                     <Button
                       category={BUTTON_STYLE.simple}
@@ -130,7 +131,7 @@ export const TaskDescription = () => {
                   comments: {taskForView?.comments?.length}
                 </span>
               </div>
-              {taskForView?.comments && currentUser && (
+              {taskForView?.comments && currentUser.emailVerified && (
                 <NewComment
                   addComment={(comment: commentType, taskId: number) =>
                     dispatch(addComment(comment, taskId))
@@ -140,9 +141,9 @@ export const TaskDescription = () => {
                   username={currentUser.displayName}
                 />
               )}
-              {!currentUser && (
+              {!currentUser?.emailVerified && (
                 <p className="task-description__discussion_noUser">
-                  Sign in to leave comments
+                  Sign in or verify to leave comments
                 </p>
               )}
               {taskForView?.comments && (

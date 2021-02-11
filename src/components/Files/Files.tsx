@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { FileItemsTypes } from "./fileType";
 
 import "./files.scss";
+import { auth } from "../../firebase";
 
 interface FileProps {
   files: FileItemsTypes[];
@@ -11,6 +12,12 @@ interface FileProps {
 }
 
 export const Files = ({ files, onDelete, taskId }: FileProps) => {
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  useEffect(() => {
+    auth.onAuthStateChanged(setCurrentUser);
+  }, []);
+
   return (
     <div className="files">
       {files.map(({ id, fileType, image, fileName, fileSize }) => {
@@ -28,12 +35,14 @@ export const Files = ({ files, onDelete, taskId }: FileProps) => {
               <span className="file__title">{fileName}</span>
               <div className="file__misc">
                 <span className="file__misc_size">{fileSize}</span>
-                <button
-                  className="file__misc_delete"
-                  onClick={() => onDelete(id, taskId)}
-                >
-                  {fileName && "Delete"}
-                </button>
+                {currentUser?.emailVerified && (
+                  <button
+                    className="file__misc_delete"
+                    onClick={() => onDelete(id, taskId)}
+                  >
+                    {fileName && "Delete"}
+                  </button>
+                )}
               </div>
             </div>
           </div>

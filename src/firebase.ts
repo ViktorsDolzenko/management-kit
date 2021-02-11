@@ -5,7 +5,6 @@ import "firebase/firestore";
 const app = firebase.initializeApp({
   apiKey: "AIzaSyAsNX7Jkd0MVLJT7ZDVig35h3zoneXtZQI",
   authDomain: "management-kit-awsick.firebaseapp.com",
-  databaseURL: "https://management-kit-awsick-default-rtdb.firebaseio.com",
   projectId: "management-kit-awsick",
   storageBucket: "management-kit-awsick.appspot.com",
   messagingSenderId: "239211949496",
@@ -29,4 +28,6 @@ export const actionCodeSettings = {
 
 export const auth = app.auth();
 export const db = app.firestore();
+
+export const deleteField = firebase.firestore.FieldValue.delete();
 export default app;

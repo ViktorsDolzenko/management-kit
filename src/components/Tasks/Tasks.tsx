@@ -21,6 +21,7 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
   }, []);
 
   const { state, dispatch } = useContext(StorageContext);
+
   const preparedBackLogTasks = state.tasks.filter(
     (task) => task.type === TASK_TYPE.BACKLOG
   );
@@ -38,7 +39,7 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
       <div className="tasks__container">
         <div className="tasks__header">
           <h2 className="tasks__title">Backlog</h2>
-          {currentUser && (
+          {currentUser?.emailVerified && (
             <Button
               category={BUTTON_STYLE.primary}
               title="+ Add Task"
@@ -61,7 +62,7 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
       <div className="tasks__container">
         <div className="tasks__header">
           <h2 className="tasks__title">To Do</h2>
-          {currentUser && (
+          {currentUser?.emailVerified && (
             <Button
               category={BUTTON_STYLE.primary}
               title="+ Add Task"

@@ -3,8 +3,7 @@ import React, { createContext, Dispatch, useReducer } from "react";
 import { commentType, taskItemsType } from "components/Tasks/taskItems";
 import { ActionType } from "./actions";
 import {
-  addNewTask,
-  deleteTask,
+  deleteTaskFromServer,
   openTask,
   toggleTaskCompleteById,
 } from "reducers/tasks";
@@ -71,15 +70,10 @@ const reducer = (state: StoreType, { type, payload }: Action) => {
         ...state,
         tasks: removeFile(payload.fileId, state.tasks, payload.taskId),
       };
-    case ActionType.ADD_NEW_TASK:
-      return {
-        ...state,
-        tasks: addNewTask(state.tasks, payload),
-      };
     case ActionType.DELETE_TASK:
       return {
         ...state,
-        tasks: deleteTask(state.tasks, payload),
+        tasks: deleteTaskFromServer(payload),
       };
     case ActionType.UPDATE_TASKS:
       return {

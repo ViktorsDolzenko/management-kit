@@ -81,13 +81,18 @@
     margin-bottom: 10px;
   }
 
-  &__error {
+  &__message {
     margin: 0 13px 13px 13px;
     text-align: center;
 
-    &_message {
+    &_error {
       font-weight: bold;
       color: #c00003;
+    }
+
+    &_success {
+      font-weight: bold;
+      color: green;
     }
   }
 }

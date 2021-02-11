@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import "./checkbox.scss";
+import { auth } from "../../firebase";
 
 interface checkboxType {
   id: string;
@@ -9,6 +10,12 @@ interface checkboxType {
 }
 
 export const CheckBox = ({ id, isChecked, onChange }: checkboxType) => {
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  useEffect(() => {
+    auth.onAuthStateChanged(setCurrentUser);
+  }, []);
+
   return (
     <div className="checkbox">
       <input
@@ -17,6 +24,7 @@ export const CheckBox = ({ id, isChecked, onChange }: checkboxType) => {
         type="checkbox"
         checked={isChecked}
         onChange={(evt) => onChange(evt.target.checked)}
+        disabled={!currentUser?.emailVerified}
       />
       <label htmlFor={id} />
     </div>
