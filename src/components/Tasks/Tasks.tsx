@@ -18,8 +18,7 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
 
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
-    auth.isSignInWithEmailLink(currentUser);
-  }, [currentUser]);
+  }, []);
 
   const { state, dispatch } = useContext(StorageContext);
 
@@ -34,7 +33,7 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
   const doneTaskHandler = (task: taskItemsType): void => {
     dispatch(taskIsChecked(task.id));
   };
-
+  console.log(currentUser);
   return (
     <div className="tasks">
       <div className="tasks__container">

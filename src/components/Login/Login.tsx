@@ -17,13 +17,15 @@ export const Login = ({ onClickClose, onSignUpClick }: LoginProps) => {
 
   const [loginError, setLoginError] = useState("");
 
-  const onSubmit = (data: any, evt: any) => {
+  const onSubmit = (data: any) => {
     const email = data.email;
     const password = data.password;
 
     auth
       .signInWithEmailAndPassword(email, password)
-      .then(() => onClickClose())
+      .then(() => {
+        onClickClose();
+      })
       .catch((error) => {
         const errorMessage = error.message;
         setLoginError(errorMessage);

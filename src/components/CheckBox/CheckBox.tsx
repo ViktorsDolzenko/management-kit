@@ -14,8 +14,7 @@ export const CheckBox = ({ id, isChecked, onChange }: checkboxType) => {
 
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
-    auth.isSignInWithEmailLink(currentUser);
-  }, [currentUser]);
+  }, []);
 
   return (
     <div className="checkbox">
