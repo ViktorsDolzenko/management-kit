@@ -8,7 +8,7 @@ import { TASK_TYPE } from "components/Tasks/taskItems";
 import { TAG_TYPE } from "components/Tag/tagProps";
 import { BUTTON_TYPE } from "components/Button/buttonProps";
 import { getTasks, StorageContext } from "context/storage";
-import { addNewTask, updateTasks } from "context/actions";
+import { updateTasks } from "context/actions";
 import { getTaskNewId } from "utils";
 
 import "./addNewTask.scss";
@@ -33,7 +33,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
     await db
       .collection("tasks-collection")
       .doc("tasks")
-      .set({
+      .update({
         [key]: {
           done: false,
           image: photo_1,

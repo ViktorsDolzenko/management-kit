@@ -7,7 +7,7 @@ import { setTaskForView, taskIsChecked } from "context/actions";
 import { TASK_TYPE, taskItemsType } from "./taskItems";
 
 import "./tasks.scss";
-import { auth, db } from "../../firebase";
+import { auth } from "../../firebase";
 
 interface tasksProps {
   onAddTaskClick: (taskType: TASK_TYPE) => void;
@@ -46,11 +46,17 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
             />
           )}
         </div>
-        <TasksList
-          items={preparedBackLogTasks}
-          onTaskSelect={(taskId) => dispatch(setTaskForView(taskId))}
-          onDoneChecked={(task) => doneTaskHandler(task)}
-        />
+        {preparedBackLogTasks.length !== 0 ? (
+          <TasksList
+            items={preparedBackLogTasks}
+            onTaskSelect={(taskId) => dispatch(setTaskForView(taskId))}
+            onDoneChecked={(task) => doneTaskHandler(task)}
+          />
+        ) : (
+          <div className="tasks__empty">
+            <span>0 tasks in Backlog</span>
+          </div>
+        )}
       </div>
       <div className="tasks__container">
         <div className="tasks__header">
@@ -63,11 +69,17 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
             />
           )}
         </div>
-        <TasksList
-          items={preparedToDoTasks}
-          onTaskSelect={(taskId) => dispatch(setTaskForView(taskId))}
-          onDoneChecked={(task) => doneTaskHandler(task)}
-        />
+        {preparedToDoTasks.length !== 0 ? (
+          <TasksList
+            items={preparedToDoTasks}
+            onTaskSelect={(taskId) => dispatch(setTaskForView(taskId))}
+            onDoneChecked={(task) => doneTaskHandler(task)}
+          />
+        ) : (
+          <div className="tasks__empty">
+            <span>0 tasks in To Do</span>
+          </div>
+        )}
       </div>
     </div>
   );

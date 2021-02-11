@@ -1,11 +1,6 @@
 import React, { createContext, Dispatch, useReducer } from "react";
 
-import {
-  backLog,
-  commentType,
-  taskItemsType,
-  toDo,
-} from "components/Tasks/taskItems";
+import { commentType, taskItemsType } from "components/Tasks/taskItems";
 import { ActionType } from "./actions";
 import {
   addNewTask,
@@ -35,20 +30,16 @@ export const getTasks = async (): Promise<taskItemsType[]> => {
   const tasksData = await tasksDb.get();
   const tasks = tasksData.data();
 
-  const preparedTasks = Object.keys(tasks ? tasks : {}).map((taskId) => {
+  return Object.keys(tasks ? tasks : {}).map((taskId) => {
     if (tasks) {
       return tasks[taskId];
     }
-    return [];
+    return taskId;
   });
-
-  console.log(preparedTasks);
 };
 
-getTasks();
-
 const initialState: StoreType = {
-  tasks: [...backLog, ...toDo],
+  tasks: [],
   comments: [],
 };
 

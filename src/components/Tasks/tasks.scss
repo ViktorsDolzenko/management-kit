@@ -25,4 +25,9 @@
     justify-content: space-between;
     align-items: center;
   }
+
+  &__empty {
+    padding-top: 30px;
+    font-size: 20px;
+  }
 }

@@ -37,7 +37,12 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
           });
       })
       .catch((error) => {
-        setErrorMessage(error.message);
+        if (error.code === "auth/weak-password") {
+          return setErrorMessage("Password should be at least 6 characters");
+        }
+        setErrorMessage(
+          "The email address is already in use by another account"
+        );
       });
   };
 
@@ -83,9 +88,7 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
           </div>
           {errorMessage && (
             <div className="signUp__error">
-              <span className="signUp__error_message">
-                This email is already registered
-              </span>
+              <span className="signUp__error_message">{errorMessage}</span>
             </div>
           )}
           <Button

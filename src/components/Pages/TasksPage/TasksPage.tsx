@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { SideBar } from "components/layout/SideBar";
 import { Header } from "components//layout/Header";
@@ -13,6 +13,8 @@ import { close } from "utils";
 import "./TasksPage.scss";
 import { SignUp } from "../../SignUp";
 import { useMediaQuery } from "react-responsive";
+import { getTasks, StorageContext } from "../../../context/storage";
+import { updateTasks } from "../../../context/actions";
 
 export const TasksPage = () => {
   const [isOpenAddNewTask, setIsOpenAddNewTask] = useState(false);
@@ -22,6 +24,8 @@ export const TasksPage = () => {
   const [taskTypeForCreation, setTaskTypeForCreation] = useState<TASK_TYPE>(
     TASK_TYPE.BACKLOG
   );
+
+  const { state, dispatch } = useContext(StorageContext);
 
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-device-width: 1224px)",
@@ -36,6 +40,15 @@ export const TasksPage = () => {
     close(setIsOpenLogin);
     open(setIsOpenSignUp);
   };
+
+  const getAllTasks = async () => {
+    const tasks = await getTasks();
+    dispatch(updateTasks([...state.tasks, ...tasks]));
+  };
+
+  useEffect(() => {
+    getAllTasks().then();
+  }, []);
 
   return (
     <div className="page-container">
