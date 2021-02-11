@@ -16,7 +16,8 @@ export const Files = ({ files, onDelete, taskId }: FileProps) => {
 
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
-  }, []);
+    auth.isSignInWithEmailLink(currentUser);
+  }, [currentUser]);
 
   return (
     <div className="files">

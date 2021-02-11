@@ -41,6 +41,7 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
                     setSuccessMessage(
                       "A verification link has been sent to your email"
                     );
+                    window.localStorage.setItem("emailForSignIn", email);
                   })
                   .catch((error) => {
                     setErrorMessage(error.message);

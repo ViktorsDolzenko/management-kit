@@ -18,7 +18,8 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
 
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
-  }, []);
+    auth.isSignInWithEmailLink(currentUser);
+  }, [currentUser]);
 
   const { state, dispatch } = useContext(StorageContext);
 
