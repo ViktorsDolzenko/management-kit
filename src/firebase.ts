@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
 
 const app = firebase.initializeApp({
   apiKey: "AIzaSyAsNX7Jkd0MVLJT7ZDVig35h3zoneXtZQI",
@@ -26,5 +27,7 @@ export const actionCodeSettings = {
 };
 
 export const auth = app.auth();
+export const db = app.firestore();
 
+export const deleteField = firebase.firestore.FieldValue.delete();
 export default app;

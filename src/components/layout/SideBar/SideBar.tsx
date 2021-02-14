@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import {
   sideBarItemsMenu,
@@ -12,13 +12,17 @@ import { auth } from "../../../firebase";
 import { simpleIcon } from "../../../const";
 
 import "./sideBar.scss";
+import { useMediaQuery } from "react-responsive";
+import { StorageContext } from "../../../context/storage";
 
 interface SidebarProps {
   onLoginClick: () => void;
+  isOpenMenu: boolean;
 }
-export const SideBar = ({ onLoginClick }: SidebarProps) => {
+export const SideBar = ({ onLoginClick, isOpenMenu }: SidebarProps) => {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [showLogout, setShowLogout] = useState(false);
+  const { state } = useContext(StorageContext);
 
   const showLogoutButton = () => {
     setShowLogout(!showLogout);
@@ -33,14 +37,25 @@ export const SideBar = ({ onLoginClick }: SidebarProps) => {
 
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
-    console.log(currentUser);
   }, [currentUser]);
 
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-device-width: 1224px)",
+  });
+
+  const getDoneTasksLength = state.tasks.filter((tasks) => tasks.done).length;
+
   return (
-    <div className="sidebar">
-      <div>
-        <span className="sidebar__header">Projectus</span>
-      </div>
+    <div
+      className={`sidebar ${
+        !isDesktopOrLaptop && isOpenMenu ? "sidebar-opened" : ""
+      } `}
+    >
+      {isDesktopOrLaptop && (
+        <div>
+          <span className="sidebar__header">Projectus</span>
+        </div>
+      )}
       {currentUser && (
         <div className="sidebar__profile">
           <img
@@ -56,8 +71,7 @@ export const SideBar = ({ onLoginClick }: SidebarProps) => {
               Product Owner
             </span>
           </div>
-
-          {!showLogout && (
+          {!showLogout && isDesktopOrLaptop && (
             <Button
               category={BUTTON_STYLE.clear}
               titleIcon={simpleIcon}
@@ -66,6 +80,16 @@ export const SideBar = ({ onLoginClick }: SidebarProps) => {
             />
           )}
           {showLogout && (
+            <Button
+              onMouseLeave={hideLogOutButton}
+              title="Sign Out"
+              type={BUTTON_TYPE.default}
+              category={BUTTON_STYLE.clear}
+              onClick={signOut}
+            />
+          )}
+
+          {!isDesktopOrLaptop && (
             <Button
               onMouseLeave={hideLogOutButton}
               title="Sign Out"
@@ -86,22 +110,25 @@ export const SideBar = ({ onLoginClick }: SidebarProps) => {
           />
         </div>
       )}
-      )
       <div className="sidebar__tasks">
         <div className="sidebar__tasks completed">
-          <span className="completed__count">372</span>
+          <span className="completed__count">{getDoneTasksLength}</span>
           <span className="completed__title">Completed Tasks</span>
         </div>
         <div className="sidebar__tasks open-tasks">
-          <span className="open-tasks__count">11</span>
+          <span className="open-tasks__count">{state.tasks.length}</span>
           <span className="open-tasks__title">Open Tasks</span>
         </div>
       </div>
       <SideBarMenu items={sideBarItemsMenu} title="Menu" />
       <SideBarMenu items={sideBarItemsProjects} title="Projects" />
-      <Button category={BUTTON_STYLE.danger} title="+ Add a Project" />
+      {isDesktopOrLaptop && (
+        <Button category={BUTTON_STYLE.danger} title="+ Add a Project" />
+      )}
       <SideBarMenu items={sideBarItemsTeams} title="Teams" />
-      <Button category={BUTTON_STYLE.danger} title="+ Add a Team" />
+      {isDesktopOrLaptop && (
+        <Button category={BUTTON_STYLE.danger} title="+ Add a Team" />
+      )}
     </div>
   );
 };

@@ -19,9 +19,13 @@
     border-radius: 4px;
     border: 0;
     height: 40px;
-    width: 90%;
+    width: 85%;
     margin-left: 40px;
     padding-left: 15px;
+
+    @media (min-width: 1150px) {
+      width: 90%;
+    }
 
     &::placeholder {
       opacity: 0.5;

@@ -1,10 +1,19 @@
 .tasks {
-  width: 445px;
+  width: 100%;
   border-radius: 8px;
   background-color: white;
 
+  @media (min-width: 1150px) {
+    width: 445px;
+    height: 100%;
+  }
+
   &__container {
-    padding: 30px;
+    padding: 10px;
+
+    @media (min-width: 1150px) {
+      padding: 30px;
+    }
 
     & + & {
       padding-top: 0;
@@ -15,5 +24,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  &__empty {
+    padding-top: 30px;
+    font-size: 20px;
   }
 }

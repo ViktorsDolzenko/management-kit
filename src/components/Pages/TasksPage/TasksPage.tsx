@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { SideBar } from "components/layout/SideBar";
 import { Header } from "components//layout/Header";
@@ -12,14 +12,24 @@ import { close } from "utils";
 
 import "./TasksPage.scss";
 import { SignUp } from "../../SignUp";
+import { useMediaQuery } from "react-responsive";
+import { getTasks, StorageContext } from "../../../context/storage";
+import { updateTasks } from "../../../context/actions";
 
 export const TasksPage = () => {
   const [isOpenAddNewTask, setIsOpenAddNewTask] = useState(false);
   const [isOpenLogin, setIsOpenLogin] = useState(false);
   const [isOpenSignUp, setIsOpenSignUp] = useState(false);
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [taskTypeForCreation, setTaskTypeForCreation] = useState<TASK_TYPE>(
     TASK_TYPE.BACKLOG
   );
+
+  const { state, dispatch } = useContext(StorageContext);
+
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-device-width: 1224px)",
+  });
 
   const taskCreationHandler = (taskType: TASK_TYPE) => {
     setTaskTypeForCreation(taskType);
@@ -31,20 +41,44 @@ export const TasksPage = () => {
     open(setIsOpenSignUp);
   };
 
+  const getAllTasks = async () => {
+    const tasks = await getTasks();
+    dispatch(updateTasks(tasks));
+  };
+
+  useEffect(() => {
+    getAllTasks();
+  }, []);
+
+  console.log(state.tasks);
+
+  const isTaskOpened = state.tasks
+    ? state.tasks.find((task) => task.isOpened)
+    : false;
+
   return (
     <div className="page-container">
-      <div className="page-container__sidebar">
-        <SideBar onLoginClick={() => open(setIsOpenLogin)} />
-      </div>
-
       <div className="page-container__header">
-        <Header />
+        <Header
+          onMenuClick={() => setIsOpenMenu(!isOpenMenu)}
+          isOpenMenu={isOpenMenu}
+        />
       </div>
 
+      <div className="page-container__sidebar">
+        <SideBar
+          onLoginClick={() => open(setIsOpenLogin)}
+          isOpenMenu={isOpenMenu}
+        />
+      </div>
       <div className="page-container__content">
         <div className="page-container__content-taskList">
           <Tasks onAddTaskClick={(taskType) => taskCreationHandler(taskType)} />
         </div>
+
+        {!isDesktopOrLaptop && isTaskOpened && (
+          <div className="page-container__divider" />
+        )}
         <div className="page-container__content-task">
           <TaskDescription />
         </div>

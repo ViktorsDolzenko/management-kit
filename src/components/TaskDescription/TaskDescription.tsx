@@ -8,17 +8,19 @@ import { Tag } from "components/Tag";
 import { Files } from "components/Files";
 import { NewComment } from "components/NewComment";
 import { Comment } from "components/Comment";
-import { StorageContext } from "context/storage";
+import { getTasks, StorageContext } from "context/storage";
 import {
   addComment,
   deleteFile,
-  deleteTask,
   taskIsChecked,
+  updateTasks,
 } from "context/actions";
 import { commentType, taskItemsType } from "components/Tasks/taskItems";
 
 import "./taskDescription.scss";
 import { auth } from "../../firebase";
+import moment from "moment";
+import { deleteTaskFromServer } from "../../reducers/tasks";
 
 export const TaskDescription = () => {
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -32,7 +34,15 @@ export const TaskDescription = () => {
   const doneTaskHandler = (task: taskItemsType): void => {
     dispatch(taskIsChecked(task.id));
   };
+
   const taskForView = state.tasks.find((task) => task.isOpened);
+
+  const deleteTask = async (taskId: number) => {
+    await deleteTaskFromServer(taskId);
+    const newTasks = await getTasks();
+    dispatch(updateTasks(newTasks));
+    console.log(newTasks);
+  };
 
   return (
     <>
@@ -44,7 +54,10 @@ export const TaskDescription = () => {
                 <h2 className="task-description__header_title">
                   {taskForView?.title}
                 </h2>
-                <span>Added by Kristin A. yesterday at 12:41pm</span>
+                <span>
+                  Added by {currentUser?.displayName} at
+                  {moment().format(" MMMM Do HH:MM")}
+                </span>
               </div>
               <div className="task-description__header_misc">
                 <CheckBox
@@ -54,7 +67,7 @@ export const TaskDescription = () => {
                     taskForView && doneTaskHandler(taskForView);
                   }}
                 />
-                {currentUser && (
+                {currentUser?.emailVerified && (
                   <div className="task-description__showMore">
                     <Button
                       category={BUTTON_STYLE.simple}
@@ -64,7 +77,7 @@ export const TaskDescription = () => {
                       <Button
                         category={BUTTON_STYLE.critical}
                         title="Delete Task"
-                        onClick={() => dispatch(deleteTask(taskForView?.id))}
+                        onClick={() => deleteTask(taskForView?.id)}
                       />
                     </div>
                   </div>
@@ -118,8 +131,15 @@ export const TaskDescription = () => {
             </div>
             <hr className="task-description__divider" />
             <div className="task-description__discussion">
-              <h4 className="task-description__discussion_title">Discussion</h4>
-              {taskForView?.comments && currentUser && (
+              <div className="task-description__discussion_title">
+                <h4 className="task-description__discussion_title-text">
+                  Discussion
+                </h4>
+                <span className="task-description__discussion_count">
+                  comments: {taskForView?.comments?.length}
+                </span>
+              </div>
+              {taskForView?.comments && currentUser?.emailVerified && (
                 <NewComment
                   addComment={(comment: commentType, taskId: number) =>
                     dispatch(addComment(comment, taskId))
@@ -128,6 +148,11 @@ export const TaskDescription = () => {
                   comments={taskForView.comments}
                   username={currentUser.displayName}
                 />
+              )}
+              {!currentUser?.emailVerified && (
+                <p className="task-description__discussion_noUser">
+                  Sign in or verify to leave comments
+                </p>
               )}
               {taskForView?.comments && (
                 <Comment comments={taskForView?.comments} />

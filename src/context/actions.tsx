@@ -7,6 +7,7 @@ export const ActionType = {
   DELETE_FILE: "DELETE_FILE",
   ADD_NEW_TASK: "ADD_NEW_TASK",
   DELETE_TASK: "DELETE_TASK",
+  UPDATE_TASKS: "UPDATE_TASKS",
 };
 
 export const setTaskForView = (taskId: any) => ({
@@ -43,4 +44,9 @@ export const addNewTask = (newTask: taskItemsType) => ({
 export const deleteTask = (taskId: number) => ({
   type: ActionType.DELETE_TASK,
   payload: taskId,
+});
+
+export const updateTasks = (tasks: taskItemsType[]) => ({
+  type: ActionType.UPDATE_TASKS,
+  payload: tasks,
 });

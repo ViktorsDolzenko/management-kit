@@ -18,7 +18,7 @@ export const TasksList = ({
   onDoneChecked,
 }: tasksListItemsType) => {
   return (
-    <div>
+    <>
       {items.map((item) => {
         const taskId = item.id.toString();
         return (
@@ -44,6 +44,6 @@ export const TasksList = ({
           </div>
         );
       })}
-    </div>
+    </>
   );
 };

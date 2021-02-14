@@ -1,20 +1,15 @@
 import React, { createContext, Dispatch, useReducer } from "react";
 
-import {
-  backLog,
-  commentType,
-  taskItemsType,
-  toDo,
-} from "components/Tasks/taskItems";
+import { commentType, taskItemsType } from "components/Tasks/taskItems";
 import { ActionType } from "./actions";
 import {
-  addNewTask,
-  deleteTask,
+  deleteTaskFromServer,
   openTask,
   toggleTaskCompleteById,
 } from "reducers/tasks";
 import { addNewComments } from "reducers/comments";
 import { removeFile } from "reducers/files";
+import { db } from "../firebase";
 
 export interface taskExtend extends taskItemsType {
   isOpened?: number;
@@ -24,24 +19,28 @@ type StoreType = {
   tasks: taskExtend[];
   comments?: commentType[];
 };
-
 type Action = {
   type: string;
   payload: any;
 };
 
-export const TASKS_STORAGE_KEY = "tasks";
+export const getTasks = async (): Promise<taskItemsType[]> => {
+  const tasksDb = await db.collection("tasks-collection").doc("tasks");
+  const tasksData = await tasksDb.get();
+  const tasks = tasksData.data();
+  console.log("tasksData :", tasksData);
+  console.log("Data :", tasks);
 
-const getTasks = () => {
-  const tasksFromLocalStorage = localStorage.getItem(TASKS_STORAGE_KEY);
-  if (tasksFromLocalStorage) {
-    return JSON.parse(tasksFromLocalStorage);
-  }
-  return [...backLog, ...toDo];
+  return Object.keys(tasks ? tasks : {}).map((taskId) => {
+    if (tasks) {
+      return { ...tasks[taskId], id: taskId };
+    }
+    return taskId;
+  });
 };
 
 const initialState: StoreType = {
-  tasks: getTasks(),
+  tasks: [],
   comments: [],
 };
 
@@ -73,15 +72,15 @@ const reducer = (state: StoreType, { type, payload }: Action) => {
         ...state,
         tasks: removeFile(payload.fileId, state.tasks, payload.taskId),
       };
-    case ActionType.ADD_NEW_TASK:
-      return {
-        ...state,
-        tasks: addNewTask(state.tasks, payload),
-      };
     case ActionType.DELETE_TASK:
       return {
         ...state,
-        tasks: deleteTask(state.tasks, payload),
+        tasks: deleteTaskFromServer(payload),
+      };
+    case ActionType.UPDATE_TASKS:
+      return {
+        ...state,
+        tasks: payload,
       };
 
     default:

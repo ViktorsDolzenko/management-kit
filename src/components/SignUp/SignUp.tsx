@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 
 import { Button, BUTTON_STYLE } from "../Button";
 import { BUTTON_TYPE } from "../Button/buttonProps";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
+import { useToasts } from "react-toast-notifications";
 
 import "./signUp.scss";
 
@@ -13,8 +14,8 @@ interface SignUpProps {
 
 export const SignUp = ({ onClickClose }: SignUpProps) => {
   const { register, handleSubmit } = useForm();
-
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const { addToast } = useToasts();
 
   const onSubmit = (data: any) => {
     const email = data.email;
@@ -27,10 +28,35 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
           ?.updateProfile({
             displayName: username,
           })
-          .then(() => onClickClose());
+          .then(() => {
+            db.collection("users")
+              .doc(result.user?.uid)
+              .set({
+                userName: username,
+              })
+              .then(() => {
+                result.user
+                  ?.sendEmailVerification()
+                  .then(() => {
+                    onClickClose();
+                    addToast(
+                      "A verification link has been sent to your email",
+                      { appearance: "success", autoDismiss: true }
+                    );
+                  })
+                  .catch((error) => {
+                    setErrorMessage(error.message);
+                  });
+              });
+          });
       })
       .catch((error) => {
-        setErrorMessage(error.message);
+        if (error.code === "auth/weak-password") {
+          return setErrorMessage("Password should be at least 6 characters");
+        }
+        setErrorMessage(
+          "The email address is already in use by another account"
+        );
       });
   };
 
@@ -75,12 +101,11 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
             />
           </div>
           {errorMessage && (
-            <div className="signUp__error">
-              <span className="signUp__error_message">
-                This email is already registered
-              </span>
+            <div className="signUp__message">
+              <span className="signUp__message_error">{errorMessage}</span>
             </div>
           )}
+
           <Button
             category={BUTTON_STYLE.basic}
             title="Sign Up"
