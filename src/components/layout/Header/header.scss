@@ -1,6 +1,7 @@
 .page-header {
   display: block;
   background-color: white;
+  margin-bottom: 50px;
 
   @media (min-width: 1150px) {
     min-width: 1460px;
@@ -60,19 +61,14 @@
 }
 
 .nav-list {
-  position: absolute;
-  opacity: 0;
   list-style: none;
   padding-top: 11px;
   text-align: center;
   background-color: white;
   transition: 0.5s ease;
   width: 100%;
-  z-index: -1;
 
   @media (min-width: 1150px) {
-    position: static;
-    opacity: 1;
     display: flex;
     flex-direction: row;
     margin: 0;
@@ -131,9 +127,4 @@
   button + button {
     margin-left: 10px;
   }
-}
-
-.header-opened {
-  opacity: 1;
-  z-index: 1;
 }

@@ -18,8 +18,13 @@ import { StorageContext } from "../../../context/storage";
 interface SidebarProps {
   onLoginClick: () => void;
   isOpenMenu: boolean;
+  onMenuClick: () => void;
 }
-export const SideBar = ({ onLoginClick, isOpenMenu }: SidebarProps) => {
+export const SideBar = ({
+  onLoginClick,
+  isOpenMenu,
+  onMenuClick,
+}: SidebarProps) => {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [showLogout, setShowLogout] = useState(false);
   const { state } = useContext(StorageContext);
@@ -51,6 +56,11 @@ export const SideBar = ({ onLoginClick, isOpenMenu }: SidebarProps) => {
         !isDesktopOrLaptop && isOpenMenu ? "sidebar-opened" : ""
       } `}
     >
+      {!isDesktopOrLaptop && (
+        <div className="sidebar__close">
+          <i className="fas fa-times" onClick={onMenuClick} />
+        </div>
+      )}
       {isDesktopOrLaptop && (
         <div>
           <span className="sidebar__header">Projectus</span>

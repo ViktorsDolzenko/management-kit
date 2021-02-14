@@ -69,6 +69,7 @@ export const TasksPage = () => {
         <SideBar
           onLoginClick={() => open(setIsOpenLogin)}
           isOpenMenu={isOpenMenu}
+          onMenuClick={() => setIsOpenMenu(!isOpenMenu)}
         />
       </div>
       <div className="page-container__content">

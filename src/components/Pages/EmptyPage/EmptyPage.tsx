@@ -42,6 +42,7 @@ export const EmptyPage = () => {
         <SideBar
           onLoginClick={() => open(setIsOpenLogin)}
           isOpenMenu={isOpenMenu}
+          onMenuClick={() => setIsOpenMenu(!isOpenMenu)}
         />
       </div>
 
