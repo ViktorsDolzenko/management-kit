@@ -47,7 +47,7 @@ export const TasksPage = () => {
   };
 
   useEffect(() => {
-    getAllTasks().then();
+    getAllTasks();
   }, []);
 
   console.log(state.tasks);
