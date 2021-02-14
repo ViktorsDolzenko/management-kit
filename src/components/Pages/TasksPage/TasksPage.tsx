@@ -43,13 +43,18 @@ export const TasksPage = () => {
 
   const getAllTasks = async () => {
     const tasks = await getTasks();
-    dispatch(updateTasks([...state.tasks, ...tasks]));
+    dispatch(updateTasks(tasks));
   };
 
   useEffect(() => {
     getAllTasks().then();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log(state.tasks);
+
+  const isTaskOpened = state.tasks
+    ? state.tasks.find((task) => task.isOpened)
+    : false;
 
   return (
     <div className="page-container">
@@ -71,7 +76,9 @@ export const TasksPage = () => {
           <Tasks onAddTaskClick={(taskType) => taskCreationHandler(taskType)} />
         </div>
 
-        {!isDesktopOrLaptop && <div className="page-container__divider" />}
+        {!isDesktopOrLaptop && isTaskOpened && (
+          <div className="page-container__divider" />
+        )}
         <div className="page-container__content-task">
           <TaskDescription />
         </div>

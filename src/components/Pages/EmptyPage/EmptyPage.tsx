@@ -8,12 +8,18 @@ import { Login } from "../../Login";
 import { SignUp } from "../../SignUp";
 
 import "./emptyPage.scss";
+import { auth } from "../../../firebase";
 
 export const EmptyPage = () => {
   const [timer, setTimer] = useState<string>("");
   const [isOpenLogin, setIsOpenLogin] = useState(false);
   const [isOpenSignUp, setIsOpenSignUp] = useState(false);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  useEffect(() => {
+    auth.onAuthStateChanged(setCurrentUser);
+  }, []);
 
   useEffect(() => {
     let interval: any;
@@ -48,7 +54,8 @@ export const EmptyPage = () => {
       <div className="page-container__emptyContent">
         <div className="emptyPage">
           <div className="emptyPage__title">
-            <h1>COMING SOON</h1>
+            <h1>Welcome {currentUser ? currentUser.displayName : "Guest"}</h1>
+            <h1>This page is on reconstruction </h1>
             <hr className="emptyPage__divider" />
             <p>{timer}</p>
             <Link to="/" className="emptyPage__text">
@@ -56,14 +63,14 @@ export const EmptyPage = () => {
             </Link>
           </div>
         </div>
-        {isOpenLogin && (
-          <Login
-            onClickClose={() => close(setIsOpenLogin)}
-            onSignUpClick={openSignUp}
-          />
-        )}
-        {isOpenSignUp && <SignUp onClickClose={() => close(setIsOpenSignUp)} />}
       </div>
+      {isOpenLogin && (
+        <Login
+          onClickClose={() => close(setIsOpenLogin)}
+          onSignUpClick={openSignUp}
+        />
+      )}
+      {isOpenSignUp && <SignUp onClickClose={() => close(setIsOpenSignUp)} />}
     </div>
   );
 };

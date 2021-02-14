@@ -28,10 +28,12 @@ export const getTasks = async (): Promise<taskItemsType[]> => {
   const tasksDb = await db.collection("tasks-collection").doc("tasks");
   const tasksData = await tasksDb.get();
   const tasks = tasksData.data();
+  console.log("tasksData :", tasksData);
+  console.log("Data :", tasks);
 
   return Object.keys(tasks ? tasks : {}).map((taskId) => {
     if (tasks) {
-      return tasks[taskId];
+      return { ...tasks[taskId], id: taskId };
     }
     return taskId;
   });

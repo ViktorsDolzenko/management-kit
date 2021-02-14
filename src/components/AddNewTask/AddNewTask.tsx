@@ -38,7 +38,6 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
           done: false,
           image: photo_1,
           title: data.title,
-          id: getTaskNewId(state.tasks),
           tag: "Development",
           tagType: TAG_TYPE.primary,
           date: moment().format(" MMMM Do"),

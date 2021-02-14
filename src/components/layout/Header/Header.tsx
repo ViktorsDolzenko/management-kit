@@ -21,6 +21,8 @@ export const Header = ({ onMenuClick, isOpenMenu }: HeaderProps) => {
     query: "(min-device-width: 1224px)",
   });
 
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1149px)" });
+
   return (
     <header className="page-header">
       <nav className="navbar">
@@ -28,12 +30,12 @@ export const Header = ({ onMenuClick, isOpenMenu }: HeaderProps) => {
           <div className="page-header__left-wrapper">
             <a href="/" className="page-header__logo">
               <img className="page-header__img" src={Logo} alt="logo" />
-              <span className="page-header__title">ToDoex</span>
+              <span className="page-header__title">ToDoeX</span>
             </a>
-            {isDesktopOrLaptop && (
+            {isDesktopOrLaptop && !isTabletOrMobile && (
               <Button category={BUTTON_STYLE.simple} titleIcon={simpleIcon} />
             )}
-            {!isDesktopOrLaptop && (
+            {isTabletOrMobile && (
               <div className="page-header__menuButton" onClick={onMenuClick}>
                 {!isOpenMenu && <i className="fas fa-bars" />}
                 {isOpenMenu && <i className="fas fa-times" />}

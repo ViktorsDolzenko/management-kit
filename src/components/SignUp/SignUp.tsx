@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Button, BUTTON_STYLE } from "../Button";
 import { BUTTON_TYPE } from "../Button/buttonProps";
 import { auth, db } from "../../firebase";
+import { useToasts } from "react-toast-notifications";
 
 import "./signUp.scss";
 
@@ -13,9 +14,8 @@ interface SignUpProps {
 
 export const SignUp = ({ onClickClose }: SignUpProps) => {
   const { register, handleSubmit } = useForm();
-
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [successMessage, setSuccessMessage] = useState<string>("");
+  const { addToast } = useToasts();
 
   const onSubmit = (data: any) => {
     const email = data.email;
@@ -38,8 +38,10 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
                 result.user
                   ?.sendEmailVerification()
                   .then(() => {
-                    setSuccessMessage(
-                      "A verification link has been sent to your email"
+                    onClickClose();
+                    addToast(
+                      "A verification link has been sent to your email",
+                      { appearance: "success", autoDismiss: true }
                     );
                   })
                   .catch((error) => {
@@ -98,15 +100,9 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
               ref={register}
             />
           </div>
-          {(successMessage || errorMessage) && (
+          {errorMessage && (
             <div className="signUp__message">
-              <span
-                className={`signUp__message_${
-                  successMessage ? "success" : "error"
-                }`}
-              >
-                {successMessage || errorMessage}
-              </span>
+              <span className="signUp__message_error">{errorMessage}</span>
             </div>
           )}
 
