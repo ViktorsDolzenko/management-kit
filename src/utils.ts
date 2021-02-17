@@ -17,7 +17,7 @@ export const getTaskNewId = (tasks: taskItemsType[]) => {
   }
   const sortedArray = tasks.map((task) => task.id).sort((a, b) => a - b);
   const lastId = sortedArray[sortedArray.length - 1];
-  return lastId + 1;
+  return Number(lastId) + 1;
 };
 
 export const countDownFunc = (timeLeft: any) => {

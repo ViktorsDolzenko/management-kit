@@ -50,8 +50,6 @@ export const TasksPage = () => {
     getAllTasks();
   }, []);
 
-  console.log(state.tasks);
-
   const isTaskOpened = state.tasks
     ? state.tasks.find((task) => task.isOpened)
     : false;

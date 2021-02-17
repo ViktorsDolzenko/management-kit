@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { TasksList } from "components/TasksList";
 import { Button, BUTTON_STYLE } from "components/Button";
-import { StorageContext } from "context/storage";
-import { setTaskForView, taskIsChecked } from "context/actions";
-import { TASK_TYPE, taskItemsType } from "./taskItems";
+import { getTasks, StorageContext } from "context/storage";
+import { setTaskForView, updateTasks } from "context/actions";
+import { TASK_TYPE } from "./taskItems";
 
 import "./tasks.scss";
 import { auth } from "../../firebase";
+import { toggleTaskCompleteById } from "../../reducers/tasks";
 
 interface tasksProps {
   onAddTaskClick: (taskType: TASK_TYPE) => void;
@@ -30,8 +31,16 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
     (task) => task.type === TASK_TYPE.TODO
   );
 
-  const doneTaskHandler = (task: taskItemsType): void => {
-    dispatch(taskIsChecked(task.id));
+  const doneTaskHandler = async (taskId: number, isChecked: boolean) => {
+    await toggleTaskCompleteById(taskId, isChecked);
+    const tasks = await getTasks();
+    const preparedTasks = tasks.map((task) => {
+      if (task.id === taskId) {
+        return { ...task, isOpened: true };
+      }
+      return task;
+    });
+    dispatch(updateTasks(preparedTasks));
   };
 
   return (
@@ -51,7 +60,9 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
           <TasksList
             items={preparedBackLogTasks}
             onTaskSelect={(taskId) => dispatch(setTaskForView(taskId))}
-            onDoneChecked={(task) => doneTaskHandler(task)}
+            onDoneChecked={(taskId, isChecked) =>
+              doneTaskHandler(taskId, isChecked)
+            }
           />
         ) : (
           <div className="tasks__empty">
@@ -74,7 +85,9 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
           <TasksList
             items={preparedToDoTasks}
             onTaskSelect={(taskId) => dispatch(setTaskForView(taskId))}
-            onDoneChecked={(task) => doneTaskHandler(task)}
+            onDoneChecked={(task, isChecked) =>
+              doneTaskHandler(task, isChecked)
+            }
           />
         ) : (
           <div className="tasks__empty">

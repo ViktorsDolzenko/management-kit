@@ -8,7 +8,7 @@ import {
 import { SideBarMenu } from "components/SideBarMenu";
 import { Button, BUTTON_STYLE } from "components/Button";
 import { BUTTON_TYPE } from "../../Button/buttonProps";
-import { auth } from "../../../firebase";
+import { auth, db, storage } from "../../../firebase";
 import { simpleIcon } from "../../../const";
 
 import "./sideBar.scss";
@@ -27,6 +27,9 @@ export const SideBar = ({
 }: SidebarProps) => {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [showLogout, setShowLogout] = useState(false);
+  const [avatar, setAvatar] = useState<string>(
+    `https://via.placeholder.com/48`
+  );
   const { state } = useContext(StorageContext);
 
   const showLogoutButton = () => {
@@ -40,8 +43,22 @@ export const SideBar = ({
     auth.signOut().then();
   };
 
+  const getAvatarUrl = async (userId: string): Promise<void> => {
+    const user = await db.collection("users").doc(`${userId}`).get();
+    const userField = user.data();
+    if (userField?.avatarUrl) {
+      setAvatar(`${userField.avatarUrl}?alt=media`);
+      await currentUser.updateProfile({
+        photoURL: avatar,
+      });
+    }
+  };
+
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
+    if (currentUser) {
+      getAvatarUrl(currentUser.uid);
+    }
   }, [currentUser]);
 
   const isDesktopOrLaptop = useMediaQuery({
@@ -49,6 +66,24 @@ export const SideBar = ({
   });
 
   const getDoneTasksLength = state.tasks.filter((tasks) => tasks.done).length;
+
+  const uploadProfileImg = async (file: File | undefined) => {
+    if (!file) return;
+    const imageFileName = file?.name;
+    const storageRef = storage.ref(
+      `users/${currentUser.uid}/files/${imageFileName}`
+    );
+    const storageSnapshot = await storageRef.put(file);
+    const fileUrl = await storageSnapshot.ref.getDownloadURL();
+    const url = new URL(fileUrl);
+    const preparedUrl = `${url.origin}${url.pathname}`;
+    await db
+      .collection("users")
+      .doc(currentUser?.uid)
+      .set({ avatarUrl: preparedUrl }, { merge: true });
+    setAvatar(`${preparedUrl}?alt=media`);
+    window.location.reload();
+  };
 
   return (
     <div
@@ -68,11 +103,22 @@ export const SideBar = ({
       )}
       {currentUser && (
         <div className="sidebar__profile">
-          <img
-            className="sidebar__profile--img"
-            src="https://via.placeholder.com/48"
-            alt="avatar"
-          />
+          <div>
+            <label htmlFor="file">
+              <img
+                className="sidebar__profile--img"
+                src={avatar}
+                alt="avatar"
+              />
+            </label>
+            <input
+              type="file"
+              id="file"
+              name="file"
+              style={{ display: "none" }}
+              onChange={({ target }) => uploadProfileImg(target?.files?.[0])}
+            />
+          </div>
           <div className="sidebar__profile--info">
             <span className="sidebar__profile--info name">
               {currentUser.displayName}

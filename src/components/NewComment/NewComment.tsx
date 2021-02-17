@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./newComment.scss";
 import { useForm } from "react-hook-form";
 import { commentType } from "components/Tasks/taskItems";
 import { getNewId } from "utils";
 import moment from "moment";
+import { updateTasks } from "../../context/actions";
+import { getTasks, StorageContext } from "../../context/storage";
+import { auth, db, fieldValue } from "../../firebase";
 
 interface newCommentProps {
   addComment: (comment: commentType, taskId: number) => void;
@@ -12,33 +15,50 @@ interface newCommentProps {
   username: string;
 }
 
-export const NewComment = ({
-  addComment,
-  taskId,
-  comments,
-  username,
-}: newCommentProps) => {
+export const NewComment = ({ taskId, comments, username }: newCommentProps) => {
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const { register, handleSubmit, reset } = useForm();
+  const { dispatch } = useContext(StorageContext);
 
-  const onSubmit = (data: any) => {
-    addComment(
-      {
-        id: getNewId(comments),
-        author: username,
-        createDate: moment().format(" MMMM Do [at] HH:mm"),
-        text: data.text,
-        vacancy: "Developer",
-        photo: "https://via.placeholder.com/48",
-      },
-      taskId
-    );
+  useEffect(() => {
+    auth.onAuthStateChanged(setCurrentUser);
+  });
+
+  const onSubmit = async (data: any) => {
+    await db
+      .collection("tasks-collection")
+      .doc("tasks")
+      .set(
+        {
+          [taskId]: {
+            comments: fieldValue.arrayUnion({
+              id: getNewId(comments),
+              author: username,
+              createDate: moment().format(" MMMM Do [at] HH:mm"),
+              text: data.text,
+              vacancy: "Developer",
+              photo: currentUser.photoURL,
+            }),
+          },
+        },
+        { merge: true }
+      );
+
     reset();
+    const tasks = await getTasks();
+    const preparedTasks = tasks.map((task) => {
+      if (task.id === taskId) {
+        return { ...task, isOpened: true };
+      }
+      return task;
+    });
+    dispatch(updateTasks(preparedTasks));
   };
 
   return (
     <div className="new-comment">
       <img
-        src="https://via.placeholder.com/48"
+        src={currentUser?.photoURL}
         alt="profile-avatar"
         className="new-comment__avatar"
       />

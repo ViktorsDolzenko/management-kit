@@ -1,20 +1,19 @@
-import { taskItemsType } from "components/Tasks/taskItems";
 import { taskExtend } from "context/storage";
 import { db, deleteField } from "../firebase";
 
-export const toggleTaskCompleteById = (
-  allTasks: taskItemsType[],
-  taskId: number
-): taskItemsType[] => {
-  return allTasks.map((task) => {
-    if (task.id === taskId) {
-      return {
-        ...task,
-        done: !task.done,
-      };
-    }
-    return task;
-  });
+export const toggleTaskCompleteById = async (
+  taskId: number,
+  isChecked: boolean
+) => {
+  await db
+    .collection("tasks-collection")
+    .doc("tasks")
+    .set(
+      {
+        [taskId]: { done: !isChecked },
+      },
+      { merge: true }
+    );
 };
 
 export const openTask = (allTasks: taskExtend[], taskId: number) => {

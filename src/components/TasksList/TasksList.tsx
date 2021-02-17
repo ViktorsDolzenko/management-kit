@@ -9,7 +9,7 @@ import "./taskList.scss";
 interface tasksListItemsType {
   items: taskItemsType[];
   onTaskSelect: (taskId: number) => void;
-  onDoneChecked: (task: taskItemsType) => void;
+  onDoneChecked: (taskId: number, checked: boolean) => void;
 }
 
 export const TasksList = ({
@@ -27,7 +27,7 @@ export const TasksList = ({
               <CheckBox
                 id={taskId}
                 isChecked={item.done}
-                onChange={() => onDoneChecked(item)}
+                onChange={() => onDoneChecked(item.id, item.done)}
               />
               <div onClick={() => onTaskSelect(item.id)}>
                 <span className="taskList__text">{item.title}</span>

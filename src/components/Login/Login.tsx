@@ -5,7 +5,8 @@ import { Button, BUTTON_STYLE } from "../Button";
 import { BUTTON_TYPE } from "../Button/buttonProps";
 
 import "./login.scss";
-import { auth } from "../../firebase";
+import { auth, uiConfig } from "../../firebase";
+import { StyledFirebaseAuth } from "react-firebaseui";
 
 interface LoginProps {
   onClickClose: () => void;
@@ -83,6 +84,7 @@ export const Login = ({ onClickClose, onSignUpClick }: LoginProps) => {
               onClick={onSignUpClick}
             />
           </div>
+          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
         </form>
       </div>
     </div>
