@@ -49,7 +49,7 @@ export const SideBar = ({
     if (userField?.avatarUrl) {
       setAvatar(`${userField.avatarUrl}?alt=media`);
       await currentUser.updateProfile({
-        photoURL: avatar,
+        photoURL: `${userField.avatarUrl}?alt=media`,
       });
     }
   };
