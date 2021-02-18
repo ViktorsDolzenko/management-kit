@@ -8,6 +8,7 @@ export enum BUTTON_STYLE {
   basic = "basic",
   important = "important",
   critical = "critical",
+  significant = "significant",
 }
 
 export enum BUTTON_TYPE {
