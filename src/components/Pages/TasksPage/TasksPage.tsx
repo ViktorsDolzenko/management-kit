@@ -15,6 +15,7 @@ import { SignUp } from "../../SignUp";
 import { useMediaQuery } from "react-responsive";
 import { getTasks, StorageContext } from "../../../context/storage";
 import { updateTasks } from "../../../context/actions";
+import { animateScroll as scroll } from "react-scroll/modules";
 
 export const TasksPage = () => {
   const [isOpenAddNewTask, setIsOpenAddNewTask] = useState(false);
@@ -54,6 +55,10 @@ export const TasksPage = () => {
     ? state.tasks.find((task) => task.isOpened)
     : false;
 
+  const scrollToTop = () => {
+    scroll.scrollToTop();
+  };
+
   return (
     <div className="page-container">
       <div className="page-container__header">
@@ -61,6 +66,12 @@ export const TasksPage = () => {
           onMenuClick={() => setIsOpenMenu(!isOpenMenu)}
           isOpenMenu={isOpenMenu}
         />
+
+        {!isDesktopOrLaptop && (
+          <div className="page-container__scrollToTop " onClick={scrollToTop}>
+            <i className="fas fa-arrow-up" />
+          </div>
+        )}
       </div>
 
       <div className="page-container__sidebar">

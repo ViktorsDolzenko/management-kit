@@ -15,10 +15,8 @@ import { commentType } from "components/Tasks/taskItems";
 import "./taskDescription.scss";
 import { auth } from "../../firebase";
 import moment from "moment";
-import {
-  deleteTaskFromServer,
-  toggleTaskCompleteById,
-} from "../../reducers/tasks";
+import { deleteTaskFromServer } from "../../reducers/tasks";
+import { doneTaskHandler } from "../../utils";
 
 export const TaskDescription = () => {
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -28,18 +26,6 @@ export const TaskDescription = () => {
   }, []);
 
   const { state, dispatch } = useContext(StorageContext);
-
-  const doneTaskHandler = async (taskId: number, isChecked: boolean) => {
-    await toggleTaskCompleteById(taskId, isChecked);
-    const tasks = await getTasks();
-    const preparedTasks = tasks.map((task) => {
-      if (task.id === taskId) {
-        return { ...task, isOpened: true };
-      }
-      return task;
-    });
-    dispatch(updateTasks(preparedTasks));
-  };
 
   const taskForView = state.tasks.find((task) => task.isOpened);
 
@@ -56,7 +42,10 @@ export const TaskDescription = () => {
           <div className="task-description__container">
             <div className="task-description__header">
               <div>
-                <h2 className="task-description__header_title">
+                <h2
+                  className="task-description__header_title"
+                  id="taskDescriptionTitle"
+                >
                   {taskForView?.title}
                 </h2>
                 <span>
@@ -70,7 +59,11 @@ export const TaskDescription = () => {
                   isChecked={taskForView?.done}
                   onChange={() => {
                     taskForView &&
-                      doneTaskHandler(taskForView?.id, taskForView?.done);
+                      doneTaskHandler(
+                        taskForView?.id,
+                        taskForView?.done,
+                        dispatch
+                      );
                   }}
                 />
                 {currentUser?.emailVerified && (

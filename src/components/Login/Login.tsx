@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { StyledFirebaseAuth } from "react-firebaseui";
 
 import { Button, BUTTON_STYLE } from "../Button";
 import { BUTTON_TYPE } from "../Button/buttonProps";
+import { auth, uiConfig } from "../../firebase";
 
 import "./login.scss";
-import { auth, uiConfig } from "../../firebase";
-import { StyledFirebaseAuth } from "react-firebaseui";
 
 interface LoginProps {
   onClickClose: () => void;

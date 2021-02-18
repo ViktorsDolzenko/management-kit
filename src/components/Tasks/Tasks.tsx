@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { TasksList } from "components/TasksList";
 import { Button, BUTTON_STYLE } from "components/Button";
-import { getTasks, StorageContext } from "context/storage";
-import { setTaskForView, updateTasks } from "context/actions";
+import { StorageContext } from "context/storage";
+import { setTaskForView } from "context/actions";
 import { TASK_TYPE } from "./taskItems";
 
 import "./tasks.scss";
 import { auth } from "../../firebase";
-import { toggleTaskCompleteById } from "../../reducers/tasks";
+import { doneTaskHandler } from "../../utils";
 
 interface tasksProps {
   onAddTaskClick: (taskType: TASK_TYPE) => void;
@@ -31,18 +31,6 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
     (task) => task.type === TASK_TYPE.TODO
   );
 
-  const doneTaskHandler = async (taskId: number, isChecked: boolean) => {
-    await toggleTaskCompleteById(taskId, isChecked);
-    const tasks = await getTasks();
-    const preparedTasks = tasks.map((task) => {
-      if (task.id === taskId) {
-        return { ...task, isOpened: true };
-      }
-      return task;
-    });
-    dispatch(updateTasks(preparedTasks));
-  };
-
   return (
     <div className="tasks">
       <div className="tasks__container">
@@ -61,7 +49,7 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
             items={preparedBackLogTasks}
             onTaskSelect={(taskId) => dispatch(setTaskForView(taskId))}
             onDoneChecked={(taskId, isChecked) =>
-              doneTaskHandler(taskId, isChecked)
+              doneTaskHandler(taskId, isChecked, dispatch)
             }
           />
         ) : (
@@ -86,7 +74,7 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
             items={preparedToDoTasks}
             onTaskSelect={(taskId) => dispatch(setTaskForView(taskId))}
             onDoneChecked={(task, isChecked) =>
-              doneTaskHandler(task, isChecked)
+              doneTaskHandler(task, isChecked, dispatch)
             }
           />
         ) : (

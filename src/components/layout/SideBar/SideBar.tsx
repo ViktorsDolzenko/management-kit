@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
+import { StorageContext } from "../../../context/storage";
 
 import {
   sideBarItemsMenu,
@@ -12,8 +14,6 @@ import { auth, db, storage } from "../../../firebase";
 import { simpleIcon } from "../../../const";
 
 import "./sideBar.scss";
-import { useMediaQuery } from "react-responsive";
-import { StorageContext } from "../../../context/storage";
 
 interface SidebarProps {
   onLoginClick: () => void;
@@ -27,9 +27,6 @@ export const SideBar = ({
 }: SidebarProps) => {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [showLogout, setShowLogout] = useState(false);
-  const [avatar, setAvatar] = useState<string>(
-    `https://via.placeholder.com/48`
-  );
   const { state } = useContext(StorageContext);
 
   const showLogoutButton = () => {
@@ -47,7 +44,6 @@ export const SideBar = ({
     const user = await db.collection("users").doc(`${userId}`).get();
     const userField = user.data();
     if (userField?.avatarUrl) {
-      setAvatar(`${userField.avatarUrl}?alt=media`);
       await currentUser.updateProfile({
         photoURL: `${userField.avatarUrl}?alt=media`,
       });
@@ -81,7 +77,9 @@ export const SideBar = ({
       .collection("users")
       .doc(currentUser?.uid)
       .set({ avatarUrl: preparedUrl }, { merge: true });
-    setAvatar(`${preparedUrl}?alt=media`);
+    await currentUser.updateProfile({
+      photoURL: `${preparedUrl}?alt=media`,
+    });
     window.location.reload();
   };
 
@@ -107,7 +105,7 @@ export const SideBar = ({
             <label htmlFor="file">
               <img
                 className="sidebar__profile--img"
-                src={avatar}
+                src={currentUser?.photoURL || "https://via.placeholder.com/48"}
                 alt="avatar"
               />
             </label>

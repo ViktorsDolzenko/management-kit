@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-scroll";
 
 import { taskItemsType } from "components/Tasks/taskItems";
 import { CheckBox } from "components/CheckBox";
@@ -29,17 +30,25 @@ export const TasksList = ({
                 isChecked={item.done}
                 onChange={() => onDoneChecked(item.id, item.done)}
               />
-              <div onClick={() => onTaskSelect(item.id)}>
-                <span className="taskList__text">{item.title}</span>
-                <div className="taskList__tag">
-                  <img
-                    src={item.image}
-                    alt={item.image}
-                    className="taskList__tag_img"
-                  />
-                  <Tag type={item.tagType} title={item.tag} />
+              <Link
+                to="taskDescriptionTitle"
+                spy={true}
+                smooth={true}
+                offset={-70}
+                duration={500}
+              >
+                <div onClick={() => onTaskSelect(item.id)}>
+                  <span className="taskList__text">{item.title}</span>
+                  <div className="taskList__tag">
+                    <img
+                      src={item.image}
+                      alt={item.image}
+                      className="taskList__tag_img"
+                    />
+                    <Tag type={item.tagType} title={item.tag} />
+                  </div>
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
         );
