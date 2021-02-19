@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./newComment.scss";
 import { useForm } from "react-hook-form";
 import { commentType } from "components/Tasks/taskItems";
 import { getNewId } from "utils";
 import moment from "moment";
+import { updateTasks } from "../../context/actions";
+import { getTasks, StorageContext } from "../../context/storage";
+import { auth, db, fieldValue } from "../../firebase";
+import { Button, BUTTON_STYLE } from "../Button";
+import { sentIcon } from "../../const";
+import { BUTTON_TYPE } from "../Button/buttonProps";
+import { useMediaQuery } from "react-responsive";
 
 interface newCommentProps {
   addComment: (comment: commentType, taskId: number) => void;
@@ -12,33 +19,54 @@ interface newCommentProps {
   username: string;
 }
 
-export const NewComment = ({
-  addComment,
-  taskId,
-  comments,
-  username,
-}: newCommentProps) => {
+export const NewComment = ({ taskId, comments, username }: newCommentProps) => {
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const { register, handleSubmit, reset } = useForm();
+  const { dispatch } = useContext(StorageContext);
 
-  const onSubmit = (data: any) => {
-    addComment(
-      {
-        id: getNewId(comments),
-        author: username,
-        createDate: moment().format(" MMMM Do [at] HH:mm"),
-        text: data.text,
-        vacancy: "Developer",
-        photo: "https://via.placeholder.com/48",
-      },
-      taskId
-    );
+  useEffect(() => {
+    auth.onAuthStateChanged(setCurrentUser);
+  });
+
+  const onSubmit = async (data: any) => {
+    await db
+      .collection("tasks-collection")
+      .doc("tasks")
+      .set(
+        {
+          [taskId]: {
+            comments: fieldValue.arrayUnion({
+              id: getNewId(comments),
+              author: username,
+              createDate: moment().format(" MMMM Do [at] HH:mm"),
+              text: data.text,
+              vacancy: "Developer",
+              photo: currentUser.photoURL,
+            }),
+          },
+        },
+        { merge: true }
+      );
+
     reset();
+    const tasks = await getTasks();
+    const preparedTasks = tasks.map((task) => {
+      if (task.id === taskId) {
+        return { ...task, isOpened: true };
+      }
+      return task;
+    });
+    dispatch(updateTasks(preparedTasks));
   };
+
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-device-width: 1224px)",
+  });
 
   return (
     <div className="new-comment">
       <img
-        src="https://via.placeholder.com/48"
+        src={currentUser?.photoURL}
         alt="profile-avatar"
         className="new-comment__avatar"
       />
@@ -51,6 +79,13 @@ export const NewComment = ({
           required={true}
           name="text"
         />
+        {!isDesktopOrLaptop && (
+          <Button
+            category={BUTTON_STYLE.significant}
+            titleIcon={sentIcon}
+            type={BUTTON_TYPE.submit}
+          />
+        )}
       </form>
     </div>
   );

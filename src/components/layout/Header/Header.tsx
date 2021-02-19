@@ -38,7 +38,6 @@ export const Header = ({ onMenuClick, isOpenMenu }: HeaderProps) => {
             {isTabletOrMobile && (
               <div className="page-header__menuButton" onClick={onMenuClick}>
                 {!isOpenMenu && <i className="fas fa-bars" />}
-                {isOpenMenu && <i className="fas fa-times" />}
               </div>
             )}
           </div>
@@ -52,11 +51,7 @@ export const Header = ({ onMenuClick, isOpenMenu }: HeaderProps) => {
             />
           </div>
         </div>
-        <ul
-          className={`navbar__list nav-list ${
-            isOpenMenu ? "header-opened" : ""
-          }`}
-        >
+        <ul className="navbar__list nav-list">
           {headerItems.map((item) => {
             return (
               <li className="nav-list--item" key={item.title}>

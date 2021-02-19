@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage";
 
 const app = firebase.initializeApp({
   apiKey: "AIzaSyAsNX7Jkd0MVLJT7ZDVig35h3zoneXtZQI",
@@ -28,6 +29,15 @@ export const actionCodeSettings = {
 
 export const auth = app.auth();
 export const db = app.firestore();
+export const storage = app.storage();
 
+export const fieldValue = firebase.firestore.FieldValue;
 export const deleteField = firebase.firestore.FieldValue.delete();
+
+export const uiConfig = {
+  signInFlow: "popup",
+  signInSuccessUrl: "/",
+  signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+};
+
 export default app;

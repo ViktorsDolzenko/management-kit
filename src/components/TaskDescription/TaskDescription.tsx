@@ -9,18 +9,14 @@ import { Files } from "components/Files";
 import { NewComment } from "components/NewComment";
 import { Comment } from "components/Comment";
 import { getTasks, StorageContext } from "context/storage";
-import {
-  addComment,
-  deleteFile,
-  taskIsChecked,
-  updateTasks,
-} from "context/actions";
-import { commentType, taskItemsType } from "components/Tasks/taskItems";
+import { addComment, deleteFile, updateTasks } from "context/actions";
+import { commentType } from "components/Tasks/taskItems";
 
 import "./taskDescription.scss";
 import { auth } from "../../firebase";
 import moment from "moment";
 import { deleteTaskFromServer } from "../../reducers/tasks";
+import { doneTaskHandler } from "../../utils";
 
 export const TaskDescription = () => {
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -31,17 +27,12 @@ export const TaskDescription = () => {
 
   const { state, dispatch } = useContext(StorageContext);
 
-  const doneTaskHandler = (task: taskItemsType): void => {
-    dispatch(taskIsChecked(task.id));
-  };
-
   const taskForView = state.tasks.find((task) => task.isOpened);
 
   const deleteTask = async (taskId: number) => {
     await deleteTaskFromServer(taskId);
     const newTasks = await getTasks();
     dispatch(updateTasks(newTasks));
-    console.log(newTasks);
   };
 
   return (
@@ -51,7 +42,10 @@ export const TaskDescription = () => {
           <div className="task-description__container">
             <div className="task-description__header">
               <div>
-                <h2 className="task-description__header_title">
+                <h2
+                  className="task-description__header_title"
+                  id="taskDescriptionTitle"
+                >
                   {taskForView?.title}
                 </h2>
                 <span>
@@ -64,7 +58,12 @@ export const TaskDescription = () => {
                   id="description"
                   isChecked={taskForView?.done}
                   onChange={() => {
-                    taskForView && doneTaskHandler(taskForView);
+                    taskForView &&
+                      doneTaskHandler(
+                        taskForView?.id,
+                        taskForView?.done,
+                        dispatch
+                      );
                   }}
                 />
                 {currentUser?.emailVerified && (

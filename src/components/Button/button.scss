@@ -110,4 +110,15 @@
       box-shadow: none;
     }
   }
+  &_significant {
+    font-size: 20px;
+    border: none;
+    background: none;
+
+    &:hover,
+    &:focus {
+      box-shadow: none;
+      color: lightblue;
+    }
+  }
 }

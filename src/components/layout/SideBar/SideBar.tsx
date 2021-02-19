@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
+import { StorageContext } from "../../../context/storage";
 
 import {
   sideBarItemsMenu,
@@ -8,18 +10,21 @@ import {
 import { SideBarMenu } from "components/SideBarMenu";
 import { Button, BUTTON_STYLE } from "components/Button";
 import { BUTTON_TYPE } from "../../Button/buttonProps";
-import { auth } from "../../../firebase";
+import { auth, db, storage } from "../../../firebase";
 import { simpleIcon } from "../../../const";
 
 import "./sideBar.scss";
-import { useMediaQuery } from "react-responsive";
-import { StorageContext } from "../../../context/storage";
 
 interface SidebarProps {
   onLoginClick: () => void;
   isOpenMenu: boolean;
+  onMenuClick: () => void;
 }
-export const SideBar = ({ onLoginClick, isOpenMenu }: SidebarProps) => {
+export const SideBar = ({
+  onLoginClick,
+  isOpenMenu,
+  onMenuClick,
+}: SidebarProps) => {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [showLogout, setShowLogout] = useState(false);
   const { state } = useContext(StorageContext);
@@ -35,8 +40,21 @@ export const SideBar = ({ onLoginClick, isOpenMenu }: SidebarProps) => {
     auth.signOut().then();
   };
 
+  const getAvatarUrl = async (userId: string): Promise<void> => {
+    const user = await db.collection("users").doc(`${userId}`).get();
+    const userField = user.data();
+    if (userField?.avatarUrl) {
+      await currentUser.updateProfile({
+        photoURL: `${userField.avatarUrl}?alt=media`,
+      });
+    }
+  };
+
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
+    if (currentUser) {
+      getAvatarUrl(currentUser.uid);
+    }
   }, [currentUser]);
 
   const isDesktopOrLaptop = useMediaQuery({
@@ -45,12 +63,37 @@ export const SideBar = ({ onLoginClick, isOpenMenu }: SidebarProps) => {
 
   const getDoneTasksLength = state.tasks.filter((tasks) => tasks.done).length;
 
+  const uploadProfileImg = async (file: File | undefined) => {
+    if (!file) return;
+    const imageFileName = file?.name;
+    const storageRef = storage.ref(
+      `users/${currentUser.uid}/files/${imageFileName}`
+    );
+    const storageSnapshot = await storageRef.put(file);
+    const fileUrl = await storageSnapshot.ref.getDownloadURL();
+    const url = new URL(fileUrl);
+    const preparedUrl = `${url.origin}${url.pathname}`;
+    await db
+      .collection("users")
+      .doc(currentUser?.uid)
+      .set({ avatarUrl: preparedUrl }, { merge: true });
+    await currentUser.updateProfile({
+      photoURL: `${preparedUrl}?alt=media`,
+    });
+    window.location.reload();
+  };
+
   return (
     <div
       className={`sidebar ${
         !isDesktopOrLaptop && isOpenMenu ? "sidebar-opened" : ""
       } `}
     >
+      {!isDesktopOrLaptop && (
+        <div className="sidebar__close">
+          <i className="fas fa-times" onClick={onMenuClick} />
+        </div>
+      )}
       {isDesktopOrLaptop && (
         <div>
           <span className="sidebar__header">Projectus</span>
@@ -58,11 +101,22 @@ export const SideBar = ({ onLoginClick, isOpenMenu }: SidebarProps) => {
       )}
       {currentUser && (
         <div className="sidebar__profile">
-          <img
-            className="sidebar__profile--img"
-            src="https://via.placeholder.com/48"
-            alt="avatar"
-          />
+          <div>
+            <label htmlFor="file">
+              <img
+                className="sidebar__profile--img"
+                src={currentUser?.photoURL || "https://via.placeholder.com/48"}
+                alt="avatar"
+              />
+            </label>
+            <input
+              type="file"
+              id="file"
+              name="file"
+              style={{ display: "none" }}
+              onChange={({ target }) => uploadProfileImg(target?.files?.[0])}
+            />
+          </div>
           <div className="sidebar__profile--info">
             <span className="sidebar__profile--info name">
               {currentUser.displayName}

@@ -1,15 +1,17 @@
-import { commentType, taskItemsType } from "../components/Tasks/taskItems";
+import { commentType } from "../components/Tasks/taskItems";
+import { db, fieldValue } from "../firebase";
 
-export const addNewComments = (
-  tasks: taskItemsType[],
+/*export const addNewComments = async (
   taskId: number,
   newComment: commentType
 ) => {
-  return tasks.map((task) => {
-    if (task.id === taskId) {
-      const newComments = task.comments?.unshift(newComment);
-      return { ...task, comments: newComments };
-    }
-    return task;
-  });
-};
+  await db
+    .collection("tasks-collection")
+    .doc("tasks")
+    .set(
+      {
+        [taskId]: { comments: fieldValue.arrayUnion(newComment) },
+      },
+      { merge: true }
+    );
+};*/

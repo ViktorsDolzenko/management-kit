@@ -3,11 +3,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { TasksList } from "components/TasksList";
 import { Button, BUTTON_STYLE } from "components/Button";
 import { StorageContext } from "context/storage";
-import { setTaskForView, taskIsChecked } from "context/actions";
-import { TASK_TYPE, taskItemsType } from "./taskItems";
+import { setTaskForView } from "context/actions";
+import { TASK_TYPE } from "./taskItems";
 
 import "./tasks.scss";
 import { auth } from "../../firebase";
+import { doneTaskHandler } from "../../utils";
 
 interface tasksProps {
   onAddTaskClick: (taskType: TASK_TYPE) => void;
@@ -30,10 +31,6 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
     (task) => task.type === TASK_TYPE.TODO
   );
 
-  const doneTaskHandler = (task: taskItemsType): void => {
-    dispatch(taskIsChecked(task.id));
-  };
-
   return (
     <div className="tasks">
       <div className="tasks__container">
@@ -51,7 +48,9 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
           <TasksList
             items={preparedBackLogTasks}
             onTaskSelect={(taskId) => dispatch(setTaskForView(taskId))}
-            onDoneChecked={(task) => doneTaskHandler(task)}
+            onDoneChecked={(taskId, isChecked) =>
+              doneTaskHandler(taskId, isChecked, dispatch)
+            }
           />
         ) : (
           <div className="tasks__empty">
@@ -74,7 +73,9 @@ export const Tasks = ({ onAddTaskClick }: tasksProps) => {
           <TasksList
             items={preparedToDoTasks}
             onTaskSelect={(taskId) => dispatch(setTaskForView(taskId))}
-            onDoneChecked={(task) => doneTaskHandler(task)}
+            onDoneChecked={(task, isChecked) =>
+              doneTaskHandler(task, isChecked, dispatch)
+            }
           />
         ) : (
           <div className="tasks__empty">

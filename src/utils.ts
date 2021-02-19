@@ -1,4 +1,7 @@
 import { commentType, taskItemsType } from "./components/Tasks/taskItems";
+import { toggleTaskCompleteById } from "./reducers/tasks";
+import { getTasks } from "./context/storage";
+import { updateTasks } from "./context/actions";
 
 export const getNewId = (comments: commentType[]) => {
   const sortedArray = comments
@@ -17,7 +20,7 @@ export const getTaskNewId = (tasks: taskItemsType[]) => {
   }
   const sortedArray = tasks.map((task) => task.id).sort((a, b) => a - b);
   const lastId = sortedArray[sortedArray.length - 1];
-  return lastId + 1;
+  return Number(lastId) + 1;
 };
 
 export const countDownFunc = (timeLeft: any) => {
@@ -45,4 +48,20 @@ export const open = (setOpen: (value: boolean) => void) => {
 
 export const close = (setClose: (value: boolean) => void) => {
   return setClose(false);
+};
+
+export const doneTaskHandler = async (
+  taskId: number,
+  isChecked: boolean,
+  dispatch: any
+) => {
+  await toggleTaskCompleteById(taskId, isChecked);
+  const tasks = await getTasks();
+  const preparedTasks = tasks.map((task) => {
+    if (task.id === taskId) {
+      return { ...task, isOpened: true };
+    }
+    return task;
+  });
+  dispatch(updateTasks(preparedTasks));
 };

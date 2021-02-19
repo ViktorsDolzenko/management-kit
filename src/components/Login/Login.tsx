@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { StyledFirebaseAuth } from "react-firebaseui";
 
 import { Button, BUTTON_STYLE } from "../Button";
 import { BUTTON_TYPE } from "../Button/buttonProps";
+import { auth, uiConfig } from "../../firebase";
 
 import "./login.scss";
-import { auth } from "../../firebase";
 
 interface LoginProps {
   onClickClose: () => void;
@@ -83,6 +84,7 @@ export const Login = ({ onClickClose, onSignUpClick }: LoginProps) => {
               onClick={onSignUpClick}
             />
           </div>
+          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
         </form>
       </div>
     </div>
