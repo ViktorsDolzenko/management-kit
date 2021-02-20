@@ -19,12 +19,14 @@ export const ChatRoom = () => {
     evt.preventDefault();
     const photoUrl = auth.currentUser?.photoURL;
     const uid = auth.currentUser?.uid;
+    const username = auth.currentUser?.displayName;
 
     await messageRef.add({
       text: formValue,
       createdAt: fieldValue.serverTimestamp(),
       uid,
       photoUrl,
+      username,
     });
     setFormValue("");
     dummy.current?.scrollIntoView({ behavior: "smooth" });

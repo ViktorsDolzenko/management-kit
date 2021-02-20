@@ -9,7 +9,7 @@ import { SignUp } from "../../SignUp";
 import "./chatPage.scss";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebase";
-import { ChatRoom } from "components/ChatRoom";
+import { ChatRoom } from "components/ChatRoom/ChatRoom";
 
 export const ChatPage = () => {
   const [isOpenLogin, setIsOpenLogin] = useState(false);
