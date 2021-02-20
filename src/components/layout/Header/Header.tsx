@@ -44,11 +44,13 @@ export const Header = ({ onMenuClick, isOpenMenu }: HeaderProps) => {
           {isDesktopOrLaptop && <Followers />}
           <div className="navbar__buttons">
             <Button title="share" />
-            <Button
-              category={BUTTON_STYLE.warning}
-              title="chat"
-              icon={chatIcon}
-            />
+            <Link to="/chat">
+              <Button
+                category={BUTTON_STYLE.warning}
+                title="chat"
+                icon={chatIcon}
+              />
+            </Link>
           </div>
         </div>
         <ul className="navbar__list nav-list">

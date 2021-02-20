@@ -57,6 +57,10 @@
     &__emptyContent {
       grid-area: content;
     }
+
+    &__chat {
+      grid-area: content;
+    }
   }
 
   &__divider {
