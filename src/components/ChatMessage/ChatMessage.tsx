@@ -6,11 +6,14 @@ export const ChatMessage = ({ message }: any) => {
   const { text, uid, photoUrl, username } = message;
 
   const messageClass = uid === auth.currentUser?.uid ? "sent" : "received";
+  const usernameClass = uid === auth.currentUser?.uid ? "" : "receivedUsername";
 
   return (
     <div className={`chatMessage ${messageClass}`}>
       <img className="chatMessage__img" src={photoUrl} alt="avatar" />
-      <span className="chatMessage__username">{username}</span>
+      <span className={`chatMessage__username ${usernameClass}`}>
+        {username}
+      </span>
       <p className="chatMessage__text">{text}</p>
     </div>
   );
