@@ -37,7 +37,7 @@ export const ChatRoom = () => {
       <div className="chat__wrapper">
         <header className="chat__header">
           <div className="chat__header_title">
-            <i className="fas fa-comment-alt" /> SimpleChat
+            <i className="fas fa-comment-alt" /> ToDoeX Chat
           </div>
         </header>
         <main className="chat__container">
