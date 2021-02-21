@@ -10,7 +10,7 @@ export const ChatRoom = () => {
   const [formValue, setFormValue] = useState("");
 
   const messageRef = db.collection("messages");
-  const query = messageRef.orderBy("createdAt").limit(25);
+  const query = messageRef.orderBy("createdAt").limitToLast(25);
   const [messages] = useCollectionData(query, { idField: "id" });
 
   const dummy = useRef<HTMLInputElement>(null);
@@ -56,6 +56,8 @@ export const ChatRoom = () => {
             placeholder="Enter your message..."
             value={formValue}
             onChange={(evt) => setFormValue(evt.target.value)}
+            required={true}
+            minLength={3}
           />
           <Button
             category={BUTTON_STYLE.significant}
