@@ -58,6 +58,7 @@ export const ChatRoom = () => {
             onChange={(evt) => setFormValue(evt.target.value)}
             required={true}
             minLength={3}
+            maxLength={100}
           />
           <Button
             category={BUTTON_STYLE.significant}
