@@ -3,7 +3,7 @@ import { ChatMessage } from "../ChatMessage";
 import { Button, BUTTON_STYLE } from "../Button";
 import { sentIcon } from "../../const";
 import { BUTTON_TYPE } from "../Button/buttonProps";
-import { auth, db, fieldValue } from "../../firebase";
+import { auth, db, fieldValue } from "Service/firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 export const ChatRoom = () => {

@@ -1,110 +1,26 @@
-.page-container {
-  display: grid;
-  grid-template-areas:
-    "header"
-    "content";
-  overflow-x: hidden;
-
-  @media (min-width: 1150px) {
+.Tasks {
+  &__container {
+    display: grid;
     grid-template-areas:
-      "sidebar header"
-      "sidebar content";
-    grid-template-columns: 270px 1fr;
-    grid-template-rows: 136px 1fr;
-    gap: 30px 0;
+      "taskList"
+      "task";
+    padding-bottom: 30px;
 
-    &__header {
-      grid-area: header;
-    }
-
-    &__sidebar {
-      position: fixed;
-      height: 100%;
-      grid-area: sidebar;
-    }
-
-    &__content {
-      display: grid;
-      grid-template-columns: 1fr;
+    @media (min-width: 1150px) {
+      grid-template-columns: 445px 1fr;
       grid-template-rows: 1fr 1fr;
       gap: 0 10px;
       grid-template-areas:
-        "taskList"
-        "task";
-      grid-area: content;
-      padding-left: 30px;
-      padding-right: 30px;
-      padding-bottom: 30px;
-
-      @media (min-width: 1150px) {
-        grid-template-columns: 445px 1fr;
-        grid-template-rows: 1fr 1fr;
-        gap: 0 10px;
-        grid-template-areas:
-          "taskList task"
-          "taskList task";
-      }
-
-      &-taskList {
-        grid-area: taskList;
-      }
-
-      &-task {
-        grid-area: task;
-      }
-    }
-
-    &__emptyContent {
-      grid-area: content;
-    }
-
-    &__chat {
-      grid-area: content;
+        "taskList task"
+        "taskList task";
     }
   }
 
-  &__divider {
-    position: relative;
-    height: 1px;
-    margin-top: 10px;
-
-    &:before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 5%;
-      right: 5%;
-      width: 90%;
-      height: 1px;
-      background-image: linear-gradient(
-        to right,
-        transparent,
-        rgb(48, 49, 51),
-        transparent
-      );
-    }
-
-    &:after {
-      content: "";
-      position: absolute;
-      z-index: 1;
-      top: -9px;
-      left: calc(50% - 9px);
-      width: 18px;
-      height: 18px;
-      background-color: goldenrod;
-      border: 1px solid rgb(48, 49, 51);
-      border-radius: 50%;
-      box-shadow: inset 0 0 0 2px white, 0 0 0 4px white;
-    }
+  &__list {
+    grid-area: taskList;
   }
 
-  &__scrollToTop {
-    position: fixed;
-    bottom: 3%;
-    right: 10px;
-    z-index: 2;
-    font-size: 30px;
-    opacity: 0.5;
+  &__description {
+    grid-area: task;
   }
 }

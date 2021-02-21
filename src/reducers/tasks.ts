@@ -1,5 +1,5 @@
 import { taskExtend } from "context/storage";
-import { db, deleteField } from "../firebase";
+import { db, deleteField } from "Service/firebase";
 
 export const toggleTaskCompleteById = async (
   taskId: number,

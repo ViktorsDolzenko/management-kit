@@ -4,7 +4,7 @@ import { StyledFirebaseAuth } from "react-firebaseui";
 
 import { Button, BUTTON_STYLE } from "../Button";
 import { BUTTON_TYPE } from "../Button/buttonProps";
-import { auth, uiConfig } from "../../firebase";
+import { auth, uiConfig } from "Service/firebase";
 
 import "./login.scss";
 

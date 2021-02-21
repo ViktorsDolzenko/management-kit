@@ -7,7 +7,7 @@ import { setTaskForView } from "context/actions";
 import { TASK_TYPE } from "./taskItems";
 
 import "./tasks.scss";
-import { auth } from "../../firebase";
+import { auth } from "Service/firebase";
 import { doneTaskHandler } from "../../utils";
 
 interface tasksProps {

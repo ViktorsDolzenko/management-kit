@@ -6,7 +6,7 @@ import { getNewId } from "utils";
 import moment from "moment";
 import { updateTasks } from "../../context/actions";
 import { getTasks, StorageContext } from "../../context/storage";
-import { auth, db, fieldValue } from "../../firebase";
+import { auth, db, fieldValue } from "Service/firebase";
 import { Button, BUTTON_STYLE } from "../Button";
 import { sentIcon } from "../../const";
 import { BUTTON_TYPE } from "../Button/buttonProps";

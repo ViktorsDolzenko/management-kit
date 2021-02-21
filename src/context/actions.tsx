@@ -7,6 +7,7 @@ export const ActionType = {
   ADD_NEW_TASK: "ADD_NEW_TASK",
   DELETE_TASK: "DELETE_TASK",
   UPDATE_TASKS: "UPDATE_TASKS",
+  SHOW_MODAL_FORM: "SHOW_MODAL_FORM",
 };
 
 export const setTaskForView = (taskId: any) => ({
@@ -43,4 +44,9 @@ export const deleteTask = (taskId: number) => ({
 export const updateTasks = (tasks: any) => ({
   type: ActionType.UPDATE_TASKS,
   payload: tasks,
+});
+
+export const showLoginForm = (isShow: boolean) => ({
+  type: ActionType.SHOW_MODAL_FORM,
+  payload: isShow,
 });

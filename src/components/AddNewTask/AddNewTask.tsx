@@ -12,7 +12,7 @@ import { updateTasks } from "context/actions";
 import { getTaskNewId } from "utils";
 
 import "./addNewTask.scss";
-import { auth, db } from "../../firebase";
+import { auth, db } from "Service/firebase";
 
 interface AddNewTaskProps {
   onClickClose: () => void;

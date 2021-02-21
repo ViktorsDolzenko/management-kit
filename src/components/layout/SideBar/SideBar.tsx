@@ -10,7 +10,7 @@ import {
 import { SideBarMenu } from "components/SideBarMenu";
 import { Button, BUTTON_STYLE } from "components/Button";
 import { BUTTON_TYPE } from "../../Button/buttonProps";
-import { auth, db, storage } from "../../../firebase";
+import { auth, db, storage } from "Service/firebase";
 import { simpleIcon } from "../../../const";
 
 import "./sideBar.scss";

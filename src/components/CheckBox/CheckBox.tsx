@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import "./checkbox.scss";
-import { auth } from "../../firebase";
+import { auth } from "Service/firebase";
 
 interface checkboxType {
   id: string;

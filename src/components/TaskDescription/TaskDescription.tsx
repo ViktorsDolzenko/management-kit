@@ -13,7 +13,7 @@ import { addComment, deleteFile, updateTasks } from "context/actions";
 import { commentType } from "components/Tasks/taskItems";
 
 import "./taskDescription.scss";
-import { auth } from "../../firebase";
+import { auth } from "Service/firebase";
 import moment from "moment";
 import { deleteTaskFromServer } from "../../reducers/tasks";
 import { doneTaskHandler } from "../../utils";
