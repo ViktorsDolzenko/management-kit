@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FileItemsTypes } from "./fileType";
 
 import "./files.scss";
-import { auth } from "../../firebase";
+import { auth } from "Service/firebase";
 
 interface FileProps {
   files: FileItemsTypes[];

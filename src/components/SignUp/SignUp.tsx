@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import { Button, BUTTON_STYLE } from "../Button";
 import { BUTTON_TYPE } from "../Button/buttonProps";
-import { auth, db } from "../../firebase";
+import { auth, db } from "Service/firebase";
 import { useToasts } from "react-toast-notifications";
 
 import "./signUp.scss";

@@ -38,6 +38,9 @@ export const uiConfig = {
   signInFlow: "popup",
   signInSuccessUrl: "/",
   signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+  callbacks: {
+    signInSuccessWithAuthResult: () => false,
+  },
 };
 
 export default app;

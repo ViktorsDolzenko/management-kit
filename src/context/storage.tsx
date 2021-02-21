@@ -4,7 +4,7 @@ import { taskItemsType } from "components/Tasks/taskItems";
 import { ActionType } from "./actions";
 import { deleteTaskFromServer, openTask } from "reducers/tasks";
 import { removeFile } from "reducers/files";
-import { db } from "../firebase";
+import { db } from "Service/firebase";
 
 export interface taskExtend extends taskItemsType {
   isOpened?: number;
@@ -12,7 +12,10 @@ export interface taskExtend extends taskItemsType {
 
 type StoreType = {
   tasks: taskExtend[];
+  isShowLoginForm: boolean;
+  isShowSignUpForm: boolean;
 };
+
 type Action = {
   type: string;
   payload: any;
@@ -33,6 +36,8 @@ export const getTasks = async (): Promise<taskItemsType[]> => {
 
 const initialState: StoreType = {
   tasks: [],
+  isShowLoginForm: false,
+  isShowSignUpForm: false,
 };
 
 const StorageContext = createContext<{
@@ -65,6 +70,17 @@ const reducer = (state: StoreType, { type, payload }: Action) => {
       return {
         ...state,
         tasks: payload,
+      };
+
+    case ActionType.SHOW_MODAL_LOGIN_FORM:
+      return {
+        ...state,
+        isShowLoginForm: payload,
+      };
+    case ActionType.SHOW_MODAL_SIGNUP_FORM:
+      return {
+        ...state,
+        isShowSignUpForm: payload,
       };
 
     default:

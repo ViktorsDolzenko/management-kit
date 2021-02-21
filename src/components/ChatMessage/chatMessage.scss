@@ -1,0 +1,59 @@
+.chatMessage {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+
+  &:hover &__username {
+    opacity: 0.5;
+  }
+
+  &__img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 2px 5px;
+  }
+
+  &__text {
+    max-width: 150px;
+    line-height: 24px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    position: relative;
+    color: white;
+    text-align: left;
+    word-wrap: break-word;
+    overflow: hidden;
+
+    @media (min-width: 1150px) {
+      max-width: 500px;
+    }
+  }
+
+  &__username {
+    opacity: 0;
+    font-size: 10px;
+    transition: 0.4s ease;
+  }
+}
+
+.sent {
+  flex-direction: row-reverse;
+}
+
+.sent p {
+  color: white;
+  background: #0b93f6;
+  align-self: flex-end;
+}
+.received p {
+  background: #e5e5ea;
+  color: black;
+}
+
+.sent span {
+  padding-right: 10px;
+}
+.received span {
+  padding-left: 10px;
+}
