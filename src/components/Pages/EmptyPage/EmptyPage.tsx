@@ -2,7 +2,7 @@ import { Layout } from "components/layout/Layout";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { close, countDownFunc, open } from "utils";
+import { countDownFunc } from "utils";
 
 import "./emptyPage.scss";
 import { auth } from "Service/firebase";

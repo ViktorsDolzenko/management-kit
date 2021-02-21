@@ -28,7 +28,7 @@ interface LayoutProps {
 
 const Layout = ({ children, pageTitle = "TodoeXApp" }: LayoutProps) => {
   const { state, dispatch } = useContext(StorageContext);
-  const [isOpenSignUp, setIsOpenSignUp] = useState(false);
+  const [isOpenSignUp] = useState(false);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [user] = useAuthState(auth);
 
