@@ -7,9 +7,11 @@ import { Login } from "components/Login";
 import { Header } from "components/layout/Header";
 import { SideBar } from "components/layout/SideBar";
 import { StorageContext } from "context/storage";
-import { showLoginForm } from "context/actions";
+import { showLoginForm, showSignUpForm } from "context/actions";
 
 import "./style.scss";
+import { animateScroll as scroll } from "react-scroll/modules";
+import { useMediaQuery } from "react-responsive";
 
 interface LayoutProps {
   children:
@@ -28,7 +30,6 @@ interface LayoutProps {
 
 const Layout = ({ children, pageTitle = "TodoeXApp" }: LayoutProps) => {
   const { state, dispatch } = useContext(StorageContext);
-  const [isOpenSignUp] = useState(false);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [user] = useAuthState(auth);
 
@@ -42,7 +43,13 @@ const Layout = ({ children, pageTitle = "TodoeXApp" }: LayoutProps) => {
     }
   }, [user]);
 
-  useEffect(() => {}, []);
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-device-width: 1224px)",
+  });
+
+  const scrollToTop = () => {
+    scroll.scrollToTop();
+  };
 
   return (
     <div className="Layout">
@@ -61,16 +68,23 @@ const Layout = ({ children, pageTitle = "TodoeXApp" }: LayoutProps) => {
         />
       </div>
 
-      <div className="Layout__content">{children}</div>
+      <div className="Layout__content">
+        {!isDesktopOrLaptop && (
+          <div className="Layout__scrollToTop " onClick={scrollToTop}>
+            <i className="fas fa-arrow-up" />
+          </div>
+        )}
+        {children}
+      </div>
 
       {state.isShowLoginForm && (
         <Login
           onClickClose={() => dispatch(showLoginForm(false))}
-          onSignUpClick={() => dispatch(showLoginForm(true))}
+          onSignUpClick={() => dispatch(showSignUpForm(true))}
         />
       )}
-      {isOpenSignUp && (
-        <SignUp onClickClose={() => dispatch(showLoginForm(false))} />
+      {state.isShowSignUpForm && (
+        <SignUp onClickClose={() => dispatch(showSignUpForm(false))} />
       )}
     </div>
   );

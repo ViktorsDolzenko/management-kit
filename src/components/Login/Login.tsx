@@ -33,6 +33,11 @@ export const Login = ({ onClickClose, onSignUpClick }: LoginProps) => {
       });
   };
 
+  const showSignUp = () => {
+    onClickClose();
+    onSignUpClick();
+  };
+
   return (
     <div className="login">
       <div className="login__wrapper">
@@ -81,7 +86,7 @@ export const Login = ({ onClickClose, onSignUpClick }: LoginProps) => {
               category={BUTTON_STYLE.basic}
               title="Sign Up"
               type={BUTTON_TYPE.default}
-              onClick={onSignUpClick}
+              onClick={showSignUp}
             />
           </div>
           <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />

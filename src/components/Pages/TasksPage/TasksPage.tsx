@@ -12,7 +12,6 @@ import "./TasksPage.scss";
 import { useMediaQuery } from "react-responsive";
 import { getTasks, StorageContext } from "../../../context/storage";
 import { updateTasks } from "../../../context/actions";
-import { animateScroll as scroll } from "react-scroll/modules";
 
 export const TasksPage = () => {
   const [isOpenAddNewTask, setIsOpenAddNewTask] = useState(false);
@@ -44,21 +43,9 @@ export const TasksPage = () => {
     ? state.tasks.find((task) => task.isOpened)
     : false;
 
-  const scrollToTop = () => {
-    scroll.scrollToTop();
-  };
-
   return (
     <Layout pageTitle="Tasks">
       <div className="Tasks">
-        <div className="page-container__header">
-          {!isDesktopOrLaptop && (
-            <div className="page-container__scrollToTop " onClick={scrollToTop}>
-              <i className="fas fa-arrow-up" />
-            </div>
-          )}
-        </div>
-
         <div className="Tasks__container">
           <div className="Tasks__list">
             <Tasks

@@ -1,4 +1,4 @@
-import { commentType, taskItemsType } from "../components/Tasks/taskItems";
+import { commentType } from "../components/Tasks/taskItems";
 
 export const ActionType = {
   SET_TASK_FOR_VIEW: "SET_TASK_FOR_VIEW",
@@ -7,7 +7,8 @@ export const ActionType = {
   ADD_NEW_TASK: "ADD_NEW_TASK",
   DELETE_TASK: "DELETE_TASK",
   UPDATE_TASKS: "UPDATE_TASKS",
-  SHOW_MODAL_FORM: "SHOW_MODAL_FORM",
+  SHOW_MODAL_LOGIN_FORM: "SHOW_MODAL_LOGIN_FORM",
+  SHOW_MODAL_SIGNUP_FORM: "SHOW_MODAL_SIGNUP_FORM",
 };
 
 export const setTaskForView = (taskId: any) => ({
@@ -31,22 +32,17 @@ export const deleteFile = (fileId: number, taskId: number) => ({
   },
 });
 
-export const addNewTask = (newTask: taskItemsType) => ({
-  type: ActionType.ADD_NEW_TASK,
-  payload: newTask,
-});
-
-export const deleteTask = (taskId: number) => ({
-  type: ActionType.DELETE_TASK,
-  payload: taskId,
-});
-
 export const updateTasks = (tasks: any) => ({
   type: ActionType.UPDATE_TASKS,
   payload: tasks,
 });
 
 export const showLoginForm = (isShow: boolean) => ({
-  type: ActionType.SHOW_MODAL_FORM,
+  type: ActionType.SHOW_MODAL_LOGIN_FORM,
+  payload: isShow,
+});
+
+export const showSignUpForm = (isShow: boolean) => ({
+  type: ActionType.SHOW_MODAL_SIGNUP_FORM,
   payload: isShow,
 });

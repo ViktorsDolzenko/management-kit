@@ -1,11 +1,11 @@
 .Layout {
-  height: 100%;
   display: grid;
   grid-template-areas:
     "header"
     "content";
 
   @media (min-width: 1150px) {
+    height: 100%;
     grid-template-areas:
       "sidebar header"
       "sidebar content";

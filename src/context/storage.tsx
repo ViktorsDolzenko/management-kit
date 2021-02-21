@@ -13,6 +13,7 @@ export interface taskExtend extends taskItemsType {
 type StoreType = {
   tasks: taskExtend[];
   isShowLoginForm: boolean;
+  isShowSignUpForm: boolean;
 };
 
 type Action = {
@@ -36,6 +37,7 @@ export const getTasks = async (): Promise<taskItemsType[]> => {
 const initialState: StoreType = {
   tasks: [],
   isShowLoginForm: false,
+  isShowSignUpForm: false,
 };
 
 const StorageContext = createContext<{
@@ -70,10 +72,15 @@ const reducer = (state: StoreType, { type, payload }: Action) => {
         tasks: payload,
       };
 
-    case ActionType.SHOW_MODAL_FORM:
+    case ActionType.SHOW_MODAL_LOGIN_FORM:
       return {
         ...state,
         isShowLoginForm: payload,
+      };
+    case ActionType.SHOW_MODAL_SIGNUP_FORM:
+      return {
+        ...state,
+        isShowSignUpForm: payload,
       };
 
     default:
