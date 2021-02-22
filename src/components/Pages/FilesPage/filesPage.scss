@@ -1,0 +1,10 @@
+.filesPage {
+  background-color: white;
+  border-radius: 10px;
+
+  &__data {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+  }
+}

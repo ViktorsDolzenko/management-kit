@@ -27,18 +27,16 @@ export const EmptyPage = () => {
 
   return (
     <Layout pageTitle="Not found">
-      <div>
-        <div className="page-container__emptyContent">
-          <div className="emptyPage">
-            <div className="emptyPage__title">
-              <h1>Welcome {currentUser ? currentUser.displayName : "Guest"}</h1>
-              <h1>This page is on reconstruction </h1>
-              <hr className="emptyPage__divider" />
-              <p>{timer}</p>
-              <Link to="/" className="emptyPage__text">
-                Back To HomePage
-              </Link>
-            </div>
+      <div className="page-container__emptyContent">
+        <div className="emptyPage">
+          <div className="emptyPage__title">
+            <h1>Welcome {currentUser ? currentUser.displayName : "Guest"}</h1>
+            <h1>This page is on reconstruction </h1>
+            <hr className="emptyPage__divider" />
+            <p>{timer}</p>
+            <Link to="/" className="emptyPage__text">
+              Back To HomePage
+            </Link>
           </div>
         </div>
       </div>

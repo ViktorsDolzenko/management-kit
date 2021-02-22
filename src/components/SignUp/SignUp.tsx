@@ -27,6 +27,7 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
         result.user
           ?.updateProfile({
             displayName: username,
+            photoURL: "https://via.placeholder.com/48",
           })
           .then(() => {
             db.collection("users")
