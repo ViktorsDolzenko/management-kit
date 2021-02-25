@@ -1,22 +1,28 @@
 import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
+import { auth, db, storage, timestamp } from "Service/firebase";
 import { useForm } from "react-hook-form";
 
 import { Button, BUTTON_STYLE } from "components/Button";
 import photo_1 from "components/Tasks/images/photo-1.png";
 import { TASK_TYPE } from "components/Tasks/taskItems";
-import { TAG_TYPE } from "components/Tag/tagProps";
 import { BUTTON_TYPE } from "components/Button/buttonProps";
 import { getTasks, StorageContext } from "context/storage";
 import { updateTasks } from "context/actions";
-import { getTaskNewId } from "utils";
+import { getTaskNewId, tagType } from "utils";
 
 import "./addNewTask.scss";
-import { auth, db } from "Service/firebase";
 
 interface AddNewTaskProps {
   onClickClose: () => void;
   taskType: TASK_TYPE;
+}
+
+interface uploadedFilesResponse {
+  name: string;
+  size: number;
+  url: string;
+  type: string;
 }
 
 export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
@@ -28,8 +34,37 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
     auth.onAuthStateChanged(setCurrentUser);
   }, [currentUser]);
 
+  const uploadFiles = async (
+    files: File[] | undefined
+  ): Promise<uploadedFilesResponse[]> => {
+    let filesLinks: uploadedFilesResponse[] = [];
+    if (!files) return [];
+    for (const file of files) {
+      if (file.size > Math.pow(1024, 2) * 5) {
+        const fileSizeError = (file.size / Math.pow(1024, 2)).toFixed(1);
+        alert(`Your file size is: ${fileSizeError}MB maximum size is 5 MB`);
+      }
+      const storageRef = storage.ref(
+        `users/${currentUser.uid}/files/${file.name}`
+      );
+
+      const storageSnapshot = await storageRef.put(file);
+      const fileUrl = await storageSnapshot.ref.getDownloadURL();
+      const url = new URL(fileUrl);
+      const preparedUrl = `${url.origin}${url.pathname}`;
+      filesLinks.push({
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        url: preparedUrl,
+      });
+    }
+    return filesLinks;
+  };
+
   const onSubmit = async (data: any) => {
     const key = getTaskNewId(state.tasks);
+    const filesUrls = await uploadFiles(data.files);
     await db
       .collection("tasks-collection")
       .doc("tasks")
@@ -38,20 +73,30 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
           done: false,
           image: photo_1,
           title: data.title,
-          tag: "Development",
-          tagType: TAG_TYPE.primary,
+          tag: data.tag,
+          tagType: tagType(data.tag),
           date: moment().format(" MMMM Do"),
           assign: data.assignTo,
           description: data.description,
           type: taskType,
           comments: [],
-          files: [],
+          files: filesUrls.map((file) => {
+            return {
+              fileType: file.type,
+              fileName: file.name,
+              fileSize: file.size,
+              fileUrl: file.url,
+              fileUploadedBy: currentUser?.displayName,
+              fileUploadDate: timestamp.toDate().toDateString(),
+            };
+          }),
         },
       });
     const tasks = await getTasks();
     dispatch(updateTasks(tasks));
     onClickClose();
   };
+
   return (
     <div className="addNewTask">
       <div className="addNewTask__wrapper">
@@ -89,6 +134,32 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
               ref={register}
               required={true}
               name="assignTo"
+            />
+          </div>
+          <div className="addNewTask__input-wrapper">
+            <label className="addNewTask__label" htmlFor="tag">
+              Tag
+            </label>
+            <select
+              className="addNewTask__input"
+              name="tag"
+              id="tag"
+              ref={register}
+              required={true}
+            >
+              <option value="development">Development</option>
+              <option value="marketing">Marketing</option>
+              <option value="design">Design</option>
+            </select>
+          </div>
+          <div className="addNewTask__input-wrapper">
+            <label className="addNewTask__label">File</label>
+            <input
+              className="addNewTask__input_file"
+              type="file"
+              ref={register}
+              name="files"
+              multiple
             />
           </div>
           <Button

@@ -56,12 +56,11 @@ export const ChatRoom = () => {
             type="text"
             className="chat__input"
             placeholder="Enter your message..."
-            value={formValue}
+            value={formValue.trimStart()}
             onChange={(evt) => setFormValue(evt.target.value)}
             required={true}
             minLength={1}
             maxLength={100}
-            pattern="([^\s]+)"
           />
           <Button
             category={BUTTON_STYLE.significant}

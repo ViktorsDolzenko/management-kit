@@ -2,6 +2,7 @@ import { commentType, taskItemsType } from "./components/Tasks/taskItems";
 import { toggleTaskCompleteById } from "./reducers/tasks";
 import { getTasks } from "./context/storage";
 import { updateTasks } from "./context/actions";
+import { TAG_TYPE } from "./components/Tag/tagProps";
 
 export const getNewId = (comments: commentType[]) => {
   const sortedArray = comments
@@ -64,4 +65,24 @@ export const doneTaskHandler = async (
     return task;
   });
   dispatch(updateTasks(preparedTasks));
+};
+
+const TAGS = {
+  DEVELOPMENT: "development",
+  MARKETING: "marketing",
+  DESIGN: "design",
+};
+
+export const tagType = (value: string) => {
+  switch (value) {
+    case TAGS.DEVELOPMENT: {
+      return TAG_TYPE.primary;
+    }
+    case TAGS.MARKETING: {
+      return TAG_TYPE.simple;
+    }
+    case TAGS.DESIGN: {
+      return TAG_TYPE.secondary;
+    }
+  }
 };

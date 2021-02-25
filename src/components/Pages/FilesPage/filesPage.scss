@@ -1,10 +1,35 @@
 .filesPage {
   background-color: white;
   border-radius: 10px;
+  min-height: 300px;
+  font-weight: bold;
+  font-size: 14px;
 
-  &__data {
-    display: flex;
-    justify-content: space-between;
-    padding: 30px;
+  &__fileName {
+    opacity: 1;
   }
+}
+
+table {
+  font-family: arial, sans-serif;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  text-align: left;
+  border-bottom: 1px solid #ececec;
+}
+
+th {
+  opacity: 0.5;
+  line-height: 21px;
+  padding: 30px 70px 10px 30px;
+}
+
+td {
+  opacity: 0.7;
+  line-height: 21px;
+  padding: 30px 70px 30px 30px;
 }

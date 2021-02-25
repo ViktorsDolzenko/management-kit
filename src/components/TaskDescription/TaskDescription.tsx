@@ -120,7 +120,7 @@ export const TaskDescription = () => {
             <div className="task-description__file">
               {taskForView.files && (
                 <Files
-                  files={taskForView.files}
+                  files={taskForView?.files}
                   onDelete={(fileId, taskId) =>
                     dispatch(deleteFile(fileId, taskId))
                   }

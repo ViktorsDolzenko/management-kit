@@ -20,21 +20,27 @@ export const Files = ({ files, onDelete, taskId }: FileProps) => {
 
   return (
     <div className="files">
-      {files.map(({ id, fileType, image, fileName, fileSize }) => {
+      {files.map(({ id, fileType, image, fileName, fileSize, fileUrl }) => {
         return (
           <div className="file" key={fileName}>
-            {image && !fileType && (
-              <img className="file__img" alt="file-img" src={image} />
-            )}
-            {fileType && !image && (
-              <div className={`file__type file__type_${fileType}`}>
-                {fileType}
-              </div>
+            {fileUrl && (
+              <a href={fileUrl} download>
+                {image && !fileType && (
+                  <img className="file__img" alt="file-img" src={image} />
+                )}
+                {fileType && !image && (
+                  <div className={`file__type file__type_${fileType}`}>
+                    {fileType}
+                  </div>
+                )}
+              </a>
             )}
             <div>
               <span className="file__title">{fileName}</span>
               <div className="file__misc">
-                <span className="file__misc_size">{fileSize}</span>
+                <span className="file__misc_size">
+                  {(Number(fileSize) / 1024).toFixed(1)} KB
+                </span>
                 {currentUser?.emailVerified && (
                   <button
                     className="file__misc_delete"

@@ -9,4 +9,7 @@ export type FileItemsTypes = {
   fileName?: string;
   image?: string;
   fileSize?: string;
+  fileUrl?: string;
+  fileUploadedBy?: string;
+  fileUploadDate?: string;
 };

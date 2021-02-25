@@ -17,6 +17,14 @@
       font-weight: bold;
       font-size: 12px;
       margin-right: 10px;
+      background-color: grey;
+
+      &_text\/plain {
+        font-size: 0;
+        background-image: url("./images/txt.png");
+        background-size: 40px 40px;
+        background-color: transparent;
+      }
 
       &_pdf {
         background-color: #ffe2e2;
@@ -51,5 +59,8 @@
         outline: 0;
       }
     }
+  }
+  a {
+    color: black;
   }
 }

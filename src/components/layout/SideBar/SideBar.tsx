@@ -67,7 +67,7 @@ export const SideBar = ({
     if (!file) return;
     const imageFileName = file?.name;
     const storageRef = storage.ref(
-      `users/${currentUser.uid}/files/${imageFileName}`
+      `users/${currentUser.uid}/avatar/${imageFileName}`
     );
     const storageSnapshot = await storageRef.put(file);
     const fileUrl = await storageSnapshot.ref.getDownloadURL();
