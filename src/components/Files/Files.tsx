@@ -20,7 +20,7 @@ export const Files = ({ files, onDelete, taskId }: FileProps) => {
 
   return (
     <div className="files">
-      {files.map(({ id, fileType, image, fileName, fileSize, fileUrl }) => {
+      {files.map(({ fileType, image, fileName, fileSize, fileUrl }) => {
         return (
           <div className="file" key={fileName}>
             {fileUrl && (
@@ -41,14 +41,14 @@ export const Files = ({ files, onDelete, taskId }: FileProps) => {
                 <span className="file__misc_size">
                   {(Number(fileSize) / 1024).toFixed(1)} KB
                 </span>
-                {currentUser?.emailVerified && (
-                  <button
-                    className="file__misc_delete"
-                    onClick={() => onDelete(id, taskId)}
-                  >
-                    {fileName && "Delete"}
-                  </button>
-                )}
+                {/*{currentUser?.emailVerified && (*/}
+                {/*  <button*/}
+                {/*    className="file__misc_delete"*/}
+                {/*    onClick={() => onDelete(id, taskId)}*/}
+                {/*  >*/}
+                {/*    {fileName && "Delete"}*/}
+                {/*  </button>*/}
+                {/*)}*/}
               </div>
             </div>
           </div>
