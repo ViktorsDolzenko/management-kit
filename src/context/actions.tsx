@@ -1,4 +1,6 @@
 import { commentType } from "../components/Tasks/taskItems";
+import { FileItemsTypes } from "../components/Files/fileType";
+import { taskExtend } from "./storage";
 
 export const ActionType = {
   SET_TASK_FOR_VIEW: "SET_TASK_FOR_VIEW",
@@ -9,6 +11,7 @@ export const ActionType = {
   UPDATE_TASKS: "UPDATE_TASKS",
   SHOW_MODAL_LOGIN_FORM: "SHOW_MODAL_LOGIN_FORM",
   SHOW_MODAL_SIGNUP_FORM: "SHOW_MODAL_SIGNUP_FORM",
+  SORT_FILES: "SORT_FILES",
 };
 
 export const setTaskForView = (taskId: any) => ({

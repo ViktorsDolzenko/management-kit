@@ -36,7 +36,7 @@ export const TasksPage = () => {
   };
 
   useEffect(() => {
-    getAllTasks();
+    getAllTasks().then();
   }, []);
 
   const isTaskOpened = state.tasks
