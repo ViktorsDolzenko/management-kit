@@ -8,28 +8,58 @@
   &__fileName {
     opacity: 1;
   }
-}
 
-table {
-  font-family: arial, sans-serif;
-  width: 100%;
-  border-collapse: collapse;
-}
+  &__images {
+    max-width: 100px;
+    max-height: 100px;
+  }
 
-td,
-th {
-  text-align: left;
-  border-bottom: 1px solid #ececec;
-}
+  &__type {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
+    margin-right: 10px;
+    background-color: grey;
 
-th {
-  opacity: 0.5;
-  line-height: 21px;
-  padding: 30px 70px 10px 30px;
-}
+    &_text\/plain {
+      font-size: 0;
+      background-image: url("../../Files/images/txt.png");
+      background-size: 40px 40px;
+      background-color: transparent;
+    }
+  }
 
-td {
-  opacity: 0.7;
-  line-height: 21px;
-  padding: 30px 70px 30px 30px;
+  table {
+    font-family: arial, sans-serif;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  td,
+  th {
+    text-align: left;
+    border-bottom: 1px solid #ececec;
+  }
+
+  th {
+    opacity: 0.5;
+    line-height: 21px;
+    padding: 30px 70px 10px 30px;
+    transition: 0.3s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  td {
+    opacity: 0.7;
+    line-height: 21px;
+    padding: 30px 70px 30px 30px;
+  }
 }

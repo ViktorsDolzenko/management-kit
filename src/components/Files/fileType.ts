@@ -1,6 +1,8 @@
 export enum FILE_TYPE {
   PDF = "pdf",
   txt = "txt",
+  imagePng = "image/png",
+  imageJpeg = "image/jpeg",
 }
 
 // TODO: delete after rewrite to fireface files
@@ -16,13 +18,13 @@ export type FileItemsTypes = {
 };
 
 export type ServerFileType = {
-  fileType?: FILE_TYPE;
-  fileName?: string;
-  image?: string;
-  fileSize?: number;
-  fileUrl?: string;
-  fileUploadedBy?: string;
-  fileUploadDate?: string;
+  fileType: FILE_TYPE;
+  fileName: string;
+  fileSize: number;
+  fileUrl: string;
+  fileUploadedBy: string;
+  fileUploadDate: number;
+  taskID: number;
 };
 
 export enum SORT_BY {

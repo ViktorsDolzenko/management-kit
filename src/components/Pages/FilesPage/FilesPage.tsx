@@ -1,14 +1,18 @@
-import { saveAs } from "file-saver";
 import React, { useContext, useEffect, useState } from "react";
-import { downloadIcon } from "../../../const";
+import moment from "moment";
+import { saveAs } from "file-saver";
+
+import { arrowDownIcon, arrowUpIcon, downloadIcon } from "../../../const";
 import { updateTasks } from "../../../context/actions";
 import { getTasks, StorageContext } from "../../../context/storage";
-import { Button } from "../../Button";
+import { Button, BUTTON_STYLE } from "../../Button";
 import { BUTTON_TYPE } from "../../Button/buttonProps";
-import { ServerFileType, SORT_BY } from "../../Files/fileType";
+import { FILE_TYPE, ServerFileType, SORT_BY } from "../../Files/fileType";
 import { Layout } from "../../layout/Layout";
+
 import "./";
 import "./filesPage.scss";
+import { deleteFileFromServer } from "../../../reducers/files";
 
 enum SORT_TYPE {
   DESC = "desc",
@@ -28,15 +32,6 @@ export const FilesPage = () => {
 
   const { state, dispatch } = useContext(StorageContext);
 
-  const getAllTasks = async () => {
-    const tasks = await getTasks();
-    dispatch(updateTasks(tasks));
-  };
-
-  useEffect(() => {
-    getAllTasks();
-  }, []);
-
   const downloadFunc = async (fileUrl: string, fileName: string) => {
     const downloadResult = await fetch(fileUrl);
     const blob = await downloadResult.blob();
@@ -52,14 +47,26 @@ export const FilesPage = () => {
     })
     .flat();
 
-  const compare = (array: any, value: SORT_BY, sortType: SORT_TYPE) => {
+  const compare = (
+    array: ServerFileType[],
+    value: SORT_BY,
+    sortType: SORT_TYPE
+  ) => {
     return array.sort((a: any, b: any) => {
       if (sortType === SORT_TYPE.ASC) {
-        if (a[value] > b[value]) return 1;
+        if (value === SORT_BY.SIZE) {
+          return a[value] - b[value];
+        } else if (a[value] > b[value]) {
+          return -1;
+        }
       }
 
       if (sortType === SORT_TYPE.DESC) {
-        if (a[value] < b[value]) return -1;
+        if (value === SORT_BY.SIZE) {
+          return b[value] - a[value];
+        } else if (a[value] < b[value]) {
+          return -1;
+        }
       }
       return 0;
     });
@@ -75,6 +82,15 @@ export const FilesPage = () => {
     });
   };
 
+  const getAllTasks = async () => {
+    const tasks = await getTasks();
+    dispatch(updateTasks(tasks));
+  };
+
+  useEffect(() => {
+    getAllTasks();
+  }, []);
+
   return (
     <Layout pageTitle="TodoEx Files">
       <div className="page-container__filesPage">
@@ -84,39 +100,107 @@ export const FilesPage = () => {
               <tr>
                 <th />
                 <th>
-                  <b>{sort.sortType}</b>
-                  <button onClick={() => sorting(SORT_BY.NAME)}>Name</button>
+                  <Button
+                    onClick={() => sorting(SORT_BY.NAME)}
+                    title="Name"
+                    category={BUTTON_STYLE.light}
+                    titleIcon={
+                      sort.sortType === SORT_TYPE.ASC
+                        ? arrowUpIcon
+                        : arrowDownIcon
+                    }
+                  />
                 </th>
                 <th>
-                  <button onClick={() => sorting(SORT_BY.SIZE)}>Size</button>
+                  <Button
+                    onClick={() => sorting(SORT_BY.SIZE)}
+                    title="Size"
+                    category={BUTTON_STYLE.light}
+                    titleIcon={
+                      sort.sortType === SORT_TYPE.ASC
+                        ? arrowUpIcon
+                        : arrowDownIcon
+                    }
+                  />
                 </th>
-                <th>Uploaded By</th>
+                <th>
+                  <Button
+                    onClick={() => sorting(SORT_BY.UPLOADED_BY)}
+                    title="Uploaded By"
+                    category={BUTTON_STYLE.light}
+                    titleIcon={
+                      sort.sortType === SORT_TYPE.ASC
+                        ? arrowUpIcon
+                        : arrowDownIcon
+                    }
+                  />
+                </th>
                 <th>Tag</th>
-                <th>Date</th>
+                <th>
+                  <Button
+                    onClick={() => sorting(SORT_BY.DATE)}
+                    title="Date"
+                    category={BUTTON_STYLE.light}
+                    titleIcon={
+                      sort.sortType === SORT_TYPE.ASC
+                        ? arrowUpIcon
+                        : arrowDownIcon
+                    }
+                  />
+                </th>
                 <th />
                 <th />
               </tr>
-
               {Boolean(sortedArray.length) &&
                 sortedArray.map((file: ServerFileType) => {
                   return (
                     <tr key={file.fileName}>
-                      <td className="">
-                        <img
-                          style={{ width: 100 }}
-                          src={`${file.fileUrl}?alt=media`}
-                          alt=""
-                        />
+                      <td>
+                        {file.fileType === FILE_TYPE.imagePng ||
+                        file.fileType === FILE_TYPE.imageJpeg ? (
+                          <img
+                            className="filesPage__images"
+                            alt="file-img"
+                            src={`${file.fileUrl}?alt=media`}
+                          />
+                        ) : (
+                          <div
+                            className={`filesPage__type filesPage__type_${file.fileType}`}
+                          >
+                            {file.fileType}
+                          </div>
+                        )}
                       </td>
                       <td className="filesPage__fileName">{file.fileName}</td>
                       <td>{(Number(file.fileSize) / 1024).toFixed(1)} KB</td>
-                      <td>{file.fileUploadDate}</td>
-                      {/*<td>*/}
-                      {/*  <Tag type={task.tagType} title={task.tag} />*/}
-                      {/*</td>*/}
                       <td>{file.fileUploadedBy}</td>
+                      <td />
                       <td>
-                        <Button title="Actions" />
+                        {moment(file.fileUploadDate).format("DD/MM/YYYY")}
+                      </td>
+                      <td>
+                        <Button
+                          title="Delete"
+                          onClick={() =>
+                            file.taskID &&
+                            file.fileName &&
+                            file.fileSize &&
+                            file.fileType &&
+                            file.fileUploadDate &&
+                            file.fileUploadedBy &&
+                            file.fileUrl &&
+                            deleteFileFromServer(
+                              file.taskID,
+                              file.fileName,
+                              file.fileSize,
+                              file.fileType,
+                              file.fileUploadDate,
+                              file.fileUploadedBy,
+                              file.fileUrl,
+                              file.taskID
+                            )
+                          }
+                        />
                       </td>
                       <td>
                         <Button

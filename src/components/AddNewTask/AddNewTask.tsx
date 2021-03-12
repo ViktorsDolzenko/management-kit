@@ -88,6 +88,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
               fileUrl: file.url,
               fileUploadedBy: currentUser?.displayName,
               fileUploadDate: timestamp.toDate().toDateString(),
+              taskID: key,
             };
           }),
         },

@@ -1,9 +1,8 @@
 import { commentType, taskItemsType } from "./components/Tasks/taskItems";
 import { toggleTaskCompleteById } from "./reducers/tasks";
-import { getTasks, taskExtend } from "./context/storage";
+import { getTasks } from "./context/storage";
 import { updateTasks } from "./context/actions";
 import { TAG_TYPE } from "./components/Tag/tagProps";
-import { FileItemsTypes } from "./components/Files/fileType";
 
 export const getNewId = (comments: commentType[]) => {
   const sortedArray = comments
@@ -87,32 +86,3 @@ export const tagType = (value: string) => {
     }
   }
 };
-
-const compare = (array: FileItemsTypes[], value: FileItemsTypes) => {
-  array.sort((a, b) => {
-    if (a > b) return 1;
-    if (a < b) return -1;
-    return 0;
-  });
-};
-
-/*export const filesSorting = (tasks: taskItemsType[], sortType: string) => {
-  const tasksWithFiles = tasks.filter((task) => task.files);
-  const allFiles = tasksWithFiles.map((task) => {
-    return task.files;
-  });
-
-  const filesArray = allFiles.flat();
-
-  switch (sortType) {
-    case sortTypes.NAME: {
-      return compare(filesArray, fileName);
-    }
-    case sortTypes.SIZE: {
-      return compare(filesArray, fileSize);
-    }
-    case sortTypes.UPLOADED_BY: {
-      return compare(filesArray, fileUploadedBy);
-    }
-  }
-};*/
