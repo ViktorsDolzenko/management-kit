@@ -7,6 +7,7 @@ import { NotFoundPage } from "components/Pages/NotFoundPage/NotFoundPage";
 
 import "./app.scss";
 import { ChatPage } from "../Pages/ChatPage";
+import { FilesPage } from "../Pages/FilesPage";
 
 export const App = () => {
   return (
@@ -15,6 +16,7 @@ export const App = () => {
         <Route exact path="/" component={TasksPage} />
         <Route exact path="/empty" component={EmptyPage} />
         <Route exact path="/chat" component={ChatPage} />
+        <Route exact path="/files" component={FilesPage} />
         <Route render={() => <NotFoundPage />} />
       </Switch>
     </BrowserRouter>

@@ -33,6 +33,7 @@ export const storage = app.storage();
 
 export const fieldValue = firebase.firestore.FieldValue;
 export const deleteField = firebase.firestore.FieldValue.delete();
+export const timestamp = firebase.firestore.Timestamp.now();
 
 export const uiConfig = {
   signInFlow: "popup",

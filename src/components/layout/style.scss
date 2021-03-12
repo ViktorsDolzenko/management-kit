@@ -25,7 +25,6 @@
     &__content {
       display: grid;
       grid-template-columns: 1fr;
-      grid-template-rows: 1fr 1fr;
       gap: 0 10px;
       grid-area: content;
       padding: 0 16px;
@@ -36,6 +35,10 @@
     }
 
     &__chat {
+      grid-area: content;
+    }
+
+    &__filesPage {
       grid-area: content;
     }
   }

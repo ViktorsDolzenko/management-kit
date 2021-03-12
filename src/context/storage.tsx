@@ -5,6 +5,7 @@ import { ActionType } from "./actions";
 import { deleteTaskFromServer, openTask } from "reducers/tasks";
 import { removeFile } from "reducers/files";
 import { db } from "Service/firebase";
+import { FileItemsTypes } from "../components/Files/fileType";
 
 export interface taskExtend extends taskItemsType {
   isOpened?: number;

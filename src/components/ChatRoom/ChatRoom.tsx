@@ -29,7 +29,10 @@ export const ChatRoom = () => {
       username,
     });
     setFormValue("");
-    dummy.current?.scrollIntoView({ behavior: "smooth" });
+    dummy.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+    });
   };
 
   return (
@@ -45,7 +48,6 @@ export const ChatRoom = () => {
             messages.map((msg: any) => (
               <ChatMessage key={msg.id} message={msg} />
             ))}
-
           <div ref={dummy} />
         </main>
 
@@ -54,10 +56,10 @@ export const ChatRoom = () => {
             type="text"
             className="chat__input"
             placeholder="Enter your message..."
-            value={formValue}
+            value={formValue.trimStart()}
             onChange={(evt) => setFormValue(evt.target.value)}
             required={true}
-            minLength={3}
+            minLength={1}
             maxLength={100}
           />
           <Button

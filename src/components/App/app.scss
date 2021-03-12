@@ -9,6 +9,7 @@ html {
   font-family: Heebo, sans-serif;
   background-color: #ffffff;
   height: 100%;
+  box-sizing: border-box;
 
   @media (min-width: 1150px) {
     background-color: #f2f2f2;
@@ -29,4 +30,10 @@ ul {
   padding: 0;
   margin: 0;
   list-style: none;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
