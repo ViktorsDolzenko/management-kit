@@ -91,136 +91,125 @@ export const FilesPage = () => {
     getAllTasks();
   }, []);
 
+  const deleteFile = async (taskId: number, file: ServerFileType) => {
+    await deleteFileFromServer(taskId, file);
+    await getAllTasks();
+  };
+
   return (
     <Layout pageTitle="TodoEx Files">
-      <div className="page-container__filesPage">
-        <div className="filesPage">
-          <table id="files">
-            <tbody>
-              <tr>
-                <th />
-                <th>
-                  <Button
-                    onClick={() => sorting(SORT_BY.NAME)}
-                    title="Name"
-                    category={BUTTON_STYLE.light}
-                    titleIcon={
-                      sort.sortType === SORT_TYPE.ASC
-                        ? arrowUpIcon
-                        : arrowDownIcon
-                    }
-                  />
-                </th>
-                <th>
-                  <Button
-                    onClick={() => sorting(SORT_BY.SIZE)}
-                    title="Size"
-                    category={BUTTON_STYLE.light}
-                    titleIcon={
-                      sort.sortType === SORT_TYPE.ASC
-                        ? arrowUpIcon
-                        : arrowDownIcon
-                    }
-                  />
-                </th>
-                <th>
-                  <Button
-                    onClick={() => sorting(SORT_BY.UPLOADED_BY)}
-                    title="Uploaded By"
-                    category={BUTTON_STYLE.light}
-                    titleIcon={
-                      sort.sortType === SORT_TYPE.ASC
-                        ? arrowUpIcon
-                        : arrowDownIcon
-                    }
-                  />
-                </th>
-                <th>Tag</th>
-                <th>
-                  <Button
-                    onClick={() => sorting(SORT_BY.DATE)}
-                    title="Date"
-                    category={BUTTON_STYLE.light}
-                    titleIcon={
-                      sort.sortType === SORT_TYPE.ASC
-                        ? arrowUpIcon
-                        : arrowDownIcon
-                    }
-                  />
-                </th>
-                <th />
-                <th />
-              </tr>
-              {Boolean(sortedArray.length) &&
-                sortedArray.map((file: ServerFileType) => {
-                  return (
-                    <tr key={file.fileName}>
-                      <td>
-                        {file.fileType === FILE_TYPE.imagePng ||
-                        file.fileType === FILE_TYPE.imageJpeg ? (
-                          <img
-                            className="filesPage__images"
-                            alt="file-img"
-                            src={`${file.fileUrl}?alt=media`}
+      {sortedArray.length && (
+        <div className="page-container__filesPage">
+          <div className="filesPage">
+            <table id="files">
+              <tbody>
+                <tr>
+                  <th />
+                  <th>
+                    <Button
+                      onClick={() => sorting(SORT_BY.NAME)}
+                      title="Name"
+                      category={BUTTON_STYLE.light}
+                      titleIcon={
+                        sort.sortType === SORT_TYPE.ASC
+                          ? arrowUpIcon
+                          : arrowDownIcon
+                      }
+                    />
+                  </th>
+                  <th>
+                    <Button
+                      onClick={() => sorting(SORT_BY.SIZE)}
+                      title="Size"
+                      category={BUTTON_STYLE.light}
+                      titleIcon={
+                        sort.sortType === SORT_TYPE.ASC
+                          ? arrowUpIcon
+                          : arrowDownIcon
+                      }
+                    />
+                  </th>
+                  <th>
+                    <Button
+                      onClick={() => sorting(SORT_BY.UPLOADED_BY)}
+                      title="Uploaded By"
+                      category={BUTTON_STYLE.light}
+                      titleIcon={
+                        sort.sortType === SORT_TYPE.ASC
+                          ? arrowUpIcon
+                          : arrowDownIcon
+                      }
+                    />
+                  </th>
+                  <th>Tag</th>
+                  <th>
+                    <Button
+                      onClick={() => sorting(SORT_BY.DATE)}
+                      title="Date"
+                      category={BUTTON_STYLE.light}
+                      titleIcon={
+                        sort.sortType === SORT_TYPE.ASC
+                          ? arrowUpIcon
+                          : arrowDownIcon
+                      }
+                    />
+                  </th>
+                  <th />
+                  <th />
+                </tr>
+                {Boolean(sortedArray.length) &&
+                  sortedArray.map((file: ServerFileType) => {
+                    return (
+                      <tr key={file.fileName}>
+                        <td>
+                          {file.fileType === FILE_TYPE.imagePng ||
+                          file.fileType === FILE_TYPE.imageJpeg ? (
+                            <img
+                              className="filesPage__images"
+                              alt="file-img"
+                              src={`${file.fileUrl}?alt=media`}
+                            />
+                          ) : (
+                            <div
+                              className={`filesPage__type filesPage__type_${file.fileType}`}
+                            >
+                              {file.fileType}
+                            </div>
+                          )}
+                        </td>
+                        <td className="filesPage__fileName">{file.fileName}</td>
+                        <td>{(Number(file.fileSize) / 1024).toFixed(1)} KB</td>
+                        <td>{file.fileUploadedBy}</td>
+                        <td />
+                        <td>
+                          {moment(file.fileUploadDate).format("DD/MM/YYYY")}
+                        </td>
+                        <td>
+                          <Button
+                            title="Delete"
+                            onClick={() => deleteFile(file.taskID, file)}
                           />
-                        ) : (
-                          <div
-                            className={`filesPage__type filesPage__type_${file.fileType}`}
-                          >
-                            {file.fileType}
-                          </div>
-                        )}
-                      </td>
-                      <td className="filesPage__fileName">{file.fileName}</td>
-                      <td>{(Number(file.fileSize) / 1024).toFixed(1)} KB</td>
-                      <td>{file.fileUploadedBy}</td>
-                      <td />
-                      <td>
-                        {moment(file.fileUploadDate).format("DD/MM/YYYY")}
-                      </td>
-                      <td>
-                        <Button
-                          title="Delete"
-                          onClick={() =>
-                            file.taskID &&
-                            file.fileName &&
-                            file.fileSize &&
-                            file.fileType &&
-                            file.fileUploadDate &&
-                            file.fileUploadedBy &&
-                            file.fileUrl &&
-                            deleteFileFromServer(
-                              file.taskID,
-                              file.fileName,
-                              file.fileSize,
-                              file.fileType,
-                              file.fileUploadDate,
-                              file.fileUploadedBy,
-                              file.fileUrl,
-                              file.taskID
-                            )
-                          }
-                        />
-                      </td>
-                      <td>
-                        <Button
-                          type={BUTTON_TYPE.submit}
-                          titleIcon={downloadIcon}
-                          onClick={() =>
-                            downloadFunc(
-                              `${file.fileUrl}?alt=media`,
-                              `${file.fileName}`
-                            )
-                          }
-                        />
-                      </td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+                        </td>
+                        <td>
+                          <Button
+                            type={BUTTON_TYPE.submit}
+                            titleIcon={downloadIcon}
+                            onClick={() =>
+                              downloadFunc(
+                                `${file.fileUrl}?alt=media`,
+                                `${file.fileName}`
+                              )
+                            }
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      )}
     </Layout>
   );
 };

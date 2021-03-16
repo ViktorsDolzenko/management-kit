@@ -1,11 +1,13 @@
 .files {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 
   .file {
     margin-top: 30px;
     font-size: 14px;
     display: inline-flex;
+    margin-left: 10px;
 
     &__type {
       display: flex;

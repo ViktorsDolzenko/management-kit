@@ -29,6 +29,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
   const { register, handleSubmit } = useForm();
   const { state, dispatch } = useContext(StorageContext);
   const [currentUser, setCurrentUser] = useState<any>(null);
+  const [progressValue, setProgressValue] = useState(0);
 
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
@@ -47,8 +48,13 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
       const storageRef = storage.ref(
         `users/${currentUser.uid}/files/${file.name}`
       );
-
       const storageSnapshot = await storageRef.put(file);
+      // @ts-ignore
+      storageSnapshot.on("state_changed", (snapshot: any) => {
+        let percentage =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setProgressValue(percentage);
+      });
       const fileUrl = await storageSnapshot.ref.getDownloadURL();
       const url = new URL(fileUrl);
       const preparedUrl = `${url.origin}${url.pathname}`;
@@ -162,6 +168,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
               name="files"
               multiple
             />
+            <progress value={progressValue} max="100" />
           </div>
           <Button
             category={BUTTON_STYLE.basic}
