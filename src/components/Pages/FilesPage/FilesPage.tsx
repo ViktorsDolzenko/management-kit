@@ -13,6 +13,8 @@ import { Layout } from "../../layout/Layout";
 import "./";
 import "./filesPage.scss";
 import { deleteFileFromServer } from "../../../reducers/files";
+import { Tag } from "../../Tag";
+import { tagType } from "../../../utils";
 
 enum SORT_TYPE {
   DESC = "desc",
@@ -180,7 +182,14 @@ export const FilesPage = () => {
                         <td className="filesPage__fileName">{file.fileName}</td>
                         <td>{(Number(file.fileSize) / 1024).toFixed(1)} KB</td>
                         <td>{file.fileUploadedBy}</td>
-                        <td />
+                        <td>
+                          {
+                            <Tag
+                              type={tagType(file.fileTag)}
+                              title={file.fileTag}
+                            />
+                          }
+                        </td>
                         <td>
                           {moment(file.fileUploadDate).format("DD/MM/YYYY")}
                         </td>

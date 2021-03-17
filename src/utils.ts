@@ -25,7 +25,7 @@ export const getTaskNewId = (tasks: taskItemsType[]) => {
 };
 
 export const countDownFunc = (timeLeft: any) => {
-  const countDownDate = new Date("Feb 27, 2021 10:37").getTime();
+  const countDownDate = new Date("April 20, 2021 10:37").getTime();
   const now = new Date().getTime();
   const distance = countDownDate - now;
   const days = Math.floor(distance / (1000 * 60 * 60 * 24));

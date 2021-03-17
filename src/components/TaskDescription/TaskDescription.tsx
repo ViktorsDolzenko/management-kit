@@ -16,7 +16,7 @@ import "./taskDescription.scss";
 import { auth } from "Service/firebase";
 import moment from "moment";
 import { deleteTaskFromServer } from "../../reducers/tasks";
-import { doneTaskHandler } from "../../utils";
+import { doneTaskHandler, tagType } from "../../utils";
 
 export const TaskDescription = () => {
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -101,7 +101,10 @@ export const TaskDescription = () => {
               </div>
               <div className="task-description__data">
                 <span className="task-description__data_title">Tag</span>
-                <Tag type={taskForView?.tagType} title={taskForView?.tag} />
+                <Tag
+                  type={tagType(taskForView?.tag)}
+                  title={taskForView?.tag}
+                />
               </div>
               <div className="task-description__data">
                 <span className="task-description__data_title">Followers</span>

@@ -30,6 +30,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
   const { state, dispatch } = useContext(StorageContext);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [progressValue, setProgressValue] = useState(0);
+  const [createdUrl, setCreatedUrl] = useState("");
 
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
@@ -45,19 +46,23 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
         const fileSizeError = (file.size / Math.pow(1024, 2)).toFixed(1);
         alert(`Your file size is: ${fileSizeError}MB maximum size is 5 MB`);
       }
-      const storageRef = storage.ref(
-        `users/${currentUser.uid}/files/${file.name}`
-      );
-      const storageSnapshot = await storageRef.put(file);
-      // @ts-ignore
-      storageSnapshot.on("state_changed", (snapshot: any) => {
-        let percentage =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+      const storageRef = storage.ref();
+      const uploadTask = storageRef
+        .child(`users/${currentUser.uid}/files/${file.name}`)
+        .put(file);
+
+      uploadTask.on("state_changed", (snapshot: any) => {
+        let percentage = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
         setProgressValue(percentage);
       });
-      const fileUrl = await storageSnapshot.ref.getDownloadURL();
+
+      const fileUrl = await uploadTask.snapshot.ref.getDownloadURL();
       const url = new URL(fileUrl);
       const preparedUrl = `${url.origin}${url.pathname}`;
+
       filesLinks.push({
         name: file.name,
         size: file.size,
@@ -80,7 +85,6 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
           image: photo_1,
           title: data.title,
           tag: data.tag,
-          tagType: tagType(data.tag),
           date: moment().format(" MMMM Do"),
           assign: data.assignTo,
           description: data.description,
@@ -94,6 +98,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
               fileUrl: file.url,
               fileUploadedBy: currentUser?.displayName,
               fileUploadDate: timestamp.toDate().toDateString(),
+              fileTag: data.tag,
               taskID: key,
             };
           }),
@@ -168,7 +173,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
               name="files"
               multiple
             />
-            <progress value={progressValue} max="100" />
+            <progress value={progressValue} max={100} />
           </div>
           <Button
             category={BUTTON_STYLE.basic}

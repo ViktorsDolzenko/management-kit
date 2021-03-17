@@ -24,6 +24,7 @@ export type ServerFileType = {
   fileUrl: string;
   fileUploadedBy: string;
   fileUploadDate: number;
+  fileTag: string;
   taskID: number;
 };
 

@@ -6,6 +6,7 @@ import { CheckBox } from "components/CheckBox";
 import { Tag } from "components/Tag";
 
 import "./taskList.scss";
+import { tagType } from "../../utils";
 
 interface tasksListItemsType {
   items: taskItemsType[];
@@ -45,7 +46,7 @@ export const TasksList = ({
                       alt={item.image}
                       className="taskList__tag_img"
                     />
-                    <Tag type={item.tagType} title={item.tag} />
+                    <Tag type={tagType(item.tag)} title={item.tag} />
                   </div>
                 </div>
               </Link>
