@@ -30,7 +30,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
   const { register, handleSubmit } = useForm();
   const { state, dispatch } = useContext(StorageContext);
   const [currentUser, setCurrentUser] = useState<any>(null);
-  const [progressValue, setProgressValue] = useState(0);
+  const [progressValue, setProgressValue] = useState<number>(0);
 
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
@@ -42,25 +42,22 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
     let filesLinks: uploadedFilesResponse[] = [];
     if (!files) return [];
 
+    let uploadedFilesCount = 0;
+
     for (const file of files) {
-      if (file.size > Math.pow(1024, 2) * CONFIG.maxUploadFileSize) {
-        const fileSizeError = (file.size / Math.pow(1024, 2)).toFixed(1);
-        alert(`Your file size is: ${fileSizeError}MB maximum size is 5 MB`);
-      }
+      const storageRef = storage.ref(
+        `users/${currentUser.uid}/files/${file.name}`
+      );
+      const uploadTask = await storageRef.put(file);
 
-      const storageRef = storage.ref();
-      const uploadTask = storageRef
-        .child(`users/${currentUser.uid}/files/${file.name}`)
-        .put(file);
+      const fileUrl = await uploadTask.ref.getDownloadURL();
 
-      uploadTask.on("state_changed", (snapshot: any) => {
-        let percentage = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgressValue(percentage);
-      });
+      uploadedFilesCount += 1;
 
-      const fileUrl = await uploadTask.snapshot.ref.getDownloadURL();
+      const percentage = Math.round((uploadedFilesCount / files.length) * 100);
+
+      setProgressValue(percentage);
+
       const url = new URL(fileUrl);
       const preparedUrl = `${url.origin}${url.pathname}`;
 
