@@ -1,54 +1,74 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
-import { FileItemsTypes } from "./fileType";
+import { ServerFileType } from "./fileType";
 
 import "./files.scss";
 import { auth } from "Service/firebase";
+import { deleteFileFromServer } from "../../reducers/files";
+import { updateTasks } from "../../context/actions";
+import { getTasks, StorageContext } from "../../context/storage";
 
 interface FileProps {
-  files: FileItemsTypes[];
-  onDelete: (fileId: number, taskId: number) => void;
+  files: ServerFileType[];
   taskId: number;
 }
 
-export const Files = ({ files, onDelete, taskId }: FileProps) => {
+export const Files = ({ files, taskId }: FileProps) => {
   const [currentUser, setCurrentUser] = useState<any>(null);
+
+  const { dispatch } = useContext(StorageContext);
 
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
   }, []);
 
+  const getAllTasks = async () => {
+    const tasks = await getTasks();
+    const preparedTasks = tasks.map((task) => {
+      if (task.id === taskId) {
+        return { ...task, isOpened: true };
+      }
+      return task;
+    });
+    dispatch(updateTasks(preparedTasks));
+  };
+
+  const deleteFile = async (taskId: number, file: ServerFileType) => {
+    await deleteFileFromServer(taskId, file);
+    await getAllTasks();
+  };
+
   return (
     <div className="files">
-      {files.map(({ fileType, image, fileName, fileSize, fileUrl }) => {
+      {files.map((file) => {
         return (
-          <div className="file" key={fileName}>
-            {fileUrl && (
-              <a href={fileUrl} download>
-                {image && !fileType && (
-                  <img className="file__img" alt="file-img" src={image} />
+          <div className="file" key={file.fileName}>
+            {file.fileUrl && (
+              <a href={file.fileUrl} download>
+                {file.image && !file.fileType && (
+                  <img className="file__img" alt="file-img" src={file.image} />
                 )}
-                {fileType && !image && (
-                  <div className={`file__type file__type_${fileType}`}>
-                    {fileType}
+                {file.fileType && !file.image && (
+                  <div className={`file__type file__type_${file.fileType}`}>
+                    {file.fileType}
                   </div>
                 )}
               </a>
             )}
             <div>
-              <span className="file__title">{fileName}</span>
+              <span className="file__title">{file.fileName}</span>
               <div className="file__misc">
                 <span className="file__misc_size">
-                  {(Number(fileSize) / 1024).toFixed(1)} KB
+                  {(Number(file.fileSize) / 1024).toFixed(1)} KB
                 </span>
-                {/*{currentUser?.emailVerified && (*/}
-                {/*  <button*/}
-                {/*    className="file__misc_delete"*/}
-                {/*    onClick={() => onDelete(id, taskId)}*/}
-                {/*  >*/}
-                {/*    {fileName && "Delete"}*/}
-                {/*  </button>*/}
-                {/*)}*/}
+                {currentUser?.emailVerified && (
+                  <button
+                    className="file__misc_delete"
+                    onClick={() => deleteFile(taskId, file)}
+                  >
+                    {file.fileName && "Delete"}
+                  </button>
+                )}
               </div>
             </div>
           </div>

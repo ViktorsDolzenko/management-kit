@@ -9,7 +9,7 @@ import { Files } from "components/Files";
 import { NewComment } from "components/NewComment";
 import { Comment } from "components/Comment";
 import { getTasks, StorageContext } from "context/storage";
-import { addComment, deleteFile, updateTasks } from "context/actions";
+import { addComment, updateTasks } from "context/actions";
 import { commentType } from "components/Tasks/taskItems";
 
 import "./taskDescription.scss";
@@ -122,13 +122,7 @@ export const TaskDescription = () => {
             </div>
             <div className="task-description__file">
               {taskForView.files && (
-                <Files
-                  files={taskForView?.files}
-                  onDelete={(fileId, taskId) =>
-                    dispatch(deleteFile(fileId, taskId))
-                  }
-                  taskId={taskForView.id}
-                />
+                <Files files={taskForView?.files} taskId={taskForView.id} />
               )}
             </div>
             <hr className="task-description__divider" />

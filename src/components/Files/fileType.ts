@@ -5,18 +5,6 @@ export enum FILE_TYPE {
   imageJpeg = "image/jpeg",
 }
 
-// TODO: delete after rewrite to fireface files
-export type FileItemsTypes = {
-  id: number;
-  fileType?: FILE_TYPE;
-  fileName?: string;
-  image?: string;
-  fileSize?: number;
-  fileUrl?: string;
-  fileUploadedBy?: string;
-  fileUploadDate?: string;
-};
-
 export type ServerFileType = {
   fileType: FILE_TYPE;
   fileName: string;
@@ -26,6 +14,7 @@ export type ServerFileType = {
   fileUploadDate: number;
   fileTag: string;
   taskID: number;
+  image?: string;
 };
 
 export enum SORT_BY {

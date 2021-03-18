@@ -9,7 +9,7 @@ import { TASK_TYPE } from "components/Tasks/taskItems";
 import { BUTTON_TYPE } from "components/Button/buttonProps";
 import { getTasks, StorageContext } from "context/storage";
 import { updateTasks } from "context/actions";
-import { getTaskNewId, tagType } from "utils";
+import { getTaskNewId } from "utils";
 
 import "./addNewTask.scss";
 
@@ -30,7 +30,6 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
   const { state, dispatch } = useContext(StorageContext);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [progressValue, setProgressValue] = useState(0);
-  const [createdUrl, setCreatedUrl] = useState("");
 
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
