@@ -1,3 +1,4 @@
+import { CONFIG } from "config";
 import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
 import { auth, db, storage, timestamp } from "Service/firebase";
@@ -40,8 +41,9 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
   ): Promise<uploadedFilesResponse[]> => {
     let filesLinks: uploadedFilesResponse[] = [];
     if (!files) return [];
+
     for (const file of files) {
-      if (file.size > Math.pow(1024, 2) * 5) {
+      if (file.size > Math.pow(1024, 2) * CONFIG.maxUploadFileSize) {
         const fileSizeError = (file.size / Math.pow(1024, 2)).toFixed(1);
         alert(`Your file size is: ${fileSizeError}MB maximum size is 5 MB`);
       }
@@ -75,6 +77,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
   const onSubmit = async (data: any) => {
     const key = getTaskNewId(state.tasks);
     const filesUrls = await uploadFiles(data.files);
+
     await db
       .collection("tasks-collection")
       .doc("tasks")
