@@ -1,3 +1,4 @@
+import { CONFIG } from "config";
 import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
 import { auth, db, storage, timestamp } from "Service/firebase";
@@ -9,7 +10,7 @@ import { TASK_TYPE } from "components/Tasks/taskItems";
 import { BUTTON_TYPE } from "components/Button/buttonProps";
 import { getTasks, StorageContext } from "context/storage";
 import { updateTasks } from "context/actions";
-import { getTaskNewId, tagType } from "utils";
+import { getTaskNewId } from "utils";
 
 import "./addNewTask.scss";
 
@@ -29,6 +30,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
   const { register, handleSubmit } = useForm();
   const { state, dispatch } = useContext(StorageContext);
   const [currentUser, setCurrentUser] = useState<any>(null);
+  const [progressValue, setProgressValue] = useState<number>(0);
 
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
@@ -39,19 +41,26 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
   ): Promise<uploadedFilesResponse[]> => {
     let filesLinks: uploadedFilesResponse[] = [];
     if (!files) return [];
+
+    let uploadedFilesCount = 0;
+
     for (const file of files) {
-      if (file.size > Math.pow(1024, 2) * 5) {
-        const fileSizeError = (file.size / Math.pow(1024, 2)).toFixed(1);
-        alert(`Your file size is: ${fileSizeError}MB maximum size is 5 MB`);
-      }
       const storageRef = storage.ref(
         `users/${currentUser.uid}/files/${file.name}`
       );
+      const uploadTask = await storageRef.put(file);
 
-      const storageSnapshot = await storageRef.put(file);
-      const fileUrl = await storageSnapshot.ref.getDownloadURL();
+      const fileUrl = await uploadTask.ref.getDownloadURL();
+
+      uploadedFilesCount += 1;
+
+      const percentage = Math.round((uploadedFilesCount / files.length) * 100);
+
+      setProgressValue(percentage);
+
       const url = new URL(fileUrl);
       const preparedUrl = `${url.origin}${url.pathname}`;
+
       filesLinks.push({
         name: file.name,
         size: file.size,
@@ -65,6 +74,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
   const onSubmit = async (data: any) => {
     const key = getTaskNewId(state.tasks);
     const filesUrls = await uploadFiles(data.files);
+
     await db
       .collection("tasks-collection")
       .doc("tasks")
@@ -74,7 +84,6 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
           image: photo_1,
           title: data.title,
           tag: data.tag,
-          tagType: tagType(data.tag),
           date: moment().format(" MMMM Do"),
           assign: data.assignTo,
           description: data.description,
@@ -88,6 +97,8 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
               fileUrl: file.url,
               fileUploadedBy: currentUser?.displayName,
               fileUploadDate: timestamp.toDate().toDateString(),
+              fileTag: data.tag,
+              taskID: key,
             };
           }),
         },
@@ -161,6 +172,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
               name="files"
               multiple
             />
+            <progress value={progressValue} max={100} />
           </div>
           <Button
             category={BUTTON_STYLE.basic}

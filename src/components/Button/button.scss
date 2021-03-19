@@ -121,4 +121,17 @@
       color: lightblue;
     }
   }
+
+  &_light {
+    border: none;
+    background: none;
+    padding: 0;
+
+    &:hover,
+    &:focus {
+      box-shadow: none;
+      opacity: 1;
+      transition: 0.3s ease;
+    }
+  }
 }

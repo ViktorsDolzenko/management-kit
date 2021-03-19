@@ -3,9 +3,7 @@ import React, { createContext, Dispatch, useReducer } from "react";
 import { taskItemsType } from "components/Tasks/taskItems";
 import { ActionType } from "./actions";
 import { deleteTaskFromServer, openTask } from "reducers/tasks";
-import { removeFile } from "reducers/files";
 import { db } from "Service/firebase";
-import { FileItemsTypes } from "../components/Files/fileType";
 
 export interface taskExtend extends taskItemsType {
   isOpened?: number;
@@ -57,11 +55,6 @@ const reducer = (state: StoreType, { type, payload }: Action) => {
   switch (type) {
     case ActionType.SET_TASK_FOR_VIEW:
       return { ...state, tasks: openTask(state.tasks, payload) };
-    case ActionType.DELETE_FILE:
-      return {
-        ...state,
-        tasks: removeFile(payload.fileId, state.tasks, payload.taskId),
-      };
     case ActionType.DELETE_TASK:
       return {
         ...state,

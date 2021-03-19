@@ -41,10 +41,6 @@
 
   &__file {
     display: flex;
-
-    .file + .file {
-      margin-left: 50px;
-    }
   }
 
   &__info {
