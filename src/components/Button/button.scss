@@ -100,14 +100,16 @@
   }
 
   &_critical {
-    color: #c00003;
+    color: #ee214d;
     border: none;
     background: none;
     padding: 0;
+    transition: 1s linear;
 
     &:hover,
     &:focus {
       box-shadow: none;
+      font-size: 15px;
     }
   }
   &_significant {

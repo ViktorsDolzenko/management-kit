@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { ServerFileType } from "./fileType";
 
-import "./files.scss";
 import { auth } from "Service/firebase";
 import { deleteFileFromServer } from "../../reducers/files";
 import { updateTasks } from "../../context/actions";
 import { getTasks, StorageContext } from "../../context/storage";
+
+import "./files.scss";
 
 interface FileProps {
   files: ServerFileType[];
@@ -44,7 +45,7 @@ export const Files = ({ files, taskId }: FileProps) => {
         return (
           <div className="file" key={file.fileName}>
             {file.fileUrl && (
-              <a href={file.fileUrl} download>
+              <a href={`${file.fileUrl}?alt=media`}>
                 {file.image && !file.fileType && (
                   <img className="file__img" alt="file-img" src={file.image} />
                 )}

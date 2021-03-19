@@ -10,6 +10,7 @@ export enum BUTTON_STYLE {
   critical = "critical",
   significant = "significant",
   light = "light",
+  upload = "upload",
 }
 
 export enum BUTTON_TYPE {

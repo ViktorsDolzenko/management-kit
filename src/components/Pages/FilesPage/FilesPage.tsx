@@ -100,7 +100,9 @@ export const FilesPage = () => {
 
   return (
     <Layout pageTitle="TodoEx Files">
-      {sortedArray.length && (
+      {!sortedArray.length ? (
+        <h1 className="noFiles">No Files Attached</h1>
+      ) : (
         <div className="page-container__filesPage">
           <div className="filesPage">
             <table id="files">
@@ -166,11 +168,13 @@ export const FilesPage = () => {
                         <td>
                           {file.fileType === FILE_TYPE.imagePng ||
                           file.fileType === FILE_TYPE.imageJpeg ? (
-                            <img
-                              className="filesPage__images"
-                              alt="file-img"
-                              src={`${file.fileUrl}?alt=media`}
-                            />
+                            <a href={`${file.fileUrl}?alt=media`}>
+                              <img
+                                className="filesPage__images"
+                                alt="file-img"
+                                src={`${file.fileUrl}?alt=media`}
+                              />
+                            </a>
                           ) : (
                             <div
                               className={`filesPage__type filesPage__type_${file.fileType}`}

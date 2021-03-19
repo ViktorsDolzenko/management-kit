@@ -10,7 +10,6 @@ import { auth, db, fieldValue } from "Service/firebase";
 import { Button, BUTTON_STYLE } from "../Button";
 import { sentIcon } from "../../const";
 import { BUTTON_TYPE } from "../Button/buttonProps";
-import { useMediaQuery } from "react-responsive";
 
 interface newCommentProps {
   addComment: (comment: commentType, taskId: number) => void;
@@ -59,10 +58,6 @@ export const NewComment = ({ taskId, comments, username }: newCommentProps) => {
     dispatch(updateTasks(preparedTasks));
   };
 
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-device-width: 1224px)",
-  });
-
   return (
     <div className="new-comment">
       <img
@@ -79,13 +74,11 @@ export const NewComment = ({ taskId, comments, username }: newCommentProps) => {
           required={true}
           name="text"
         />
-        {!isDesktopOrLaptop && (
-          <Button
-            category={BUTTON_STYLE.significant}
-            titleIcon={sentIcon}
-            type={BUTTON_TYPE.submit}
-          />
-        )}
+        <Button
+          category={BUTTON_STYLE.significant}
+          titleIcon={sentIcon}
+          type={BUTTON_TYPE.submit}
+        />
       </form>
     </div>
   );

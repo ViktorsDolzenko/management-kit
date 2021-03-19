@@ -59,7 +59,6 @@
     display: flex;
     flex-direction: column;
     padding-bottom: 20px;
-    align-items: center;
 
     &_title {
       text-transform: uppercase;
@@ -71,6 +70,7 @@
   &__assign {
     display: flex;
     align-items: center;
+    width: 155px;
 
     &_img {
       padding-right: 5px;
@@ -122,14 +122,20 @@
   &__showMore {
     position: relative;
     &_hidden {
-      visibility: hidden;
+      opacity: 0;
+      display: flex;
+      justify-content: center;
       position: absolute;
-      width: 75px;
-      right: -77%;
+      align-items: center;
+      width: 84px;
+      height: 40px;
+      right: -94%;
+      border-radius: 20px;
+      transition: 0.3s ease;
     }
 
     &:hover &_hidden {
-      visibility: visible;
+      opacity: 1;
     }
   }
 }
