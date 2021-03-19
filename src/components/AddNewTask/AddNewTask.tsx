@@ -1,3 +1,4 @@
+import { CONFIG } from "config";
 import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
 import { auth, db, storage, timestamp } from "Service/firebase";
@@ -35,6 +36,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
   const [allUsers, setAllUsers] = useState([]);
   const [uploadInfo, setUploadInfo] = useState("");
 
+
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
   }, [currentUser]);
@@ -61,6 +63,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
   ): Promise<uploadedFilesResponse[]> => {
     let filesLinks: uploadedFilesResponse[] = [];
     if (!files) return [];
+
     let uploadedFilesCount = 0;
     setUploadInfo("Please wait, files uploading...");
     for (const file of files) {
@@ -96,6 +99,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
     const key = getTaskNewId(state.tasks);
     const filesUrls = await uploadFiles(data.files);
     const assignData = data.assignTo.map(({ value }: any) => value).join(", ");
+
     await db
       .collection("tasks-collection")
       .doc("tasks")
