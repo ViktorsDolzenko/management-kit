@@ -1,4 +1,3 @@
-import { CONFIG } from "config";
 import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
 import { auth, db, storage, timestamp } from "Service/firebase";
@@ -36,7 +35,6 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
   const [allUsers, setAllUsers] = useState([]);
   const [uploadInfo, setUploadInfo] = useState("");
   const [filesLength, setFilesLength] = useState(0);
-
 
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
