@@ -1,7 +1,7 @@
 .SidebarMenu {
   margin-top: 30px;
   text-align: center;
-  @media (min-width: 1150px) {
+  @media (min-width: 768px) {
     text-align: left;
   }
 
@@ -13,7 +13,7 @@
     font-size: 12px;
     font-weight: 700;
 
-    @media (min-width: 1150px) {
+    @media (min-width: 768px) {
       padding-left: 30px;
     }
   }
@@ -28,7 +28,7 @@
     color: white;
     font-weight: 700;
 
-    @media (min-width: 1150px) {
+    @media (min-width: 768px) {
       display: block;
     }
   }
@@ -41,7 +41,7 @@
     align-items: center;
     cursor: pointer;
 
-    @media (min-width: 1150px) {
+    @media (min-width: 768px) {
       display: flex;
       padding-left: 30px;
     }

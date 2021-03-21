@@ -25,7 +25,7 @@
     word-wrap: break-word;
     overflow: hidden;
 
-    @media (min-width: 1150px) {
+    @media (min-width: 768px) {
       max-width: 500px;
     }
   }

@@ -5,7 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import ReactSelect from "react-select";
 
 import { Button, BUTTON_STYLE } from "components/Button";
-import photo_1 from "components/Tasks/images/photo-1.png";
+import photo_1 from "components/Tasks/images/photo-1.svg";
 import { TASK_TYPE } from "components/Tasks/taskItems";
 import { BUTTON_TYPE } from "components/Button/buttonProps";
 import { getTasks, StorageContext } from "context/storage";
@@ -27,13 +27,14 @@ interface uploadedFilesResponse {
 }
 
 export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
-  const { register, handleSubmit, control } = useForm();
+  const { register, handleSubmit, control, getValues } = useForm();
   const { state, dispatch } = useContext(StorageContext);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [progressValue, setProgressValue] = useState(0);
   const [valueDescription, setValueDescription] = useState("");
   const [allUsers, setAllUsers] = useState([]);
   const [uploadInfo, setUploadInfo] = useState("");
+  const [filesLength, setFilesLength] = useState(0);
 
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
@@ -68,7 +69,6 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
         const fileSizeError = (file.size / Math.pow(1024, 2)).toFixed(1);
         alert(`Your file size is: ${fileSizeError}MB maximum size is 5 MB`);
       }
-
       const storageRef = storage.ref(
         `users/${currentUser.uid}/files/${file.name}`
       );
@@ -134,6 +134,10 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
       ...base,
       background: "#eaeaea",
     }),
+  };
+
+  const handleChange = () => {
+    setFilesLength(getValues("files").length);
   };
 
   return (
@@ -237,6 +241,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
                     id="files"
                     multiple
                     style={{ display: "none" }}
+                    onChange={handleChange}
                   />
                 </label>
                 <progress
@@ -244,7 +249,11 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
                   value={progressValue}
                   max={100}
                 />
-                <span>{uploadInfo}</span>
+                <span>
+                  {uploadInfo
+                    ? uploadInfo
+                    : `Selected files count: ${filesLength}`}
+                </span>
               </div>
             </div>
             <Button

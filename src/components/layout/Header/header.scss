@@ -3,7 +3,7 @@
   background-color: white;
   margin-bottom: 50px;
 
-  @media (min-width: 1150px) {
+  @media (min-width: 768px) {
     min-width: 1460px;
     min-height: 136px;
     overflow-x: hidden;
@@ -13,7 +13,7 @@
     display: flex;
     align-items: center;
 
-    @media (min-width: 1150px) {
+    @media (min-width: 768px) {
       padding-right: 150px;
     }
   }
@@ -37,7 +37,7 @@
   flex-direction: column;
   margin: 0 10px;
 
-  @media (min-width: 1150px) {
+  @media (min-width: 768px) {
     flex-direction: row;
     flex-grow: 1;
     justify-content: space-between;
@@ -53,7 +53,7 @@
   justify-content: space-evenly;
   margin-bottom: 10px;
 
-  @media (min-width: 1150px) {
+  @media (min-width: 768px) {
     justify-content: center;
     padding-left: 30px;
     margin: 0;
@@ -68,7 +68,7 @@
   transition: 0.5s ease;
   width: 100%;
 
-  @media (min-width: 1150px) {
+  @media (min-width: 768px) {
     display: flex;
     flex-direction: row;
     margin: 0;
@@ -82,7 +82,7 @@
   line-height: 23px;
   margin-bottom: 15px;
 
-  @media (min-width: 1150px) {
+  @media (min-width: 768px) {
     text-align: left;
     padding-left: 30px;
     font-size: 16px;
@@ -118,13 +118,13 @@
   justify-content: center;
   margin-bottom: 10px;
 
-  @media (min-width: 1150px) {
+  @media (min-width: 768px) {
     justify-content: flex-start;
     padding-right: 30px;
     margin: 0;
   }
 
-  button + button {
+  button + a {
     margin-left: 10px;
   }
 }

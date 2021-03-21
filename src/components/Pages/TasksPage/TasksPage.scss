@@ -6,7 +6,7 @@
       "task";
     padding-bottom: 30px;
 
-    @media (min-width: 1150px) {
+    @media (min-width: 768px) {
       grid-template-columns: 445px 1fr;
       grid-template-rows: 1fr 1fr;
       gap: 0 10px;
