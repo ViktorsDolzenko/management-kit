@@ -7,12 +7,12 @@
   cursor: pointer;
   transition: ease 1s;
 
-  @media (min-width: 1150px) {
+  @media (min-width: 768px) {
     width: 385px;
   }
 
   &:hover {
-    background-color: #111;
+    background-color: #b3b3af;
     color: white;
   }
 
@@ -26,7 +26,7 @@
     line-height: 27px;
     font-weight: bold;
 
-    @media (min-width: 1150px) {
+    @media (min-width: 768px) {
       font-size: 18px;
     }
   }

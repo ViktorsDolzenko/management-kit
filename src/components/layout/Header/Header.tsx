@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
 import { headerItems } from "./headerItems";
@@ -57,7 +57,18 @@ export const Header = ({ onMenuClick, isOpenMenu }: HeaderProps) => {
           {headerItems.map((item) => {
             return (
               <li className="nav-list--item" key={item.title}>
-                <Link to={item.link}>{item.title}</Link>
+                <NavLink
+                  exact={true}
+                  activeStyle={{
+                    borderBottom: "solid #ffc200",
+                    paddingBottom: "21px",
+                    borderWidth: "1px 2px 2px",
+                    opacity: "1",
+                  }}
+                  to={item.link}
+                >
+                  {item.title}
+                </NavLink>
               </li>
             );
           })}

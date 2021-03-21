@@ -13,7 +13,7 @@
   z-index: -1;
   transition: 0.5s ease;
 
-  @media (min-width: 1150px) {
+  @media (min-width: 768px) {
     opacity: 1;
     position: static;
     display: block;
@@ -30,7 +30,7 @@
     line-height: 24px;
     text-transform: uppercase;
 
-    @media (min-width: 1150px) {
+    @media (min-width: 768px) {
       justify-content: flex-start;
     }
 
@@ -100,7 +100,7 @@
   color: white;
   padding-left: 30px;
 
-  @media (min-width: 1150px) {
+  @media (min-width: 768px) {
     padding: 0;
   }
 }

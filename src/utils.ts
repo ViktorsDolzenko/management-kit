@@ -86,3 +86,9 @@ export const tagType = (value: string) => {
     }
   }
 };
+
+export const tagOptions = [
+  { value: "development", label: "Development" },
+  { value: "marketing", label: "Marketing" },
+  { value: "design", label: "Design" },
+];

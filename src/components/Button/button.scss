@@ -13,8 +13,9 @@
 
   &:hover,
   &:focus {
-    box-shadow: 0 8px 15px #888888;
+    box-shadow: rgba(0, 0, 0, 0.15) 0 5px 15px 0;
     transition: 0.3s ease;
+    transform: scale(1.1);
   }
 
   &_warning {
@@ -36,7 +37,7 @@
     margin-right: 20px;
     margin-top: 10px;
 
-    @media (min-width: 1150px) {
+    @media (min-width: 768px) {
       margin: 0;
     }
   }
@@ -100,14 +101,16 @@
   }
 
   &_critical {
-    color: #c00003;
+    color: #ee214d;
     border: none;
     background: none;
     padding: 0;
+    transition: 1s linear;
 
     &:hover,
     &:focus {
       box-shadow: none;
+      font-size: 15px;
     }
   }
   &_significant {

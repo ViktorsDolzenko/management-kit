@@ -40,8 +40,11 @@ export const uiConfig = {
   signInSuccessUrl: "/",
   signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
   callbacks: {
-    signInSuccessWithAuthResult: () => false,
+    signInSuccessWithAuthResult: (authResult: any) => {
+      db.collection("users").doc(authResult.user?.uid).set({
+        userName: authResult.user.displayName,
+      });
+      return true;
+    },
   },
 };
-
-export default app;

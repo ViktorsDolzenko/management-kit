@@ -10,7 +10,6 @@
     margin-left: 10px;
 
     &__type {
-      display: flex;
       justify-content: center;
       align-items: center;
       width: 40px;
@@ -24,6 +23,20 @@
       &_text\/plain {
         font-size: 0;
         background-image: url("./images/txt.png");
+        background-size: 40px 40px;
+        background-color: transparent;
+      }
+
+      &_image\/png {
+        font-size: 0;
+        background-image: url("./images/png-icon.png");
+        background-size: 40px 40px;
+        background-color: transparent;
+      }
+
+      &_image\/jpeg {
+        font-size: 0;
+        background-image: url("./images/jpeg-icon.png");
         background-size: 40px 40px;
         background-color: transparent;
       }
