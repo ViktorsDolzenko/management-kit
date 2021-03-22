@@ -21,6 +21,7 @@ export type taskItemsType = {
   image: string;
   tag: string;
   id: number;
+  addedBy: string;
   date?: string;
   assign?: string;
   description?: string;

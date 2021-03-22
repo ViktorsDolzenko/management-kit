@@ -108,6 +108,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
           title: data.title,
           tag: data.tag.value,
           date: moment().format(" MMMM Do"),
+          addedBy: currentUser.displayName,
           assign: assignData,
           description: data.description,
           type: taskType,
@@ -252,9 +253,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
                   max={100}
                 />
                 <span>
-                  {uploadInfo
-                    ? uploadInfo
-                    : `Selected files count: ${filesLength}`}
+                  {uploadInfo ? uploadInfo : `Selected files: ${filesLength}`}
                 </span>
               </div>
             </div>

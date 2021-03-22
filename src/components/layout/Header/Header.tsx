@@ -18,10 +18,10 @@ interface HeaderProps {
 
 export const Header = ({ onMenuClick, isOpenMenu }: HeaderProps) => {
   const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-device-width: 1224px)",
+    query: "(min-device-width: 768px)",
   });
 
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1149px)" });
+  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
   return (
     <header className="page-header">
@@ -57,18 +57,30 @@ export const Header = ({ onMenuClick, isOpenMenu }: HeaderProps) => {
           {headerItems.map((item) => {
             return (
               <li className="nav-list--item" key={item.title}>
-                <NavLink
-                  exact={true}
-                  activeStyle={{
-                    borderBottom: "solid #ffc200",
-                    paddingBottom: "21px",
-                    borderWidth: "1px 2px 2px",
-                    opacity: "1",
-                  }}
-                  to={item.link}
-                >
-                  {item.title}
-                </NavLink>
+                {isDesktopOrLaptop ? (
+                  <NavLink
+                    exact={true}
+                    activeStyle={{
+                      borderBottom: "solid #ffc200",
+                      paddingBottom: "21px",
+                      borderWidth: "1px 2px 2px",
+                      opacity: "1",
+                    }}
+                    to={item.link}
+                  >
+                    {item.title}
+                  </NavLink>
+                ) : (
+                  <NavLink
+                    exact={true}
+                    activeStyle={{
+                      opacity: "1",
+                    }}
+                    to={item.link}
+                  >
+                    {item.title}
+                  </NavLink>
+                )}
               </li>
             );
           })}

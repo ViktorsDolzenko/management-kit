@@ -49,7 +49,7 @@ export const TaskDescription = () => {
                   {taskForView?.title}
                 </h2>
                 <span>
-                  Added by {currentUser?.displayName} at
+                  Added by {taskForView?.addedBy} at
                   {moment().format(" MMMM Do HH:MM")}
                 </span>
               </div>

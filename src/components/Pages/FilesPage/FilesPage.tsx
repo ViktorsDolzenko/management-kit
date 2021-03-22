@@ -108,7 +108,7 @@ export const FilesPage = () => {
             <table id="files">
               <tbody>
                 <tr>
-                  <th />
+                  <th> Image</th>
                   <th>
                     <Button
                       onClick={() => sorting(SORT_BY.NAME)}
@@ -158,8 +158,8 @@ export const FilesPage = () => {
                       }
                     />
                   </th>
-                  <th />
-                  <th />
+                  <th>Action</th>
+                  <th>Download</th>
                 </tr>
                 {Boolean(sortedArray.length) &&
                   sortedArray.map((file: ServerFileType) => {
