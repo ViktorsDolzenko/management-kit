@@ -61,9 +61,17 @@
     padding-bottom: 20px;
 
     &_title {
+      display: flex;
       text-transform: uppercase;
       padding-bottom: 10px;
       font-weight: bold;
+      justify-content: center;
+      align-items: center;
+
+      @media (min-width: 768px) {
+        display: flex;
+        justify-content: flex-start;
+      }
     }
   }
 
