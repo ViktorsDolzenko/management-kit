@@ -5,7 +5,6 @@ import { Controller, useForm } from "react-hook-form";
 import ReactSelect from "react-select";
 
 import { Button, BUTTON_STYLE } from "components/Button";
-import photo_1 from "components/Tasks/images/photo-1.svg";
 import { TASK_TYPE } from "components/Tasks/taskItems";
 import { BUTTON_TYPE } from "components/Button/buttonProps";
 import { getTasks, StorageContext } from "context/storage";
@@ -104,7 +103,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
       .update({
         [key]: {
           done: false,
-          image: photo_1,
+          image: "https://svgshare.com/i/VFv.svg",
           title: data.title,
           tag: data.tag.value,
           date: moment().format(" MMMM Do"),
