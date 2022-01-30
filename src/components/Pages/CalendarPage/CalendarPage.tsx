@@ -73,8 +73,9 @@ export const CalendarPage = () => {
         setLoading(true);
         auth.onAuthStateChanged((user) => {
             setCurrentUser(user);
-            getSubscribedUser();
-            getEvents();
+            getSubscribedUser().then(() => {
+                getEvents();
+            });
         });
     }, [currentUser, subscription]);
 
