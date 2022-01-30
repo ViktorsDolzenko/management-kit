@@ -10,5 +10,5 @@ interface tagProps {
 }
 
 export const Tag = ({ type, title }: tagProps) => {
-  return <span className={`tag ${type}`}>{title}</span>;
+    return <span className={`tag ${type}`}>{title}</span>;
 };

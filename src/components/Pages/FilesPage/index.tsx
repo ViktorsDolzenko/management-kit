@@ -1,3 +1,3 @@
-import {FilesPage} from "./FilesPage";
+import { FilesPage } from "./FilesPage";
 
-export {FilesPage}
+export { FilesPage };

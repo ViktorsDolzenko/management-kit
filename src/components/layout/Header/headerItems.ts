@@ -4,9 +4,7 @@ type headerItemType = {
 };
 
 export const headerItems: headerItemType[] = [
-  { title: "Tasks", link: "/" },
-  { title: "Files", link: "/files" },
-  { title: "Kanban", link: "/empty" },
-  { title: "Activity", link: "/empty" },
-  { title: "Calendar", link: "/empty" },
+    { title: "phrases.Tasks", link: "/" },
+    { title: "phrases.Files", link: "/files" },
+    { title: "phrases.Calendar", link: "/calendar" }
 ];

@@ -1,19 +1,19 @@
 export enum BUTTON_STYLE {
-  simple = "simple",
-  default = "default",
-  warning = "warning",
-  primary = "primary",
-  danger = "danger",
-  clear = "clear",
-  basic = "basic",
-  important = "important",
-  critical = "critical",
-  significant = "significant",
-  light = "light",
-  upload = "upload",
+  Simple = "Simple",
+  Default = "Default",
+  Warning = "Warning",
+  Primary = "Primary",
+  Danger = "Danger",
+  Clear = "Clear",
+  Basic = "Basic",
+  Important = "Important",
+  Critical = "Critical",
+  Significant = "Significant",
+  Light = "Light",
+  Upload = "Upload",
 }
 
 export enum BUTTON_TYPE {
-  submit = "submit",
-  default = "button",
+  Submit = "Submit",
+  Default = "button",
 }

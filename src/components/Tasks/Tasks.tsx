@@ -9,80 +9,92 @@ import { TASK_TYPE } from "./taskItems";
 import "./tasks.scss";
 import { auth } from "Service/firebase";
 import { doneTaskHandler } from "../../utils";
+import { useTranslation } from "react-i18next";
 
 interface tasksProps {
   onAddTaskClick: (taskType: TASK_TYPE) => void;
+  currentUserTasks: boolean;
 }
 
-export const Tasks = ({ onAddTaskClick }: tasksProps) => {
-  const [currentUser, setCurrentUser] = useState<any>(null);
+export const Tasks = ({ onAddTaskClick, currentUserTasks }: tasksProps) => {
+    const [currentUser, setCurrentUser] = useState<any>(null);
 
-  useEffect(() => {
-    auth.onAuthStateChanged(setCurrentUser);
-  }, []);
+    const { t } = useTranslation();
 
-  const { state, dispatch } = useContext(StorageContext);
+    useEffect(() => {
+        auth.onAuthStateChanged(setCurrentUser);
+    }, []);
 
-  const preparedBackLogTasks = state.tasks.filter(
-    (task) => task.type === TASK_TYPE.BACKLOG
-  );
+    const { state, dispatch } = useContext(StorageContext);
 
-  const preparedToDoTasks = state.tasks.filter(
-    (task) => task.type === TASK_TYPE.TODO
-  );
+    const preparedBackLogTasks = state.tasks.filter(
+        (task) => task.type === TASK_TYPE.BACKLOG
+    );
 
-  return (
-    <div className="tasks">
-      <div className="tasks__container">
-        <div className="tasks__header">
-          <h2 className="tasks__title">Backlog</h2>
-          {currentUser?.emailVerified && (
-            <Button
-              category={BUTTON_STYLE.primary}
-              title="+ Add Task"
-              onClick={() => onAddTaskClick(TASK_TYPE.BACKLOG)}
-            />
-          )}
+    const preparedToDoTasks = state.tasks.filter(
+        (task) => task.type === TASK_TYPE.TODO
+    );
+
+    const currentUserTodoTasks = preparedToDoTasks.filter((item) => {
+        return currentUser?.displayName === item.assign;
+    });
+
+    const currentUserBackLogTasks = preparedBackLogTasks.filter((item) => {
+        return currentUser?.displayName === item.assign;
+    });
+
+    return (
+        <div className="tasks">
+            <div className="tasks__container">
+                <div className="tasks__header">
+                    <h2 className="tasks__title">Backlog</h2>
+                    {currentUser?.emailVerified && (
+                        <Button
+                            category={BUTTON_STYLE.Primary}
+                            title="addTask"
+                            onClick={() => onAddTaskClick(TASK_TYPE.BACKLOG)}
+                        />
+                    )}
+                </div>
+                {preparedBackLogTasks.length !== 0 || currentUserBackLogTasks.length !== 0 ? (
+                    <TasksList
+                        items={currentUserTasks ? currentUserBackLogTasks : preparedBackLogTasks}
+                        onTaskSelect={(taskId) => dispatch(setTaskForView(taskId))}
+                        onDoneChecked={(taskId, isChecked) =>
+                            doneTaskHandler(taskId, isChecked, dispatch)
+                        }
+                    />
+                ) : (
+                    <div className="tasks__empty">
+                        <span>0 {t("phrases.tasksInBacklog")}</span>
+                    </div>
+                )}
+            </div>
+            <div className="tasks__container">
+                <div className="tasks__header">
+                    <h2 className="tasks__title"> {t("phrases.todo")}</h2>
+                    {currentUser?.emailVerified && (
+                        <Button
+                            category={BUTTON_STYLE.Primary}
+                            title="addTask"
+                            onClick={() => onAddTaskClick(TASK_TYPE.TODO)}
+                        />
+                    )}
+                </div>
+                {preparedToDoTasks.length !== 0 || currentUserTodoTasks.length !== 0 ? (
+                    <TasksList
+                        items={currentUserTasks ? currentUserTodoTasks : preparedToDoTasks}
+                        onTaskSelect={(taskId) => dispatch(setTaskForView(taskId))}
+                        onDoneChecked={(task, isChecked) =>
+                            doneTaskHandler(task, isChecked, dispatch)
+                        }
+                    />
+                ) : (
+                    <div className="tasks__empty">
+                        <span>0 {t("phrases.tasksInToDo")}</span>
+                    </div>
+                )}
+            </div>
         </div>
-        {preparedBackLogTasks.length !== 0 ? (
-          <TasksList
-            items={preparedBackLogTasks}
-            onTaskSelect={(taskId) => dispatch(setTaskForView(taskId))}
-            onDoneChecked={(taskId, isChecked) =>
-              doneTaskHandler(taskId, isChecked, dispatch)
-            }
-          />
-        ) : (
-          <div className="tasks__empty">
-            <span>0 tasks in Backlog</span>
-          </div>
-        )}
-      </div>
-      <div className="tasks__container">
-        <div className="tasks__header">
-          <h2 className="tasks__title">To Do</h2>
-          {currentUser?.emailVerified && (
-            <Button
-              category={BUTTON_STYLE.primary}
-              title="+ Add Task"
-              onClick={() => onAddTaskClick(TASK_TYPE.TODO)}
-            />
-          )}
-        </div>
-        {preparedToDoTasks.length !== 0 ? (
-          <TasksList
-            items={preparedToDoTasks}
-            onTaskSelect={(taskId) => dispatch(setTaskForView(taskId))}
-            onDoneChecked={(task, isChecked) =>
-              doneTaskHandler(task, isChecked, dispatch)
-            }
-          />
-        ) : (
-          <div className="tasks__empty">
-            <span>0 tasks in To Do</span>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+    );
 };

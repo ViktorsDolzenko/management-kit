@@ -1,0 +1,122 @@
+.card-link {
+  color: #666;
+}
+
+.card-h1 {
+  font-weight: bold;
+  margin: 0 0 10px;
+}
+
+.card-h4 {
+  margin-bottom: 30px;
+}
+
+.card-h1,
+.card-h2,
+.card-h4 {
+  text-align: center;
+}
+
+
+.App-payment {
+  padding: 30px;
+}
+
+.card-form {
+  margin: 30px auto 0;
+  max-width: 400px;
+}
+
+.form-actions {
+  margin-top: 15px;
+}
+
+.App-cards {
+  margin: 0 auto;
+  max-width: 1280px;
+  text-align: center;
+}
+
+.App-cards-list {
+  display: flex;
+  margin-top: 30px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.App-cards-list > * {
+  transform: scale(0.8);
+  margin-bottom: 30px !important;
+}
+
+.App-highlight {
+  font-family: serif;
+  margin: 15px auto 0;
+  max-width: 300px;
+}
+
+.App-highlight > div {
+  padding-left: 40px;
+}
+
+.App-badges {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.App-badges a {
+  display: block;
+}
+
+.App-badges a + a {
+  margin-top: 18px;
+}
+
+.App-credits {
+  background-color: #000;
+  color: #fff;
+  line-height: 50px;
+  text-align: center;
+}
+
+.App-credits a {
+  color: #fff;
+  font-weight: bold;
+}
+
+@media screen and (min-width: 600px) {
+  .App-badges {
+    flex-direction: row;
+  }
+
+  .App-badges a + a {
+    margin-top: 0;
+    margin-left: 18px;
+  }
+}
+
+.form-group {
+  display: flex;
+  justify-content: center;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.card-input {
+  background: #ffffff;
+  border-radius: 8px;
+  border: 0;
+  height: 40px;
+  width: 95%;
+  padding-left: 15px;
+  margin-bottom: 8px;
+
+  &::placeholder {
+    opacity: 0.8;
+  }
+}

@@ -1,0 +1,23 @@
+.calendar-page {
+  text-align: center;
+}
+
+.calendar-input {
+  background: #eaeaea;
+  border-radius: 8px;
+  border: 0;
+  height: 30px;
+  padding-left: 15px;
+  margin-bottom: 10px;
+
+  &::placeholder {
+    opacity: 0.8;
+  }
+}
+
+.react-datepicker-popper { z-index: 100 !important }
+
+.button-wrapper-calendar {
+  width: 20%;
+  margin: 0 auto;
+}

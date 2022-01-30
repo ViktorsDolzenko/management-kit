@@ -1,8 +1,8 @@
 export enum FILE_TYPE {
   PDF = "pdf",
-  txt = "txt",
-  imagePng = "image/png",
-  imageJpeg = "image/jpeg",
+  TXT = "TXT",
+  IMAGE_PNG = "image/png",
+  IMAGE_JPEG = "image/jpeg",
 }
 
 export type ServerFileType = {

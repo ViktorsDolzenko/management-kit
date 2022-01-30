@@ -1,5 +1,5 @@
 export enum TAG_TYPE {
-  primary = "primary",
-  secondary = "secondary",
-  simple = "simple",
+  Primary = "Primary",
+  Secondary = "Secondary",
+  Simple = "Simple",
 }

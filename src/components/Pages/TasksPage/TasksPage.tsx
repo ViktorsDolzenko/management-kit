@@ -13,61 +13,66 @@ import { useMediaQuery } from "react-responsive";
 import { getTasks, StorageContext } from "../../../context/storage";
 import { updateTasks } from "../../../context/actions";
 
-export const TasksPage = () => {
-  const [isOpenAddNewTask, setIsOpenAddNewTask] = useState(false);
-  const [taskTypeForCreation, setTaskTypeForCreation] = useState<TASK_TYPE>(
-    TASK_TYPE.BACKLOG
-  );
+interface taskPageProps {
+    currentUserTasks: boolean;
+}
 
-  const { state, dispatch } = useContext(StorageContext);
+export const TasksPage = ({ currentUserTasks }: taskPageProps) => {
+    const [isOpenAddNewTask, setIsOpenAddNewTask] = useState(false);
+    const [taskTypeForCreation, setTaskTypeForCreation] = useState<TASK_TYPE>(
+        TASK_TYPE.BACKLOG
+    );
 
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-device-width: 1224px)",
-  });
+    const { state, dispatch } = useContext(StorageContext);
 
-  const taskCreationHandler = (taskType: TASK_TYPE) => {
-    setTaskTypeForCreation(taskType);
-    open(setIsOpenAddNewTask);
-  };
+    const isDesktopOrLaptop = useMediaQuery({
+        query: "(min-device-width: 1224px)"
+    });
 
-  const getAllTasks = async () => {
-    const tasks = await getTasks();
-    dispatch(updateTasks(tasks));
-  };
+    const taskCreationHandler = (taskType: TASK_TYPE) => {
+        setTaskTypeForCreation(taskType);
+        open(setIsOpenAddNewTask);
+    };
 
-  useEffect(() => {
-    getAllTasks();
-  }, []);
+    const getAllTasks = async () => {
+        const tasks = await getTasks();
+        dispatch(updateTasks(tasks));
+    };
 
-  const isTaskOpened = state.tasks
-    ? state.tasks.find((task) => task.isOpened)
-    : false;
+    useEffect(() => {
+        getAllTasks();
+    }, []);
 
-  return (
-    <Layout pageTitle="Tasks">
-      <div className="Tasks">
-        <div className="Tasks__container">
-          <div className="Tasks__list">
-            <Tasks
-              onAddTaskClick={(taskType) => taskCreationHandler(taskType)}
-            />
-          </div>
+    const isTaskOpened = state.tasks ?
+        state.tasks.find((task) => task.isOpened) :
+        false;
 
-          {!isDesktopOrLaptop && isTaskOpened && (
-            <div className="page-container__divider" />
-          )}
-          <div className="Tasks__description">
-            <TaskDescription />
-          </div>
-        </div>
+    return (
+        <Layout pageTitle="Tasks">
+            <div className="Tasks">
+                <div className="Tasks__container">
+                    <div className="Tasks__list">
+                        <Tasks
+                            currentUserTasks={currentUserTasks}
+                            onAddTaskClick={(taskType) => taskCreationHandler(taskType)}
+                        />
+                    </div>
 
-        {isOpenAddNewTask && (
-          <AddNewTask
-            onClickClose={() => close(setIsOpenAddNewTask)}
-            taskType={taskTypeForCreation}
-          />
-        )}
-      </div>
-    </Layout>
-  );
+                    {!isDesktopOrLaptop && isTaskOpened && (
+                        <div className="page-container__divider" />
+                    )}
+                    <div className="Tasks__description">
+                        <TaskDescription />
+                    </div>
+                </div>
+
+                {isOpenAddNewTask && (
+                    <AddNewTask
+                        onClickClose={() => close(setIsOpenAddNewTask)}
+                        taskType={taskTypeForCreation}
+                    />
+                )}
+            </div>
+        </Layout>
+    );
 };

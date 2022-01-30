@@ -18,18 +18,18 @@
     transform: scale(1.1);
   }
 
-  &_warning {
+  &_Warning {
     color: #ffc200;
     background-color: #fff8dd;
   }
 
-  &_simple {
+  &_Simple {
     padding: 0 9px;
     width: 30px;
     height: 30px;
   }
 
-  &_primary {
+  &_Primary {
     background: #cef9c6;
     border-radius: 20px;
     font-size: 14px;
@@ -42,7 +42,7 @@
     }
   }
 
-  &_basic {
+  &_Basic {
     background: #cef9c6;
     border-radius: 20px;
     font-size: 14px;
@@ -50,7 +50,7 @@
     width: 100%;
   }
 
-  &_danger {
+  &_Danger {
     border: none;
     background: none;
     font-weight: bold;
@@ -66,7 +66,7 @@
     }
   }
 
-  &_clear {
+  &_Clear {
     border: none;
     background: none;
     color: #d8d8d8;
@@ -81,11 +81,11 @@
     outline: 0;
   }
 
-  &__icon {
+  &__Icon {
     margin-right: 5px;
   }
 
-  &_important {
+  &_Important {
     font-size: 18px;
     color: white;
     cursor: pointer;
@@ -100,7 +100,7 @@
     }
   }
 
-  &_critical {
+  &_Critical {
     color: #ee214d;
     border: none;
     background: none;
@@ -113,7 +113,7 @@
       font-size: 15px;
     }
   }
-  &_significant {
+  &_Significant {
     font-size: 20px;
     border: none;
     background: none;
@@ -125,7 +125,7 @@
     }
   }
 
-  &_light {
+  &_Light {
     border: none;
     background: none;
     padding: 0;

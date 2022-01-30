@@ -10,23 +10,23 @@ interface checkboxType {
 }
 
 export const CheckBox = ({ id, isChecked, onChange }: checkboxType) => {
-  const [currentUser, setCurrentUser] = useState<any>(null);
+    const [currentUser, setCurrentUser] = useState<any>(null);
 
-  useEffect(() => {
-    auth.onAuthStateChanged(setCurrentUser);
-  }, []);
+    useEffect(() => {
+        auth.onAuthStateChanged(setCurrentUser);
+    }, []);
 
-  return (
-    <div className="checkbox">
-      <input
-        className="checkbox__input"
-        id={id}
-        type="checkbox"
-        checked={isChecked}
-        onChange={(evt) => onChange(evt.target.checked)}
-        disabled={!currentUser?.emailVerified}
-      />
-      <label htmlFor={id} />
-    </div>
-  );
+    return (
+        <div className="checkbox">
+            <input
+                className="checkbox__input"
+                id={id}
+                type="checkbox"
+                checked={isChecked}
+                onChange={(evt) => onChange(evt.target.checked)}
+                disabled={!currentUser?.emailVerified}
+            />
+            <label htmlFor={id} />
+        </div>
+    );
 };
