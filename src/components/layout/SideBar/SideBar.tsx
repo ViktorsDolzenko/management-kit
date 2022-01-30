@@ -4,7 +4,6 @@ import { StorageContext } from "../../../context/storage";
 
 import {
     sideBarItemsMenu,
-    sideBarItemsProjects,
     sideBarItemsTeams
 } from "components/SideBarMenu/sideBarItems";
 import { SideBarMenu } from "components/SideBarMenu";
@@ -15,6 +14,7 @@ import { simpleIcon } from "../../../const";
 
 import "./sideBar.scss";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 interface SidebarProps {
   onLoginClick: () => void;
@@ -30,6 +30,7 @@ export const SideBar = ({
 }: SidebarProps) => {
     const [currentUser, setCurrentUser] = useState<any>(null);
     const [showLogout, setShowLogout] = useState(false);
+    const [subscription, setSubscription] = useState<Boolean>(false);
     const { state } = useContext(StorageContext);
 
     const showLogoutButton = () => {
@@ -52,12 +53,21 @@ export const SideBar = ({
             });
         }
     };
+
+    const getSubscribedUser = async () => {
+        const userId = currentUser?.uid;
+        const user = await db.collection("users").doc(`${userId}`).get();
+        const userField = user.data();
+        setSubscription(userField?.subscription);
+    };
+
     useEffect(() => {
         auth.onAuthStateChanged(setCurrentUser);
         if (currentUser) {
             getAvatarUrl(currentUser.uid);
+            getSubscribedUser();
         }
-    }, [currentUser]);
+    }, [currentUser, subscription]);
 
     const isDesktopOrLaptop = useMediaQuery({
         query: "(min-device-width: 1224px)"
@@ -100,7 +110,7 @@ export const SideBar = ({
             )}
             {isDesktopOrLaptop && (
                 <div>
-                    <span className="sidebar__header">Projectus</span>
+                    <span className="sidebar__header">ToDoeX</span>
                 </div>
             )}
             {currentUser && (
@@ -122,12 +132,9 @@ export const SideBar = ({
                         />
                     </div>
                     <div className="sidebar__profile--info">
-                        <span className="sidebar__profile--info name">
-                            {currentUser.displayName}
-                        </span>
-                        <span className="sidebar__profile--info vacancy">
-              Product Owner
-                        </span>
+                        <Link to="/subscription" className="sidebar__profile--info name">
+                            {currentUser.displayName} {subscription ? '👑' : ""}
+                        </Link>
                     </div>
                     {!showLogout && isDesktopOrLaptop && (
                         <Button
@@ -180,10 +187,6 @@ export const SideBar = ({
                 </div>
             </div>
             <SideBarMenu items={sideBarItemsMenu} title="Menu" />
-            <SideBarMenu items={sideBarItemsProjects} title="Projects" />
-            {isDesktopOrLaptop && (
-                <Button category={BUTTON_STYLE.Danger} title="addProject" />
-            )}
             <SideBarMenu items={sideBarItemsTeams} title="Teams" />
             {isDesktopOrLaptop && (
                 <Button category={BUTTON_STYLE.Danger} title="addTeam" />

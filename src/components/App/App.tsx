@@ -21,7 +21,7 @@ export const App = () => {
                 <Route path="/chat" element={<ChatPage/>} />
                 <Route path="/files" element={<FilesPage/>} />
                 <Route path="/my-tasks" element={<MyTasks/>} />
-                <Route path="/profile" element={<SubscriptionPage/>} />
+                <Route path="/subscription" element={<SubscriptionPage/>} />
                 <Route path="/calendar" element={<CalendarPage/>} />
                 <Route path="*" element={<NotFoundPage/>} />
 

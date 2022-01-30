@@ -19,6 +19,7 @@ import { useTranslation } from "react-i18next";
 import { auth, db } from "../../../Service/firebase";
 import { BeatLoader } from "react-spinners";
 import { css } from "@emotion/react";
+import { NoAccess } from "../../NoAccess";
 
 enum SORT_TYPE {
   DESC = "desc",
@@ -105,25 +106,21 @@ export const FilesPage = () => {
     };
 
     const getUserInfo = async () => {
-        if (currentUser?.emailVerified) {
-            setLoading(true);
-            const userUid = currentUser.uid;
-            const user = await db.collection("users").doc(`${userUid}`).get();
-            const userField = user.data();
-            setSubscription(userField?.subscription);
-            setTimeout(() => {
-                setLoading(false);
-            }, 1000);
-        }
+        const userUid = currentUser?.uid;
+        const user = await db.collection("users").doc(`${userUid}`).get();
+        const userField = user.data();
+        setSubscription(userField?.subscription);
+        setLoading(false);
     };
 
     useEffect(() => {
+        setLoading(true);
         auth.onAuthStateChanged((user) => {
             setCurrentUser(user);
             getUserInfo();
             getAllTasks();
         });
-    }, [currentUser]);
+    }, [currentUser, subscription]);
 
     const deleteFile = async (taskId: number, file: ServerFileType) => {
         await deleteFileFromServer(taskId, file);
@@ -134,139 +131,138 @@ export const FilesPage = () => {
 
 
     return (
-        <>
-            {
-                loading && <div className="blur">
-                    <BeatLoader color="#ffffff" loading={loading} css={override} size={50} />
-                </div>
-            }
-            <Layout pageTitle="TodoEx Files">
-                {!sortedArray.length ?
-                    <h1 className="noFiles">{t("phrases.noFiles")}</h1> :
-                    <div className="page-container__filesPage">
-                        <div className="filesPage">
+        <Layout pageTitle="TodoEx Files">
+            {loading ? <div className="blur">
+                <BeatLoader color="#ffffff" loading={loading} css={override} size={50}/>
+            </div> :
+                <>
+                    {!sortedArray.length ?
+                        <h1 className="noFiles">{t("phrases.noFiles")}</h1> :
+                        <div className="page-container__filesPage">
                             {subscription ?
-                                <table id="files">
-                                    <tbody>
-                                        <tr>
-                                            <th>{t("phrases.image")}</th>
-                                            <th>
-                                                <Button
-                                                    onClick={() => sorting(SORT_BY.NAME)}
-                                                    title="name"
-                                                    category={BUTTON_STYLE.Light}
-                                                    titleIcon={
-                                                        sort.sortType === SORT_TYPE.ASC ?
-                                                            arrowUpIcon :
-                                                            arrowDownIcon
-                                                    }
-                                                />
-                                            </th>
-                                            <th>
-                                                <Button
-                                                    onClick={() => sorting(SORT_BY.SIZE)}
-                                                    title="size"
-                                                    category={BUTTON_STYLE.Light}
-                                                    titleIcon={
-                                                        sort.sortType === SORT_TYPE.ASC ?
-                                                            arrowUpIcon :
-                                                            arrowDownIcon
-                                                    }
-                                                />
-                                            </th>
-                                            <th>
-                                                <Button
-                                                    onClick={() => sorting(SORT_BY.UPLOADED_BY)}
-                                                    title="uploadedBy"
-                                                    category={BUTTON_STYLE.Light}
-                                                    titleIcon={
-                                                        sort.sortType === SORT_TYPE.ASC ?
-                                                            arrowUpIcon :
-                                                            arrowDownIcon
-                                                    }
-                                                />
-                                            </th>
-                                            <th>Tag</th>
-                                            <th>
-                                                <Button
-                                                    onClick={() => sorting(SORT_BY.DATE)}
-                                                    title="date"
-                                                    category={BUTTON_STYLE.Light}
-                                                    titleIcon={
-                                                        sort.sortType === SORT_TYPE.ASC ?
-                                                            arrowUpIcon :
-                                                            arrowDownIcon
-                                                    }
-                                                />
-                                            </th>
-                                            <th>{t("phrases.actions")}</th>
-                                            <th>{t("phrases.download")}</th>
-                                        </tr>
-                                        {Boolean(sortedArray.length) &&
-                            sortedArray.map((file: ServerFileType) => {
-                                return (
-                                    <tr key={file.fileName}>
-                                        <td>
-                                            {file.fileType === FILE_TYPE.IMAGE_PNG ||
-                                            file.fileType === FILE_TYPE.IMAGE_JPEG ? (
-                                                    <a href={`${file.fileUrl}?alt=media`}>
-                                                        <img
-                                                            className="filesPage__images"
-                                                            alt="file-img"
-                                                            src={`${file.fileUrl}?alt=media`}
+                                <div className="filesPage">
+                                    <table id="files">
+                                        <tbody>
+                                            <tr>
+                                                <th>{t("phrases.image")}</th>
+                                                <th>
+                                                    <Button
+                                                        onClick={() => sorting(SORT_BY.NAME)}
+                                                        title="name"
+                                                        category={BUTTON_STYLE.Light}
+                                                        titleIcon={
+                                                            sort.sortType === SORT_TYPE.ASC ?
+                                                                arrowUpIcon :
+                                                                arrowDownIcon
+                                                        }
+                                                    />
+                                                </th>
+                                                <th>
+                                                    <Button
+                                                        onClick={() => sorting(SORT_BY.SIZE)}
+                                                        title="size"
+                                                        category={BUTTON_STYLE.Light}
+                                                        titleIcon={
+                                                            sort.sortType === SORT_TYPE.ASC ?
+                                                                arrowUpIcon :
+                                                                arrowDownIcon
+                                                        }
+                                                    />
+                                                </th>
+                                                <th>
+                                                    <Button
+                                                        onClick={() => sorting(SORT_BY.UPLOADED_BY)}
+                                                        title="uploadedBy"
+                                                        category={BUTTON_STYLE.Light}
+                                                        titleIcon={
+                                                            sort.sortType === SORT_TYPE.ASC ?
+                                                                arrowUpIcon :
+                                                                arrowDownIcon
+                                                        }
+                                                    />
+                                                </th>
+                                                <th>Tag</th>
+                                                <th>
+                                                    <Button
+                                                        onClick={() => sorting(SORT_BY.DATE)}
+                                                        title="date"
+                                                        category={BUTTON_STYLE.Light}
+                                                        titleIcon={
+                                                            sort.sortType === SORT_TYPE.ASC ?
+                                                                arrowUpIcon :
+                                                                arrowDownIcon
+                                                        }
+                                                    />
+                                                </th>
+                                                <th>{t("phrases.actions")}</th>
+                                                <th>{t("phrases.download")}</th>
+                                            </tr>
+                                            {Boolean(sortedArray.length) &&
+                                        sortedArray.map((file: ServerFileType) => {
+                                            return (
+                                                <tr key={file.fileName}>
+                                                    <td>
+                                                        {file.fileType === FILE_TYPE.IMAGE_PNG ||
+                                                        file.fileType === FILE_TYPE.IMAGE_JPEG ? (
+                                                                <a href={`${file.fileUrl}?alt=media`}>
+                                                                    <img
+                                                                        className="filesPage__images"
+                                                                        alt="file-img"
+                                                                        src={`${file.fileUrl}?alt=media`}
+                                                                    />
+                                                                </a>
+                                                            ) : (
+                                                                <div
+                                                                    className={`filesPage__type filesPage__type_${file.fileType}`}
+                                                                >
+                                                                    {file.fileType}
+                                                                </div>
+                                                            )}
+                                                    </td>
+                                                    <td className="filesPage__fileName">{file.fileName}</td>
+                                                    <td>{(Number(file.fileSize) / 1024).toFixed(1)} KB</td>
+                                                    <td>{file.fileUploadedBy}</td>
+                                                    <td>
+                                                        {
+                                                            <Tag
+                                                                type={tagType(file.fileTag)}
+                                                                title={file.fileTag}
+                                                            />
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        {moment(file.fileUploadDate).format("DD/MM/YYYY")}
+                                                    </td>
+                                                    <td>
+                                                        <Button
+                                                            title="delete"
+                                                            onClick={() => deleteFile(file.taskID, file)}
                                                         />
-                                                    </a>
-                                                ) : (
-                                                    <div
-                                                        className={`filesPage__type filesPage__type_${file.fileType}`}
-                                                    >
-                                                        {file.fileType}
-                                                    </div>
-                                                )}
-                                        </td>
-                                        <td className="filesPage__fileName">{file.fileName}</td>
-                                        <td>{(Number(file.fileSize) / 1024).toFixed(1)} KB</td>
-                                        <td>{file.fileUploadedBy}</td>
-                                        <td>
-                                            {
-                                                <Tag
-                                                    type={tagType(file.fileTag)}
-                                                    title={file.fileTag}
-                                                />
-                                            }
-                                        </td>
-                                        <td>
-                                            {moment(file.fileUploadDate).format("DD/MM/YYYY")}
-                                        </td>
-                                        <td>
-                                            <Button
-                                                title="delete"
-                                                onClick={() => deleteFile(file.taskID, file)}
-                                            />
-                                        </td>
-                                        <td>
-                                            <Button
-                                                type={BUTTON_TYPE.Submit}
-                                                titleIcon={downloadIcon}
-                                                title={''}
-                                                onClick={() =>
-                                                    downloadFunc(
-                                                        `${file.fileUrl}?alt=media`,
-                                                        `${file.fileName}`
-                                                    )
-                                                }
-                                            />
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                                    </tbody>
-                                </table> :
-                                <div>No Access</div> }
+                                                    </td>
+                                                    <td>
+                                                        <Button
+                                                            type={BUTTON_TYPE.Submit}
+                                                            titleIcon={downloadIcon}
+                                                            title={''}
+                                                            onClick={() =>
+                                                                downloadFunc(
+                                                                    `${file.fileUrl}?alt=media`,
+                                                                    `${file.fileName}`
+                                                                )
+                                                            }
+                                                        />
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
+                                        </tbody>
+                                    </table>
+                                </div> :
+                                <NoAccess userName={currentUser?.displayName}/>}
                         </div>
-                    </div>
-                }
-            </Layout>
-        </>
+                    }
+                </>
+            }
+        </Layout>
     );
 };

@@ -4,9 +4,8 @@ import { useMediaQuery } from "react-responsive";
 
 import { headerItems } from "./headerItems";
 import { Button, BUTTON_STYLE } from "components/Button";
-import Logo from "svg/logo.svg";
-import chatIcon from "svg/chat-button.svg";
-import { simpleIcon } from "const";
+import Logo from "assets/logo.svg";
+import chatIcon from "assets/chat-button.svg";
 
 
 import "./header.scss";
@@ -46,9 +45,6 @@ export const Header = ({ onMenuClick, isOpenMenu }: HeaderProps) => {
                             <img className="page-header__img" src={Logo} alt="logo" />
                             <span className="page-header__title">ToDoeX</span>
                         </a>
-                        {isDesktopOrLaptop && !isTabletOrMobile && (
-                            <Button category={BUTTON_STYLE.Simple} titleIcon={simpleIcon} title={''} />
-                        )}
                         {isTabletOrMobile && (
                             <div className="page-header__menuButton" onClick={onMenuClick}>
                                 {!isOpenMenu && <i className="fas fa-bars" />}
@@ -61,7 +57,11 @@ export const Header = ({ onMenuClick, isOpenMenu }: HeaderProps) => {
                         <Select className="page-header__language-select" defaultValue={options[0]} menuPortalTarget={document.body} onChange={(e) => changeLanguage(e?.value)} options={options} />
                     }
                     <div className="navbar__buttons">
-                        <Button title="share" />
+                        <div data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-size="small">
+                            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
+                                className="fb-xfbml-parse-ignore">
+                                <Button title="share" /></a>
+                        </div>
                         <Link to="/chat">
                             <Button
                                 category={BUTTON_STYLE.Warning}

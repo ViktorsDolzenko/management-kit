@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "react-credit-cards";
-
 
 import {
     formatCreditCardNumber,
@@ -13,123 +12,169 @@ import "./profile.scss";
 import { Layout } from "../../layout/Layout";
 import { Button, BUTTON_STYLE } from "../../Button";
 import { BUTTON_TYPE } from "../../Button/buttonProps";
+import { auth, db } from "../../../Service/firebase";
+import { BeatLoader } from "react-spinners";
+import { css } from "@emotion/react";
+import crownImg from '../../../assets/crown.png';
+import { useTranslation } from "react-i18next";
 
-export class SubscriptionPage extends React.Component {
-    state = {
-        number: "",
-        name: "",
-        expiry: "",
-        cvc: "",
-        issuer: "",
-        focused: "",
-        formData: null
-    };
+const override = css`
+  display: block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+`;
 
-    handleCallback = ({ issuer } : any, isValid: any) => {
+export const SubscriptionPage = () => {
+    const [currentUser, setCurrentUser] = useState<any>(null);
+    const [name, setName] = useState<string>('');
+    const [number, setNumber] = useState<any>('');
+    const [expiry, setExpiry] = useState<string>('');
+    const [cvc, setCvc] = useState<string>('');
+    const [issuer, setIssuer] = useState<string>('');
+    const [focused, setFocused] = useState<any>('');
+    const [subscription, setSubscription] = useState<Boolean>(false);
+    const [loading, setLoading] = useState<any>(false);
+
+    const handleCallback = ({ issuer } : any, isValid: any) => {
         if (isValid) {
-            this.setState({ issuer });
+            setIssuer(issuer);
         }
     };
 
-    handleInputFocus = ({ target } : any) => {
-        this.setState({
-            focused: target.name
-        });
+    const handleInputFocus = ({ target } : any) => {
+        setFocused(target.name);
     };
 
-    handleInputChange = ({ target } : any) => {
+    const handleInputChange = ({ target } : any) => {
         if (target.name === "number") {
-            target.value = formatCreditCardNumber(target.value);
+            setNumber(formatCreditCardNumber(target.value));
         } else if (target.name === "expiry") {
-            target.value = formatExpirationDate(target.value);
+            setExpiry(formatExpirationDate(target.value));
         } else if (target.name === "cvc") {
             // @ts-ignore
-            target.value = formatCVC(target.value);
+            setCvc(formatCVC(target.value));
+        } else if (target.name === 'name') {
+            setName(target.value);
         }
-
-        this.setState({ [target.name]: target.value });
     };
 
+    const handleSubmit = () => {
+        const userId = currentUser.uid;
+        db.collection('users').doc(`${userId}`).update({
+            subscription: true
+        }).then(() => {
+            console.log("Subscribed");
+            window.location.reload();
+        })
+            .catch((error) => {
+                console.error("Error on subscription: ", error);
+            });
+    };
 
-    render () {
-        // eslint-disable-next-line no-unused-vars
-        const { name, number, expiry, cvc, focused, issuer, formData } = this.state;
+    const getSubscribedUser = async () => {
+        const userId = currentUser?.uid;
+        const user = await db.collection("users").doc(`${userId}`).get();
+        const userField = user.data();
+        setSubscription(userField?.subscription);
+        setLoading(false);
+    };
 
+    useEffect(() => {
+        setLoading(true);
+        auth.onAuthStateChanged((user) => {
+            setCurrentUser(user);
+            getSubscribedUser();
+        });
+    }, [currentUser, subscription]);
 
-        return (
-            <Layout>
-                <div key="Payment">
-                    <div className="App-payment">
-                        <h1 className="card-h1">OPEN FEATURES</h1>
-                        <h4 className="card-h4">SUBSCRIPTION</h4>
-                        <Card
-                            number={number}
-                            name={name}
-                            expiry={expiry}
-                            cvc={cvc}
-                            // @ts-ignore
-                            focused={focused}
-                            callback={this.handleCallback}
-                        />
-                        <form className="card-form">
-                            <div className="form-group">
-                                <input
-                                    type="tel"
-                                    name="number"
-                                    className="form-control card-input"
-                                    placeholder="Card Number"
-                                    pattern="[\d| ]{16,22}"
-                                    required
-                                    onChange={this.handleInputChange}
-                                    onFocus={this.handleInputFocus}
+    const { t } = useTranslation();
+
+    return (
+        <Layout>
+            {loading ? <div className="blur">
+                <BeatLoader color="#ffffff" loading={loading} css={override} size={50}/>
+            </div> :
+                <>
+                    {!subscription ?
+                        <div key="Payment">
+                            <div className="App-payment">
+                                <h1 className="card-h1">OPEN FEATURES</h1>
+                                <h4 className="card-h4">SUBSCRIPTION</h4>
+                                <Card
+                                    number={number}
+                                    name={name}
+                                    expiry={expiry}
+                                    cvc={cvc}
+                                    // @ts-ignore
+                                    focused={focused}
+                                    callback={handleCallback}
                                 />
+                                <form className="card-form">
+                                    <div className="form-group">
+                                        <input
+                                            type="tel"
+                                            name="number"
+                                            className="form-control card-input"
+                                            placeholder="Card Number"
+                                            pattern="[\d| ]{16,22}"
+                                            required
+                                            onChange={handleInputChange}
+                                            onFocus={handleInputFocus}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            className="form-control card-input"
+                                            placeholder="Name"
+                                            required
+                                            onChange={handleInputChange}
+                                            onFocus={handleInputFocus}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <input
+                                            type="tel"
+                                            name="expiry"
+                                            className="form-control card-input"
+                                            placeholder="Valid Thru"
+                                            pattern="\d\d/\d\d"
+                                            required
+                                            onChange={handleInputChange}
+                                            onFocus={handleInputFocus}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <input
+                                            type="tel"
+                                            name="cvc"
+                                            className="form-control card-input"
+                                            placeholder="CVC"
+                                            pattern="\d{3,4}"
+                                            required
+                                            onChange={handleInputChange}
+                                            onFocus={handleInputFocus}
+                                        />
+                                    </div>
+                                    <input className="card-input" type="hidden" name="issuer" value={issuer}/>
+                                    <div className="form-actions">
+                                        <Button
+                                            onClick={handleSubmit}
+                                            title={'subscribe'}
+                                            category={BUTTON_STYLE.Basic}
+                                            type={BUTTON_TYPE.Default}
+                                        />
+                                    </div>
+                                </form>
                             </div>
-                            <div className="form-group">
-                                <input
-                                    type="text"
-                                    name="name"
-                                    className="form-control card-input"
-                                    placeholder="Name"
-                                    required
-                                    onChange={this.handleInputChange}
-                                    onFocus={this.handleInputFocus}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <input
-                                    type="tel"
-                                    name="expiry"
-                                    className="form-control card-input"
-                                    placeholder="Valid Thru"
-                                    pattern="\d\d/\d\d"
-                                    required
-                                    onChange={this.handleInputChange}
-                                    onFocus={this.handleInputFocus}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <input
-                                    type="tel"
-                                    name="cvc"
-                                    className="form-control card-input"
-                                    placeholder="CVC"
-                                    pattern="\d{3,4}"
-                                    required
-                                    onChange={this.handleInputChange}
-                                    onFocus={this.handleInputFocus}
-                                />
-                            </div>
-                            <input className="card-input" type="hidden" name="issuer" value={issuer} />
-                            <div className="form-actions">
-                                <Button title={'subscribe'}
-                                    category={BUTTON_STYLE.Basic}
-                                    type={BUTTON_TYPE.Default}
-                                />
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </Layout>
-        );
-    }
-}
+                        </div> : <div className="subscribed">
+                            <p>{t('phrases.alreadySub')}</p>
+                            <img src={crownImg} alt="crown"/>
+                        </div>}
+                </>
+            }
+        </Layout>
+    );
+};

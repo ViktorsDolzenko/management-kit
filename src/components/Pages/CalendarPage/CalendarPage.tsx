@@ -9,9 +9,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./calendarPage.scss";
 import { Layout } from "../../layout/Layout";
-import { db, fieldValue } from "../../../Service/firebase";
+import { auth, db, fieldValue } from "../../../Service/firebase";
 import { Button, BUTTON_STYLE } from "../../Button";
 import { BUTTON_TYPE } from "../../Button/buttonProps";
+import { NoAccess } from "../../NoAccess";
+import { BeatLoader } from "react-spinners";
+import { css } from "@emotion/react";
 
 const locales = {
     lv: require("date-fns/locale/lv")
@@ -24,9 +27,19 @@ const localizer = dateFnsLocalizer({
     locales
 });
 
+const override = css`
+  display: block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+`;
+
 export const CalendarPage = () => {
+    const [currentUser, setCurrentUser] = useState<any>(null);
     const [newEvent, setNewEvent] = useState<any>({ title: "", start: "", end: "" });
     const [allEvents, setAllEvents] = useState<any>([]);
+    const [subscription, setSubscription] = useState<Boolean>(false);
+    const [loading, setLoading] = useState<any>(true);
 
     const getEvents = async () => {
         const eventsDb = await db.collection("calendar").doc("events");
@@ -40,6 +53,14 @@ export const CalendarPage = () => {
         setAllEvents(...allEvents, parsedData);
     };
 
+    const getSubscribedUser = async () => {
+        const userId = currentUser?.uid;
+        const user = await db.collection("users").doc(`${userId}`).get();
+        const userField = user.data();
+        setSubscription(userField?.subscription);
+        setLoading(false);
+    };
+
 
     function handleAddEvent () {
         db.collection('calendar').doc("events").update({
@@ -49,35 +70,51 @@ export const CalendarPage = () => {
     }
 
     useEffect(() => {
-        getEvents();
-    }, []);
+        setLoading(true);
+        auth.onAuthStateChanged((user) => {
+            setCurrentUser(user);
+            getSubscribedUser();
+            getEvents();
+        });
+    }, [currentUser, subscription]);
 
     return (
         <Layout>
-            <div className="calendar-page">
-                <div>
-                    <input className="calendar-input" type="text" placeholder="Add Title"
-                        value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
-                    <DatePicker popperPlacement="bottom"
-                        showTimeSelect
-                        timeFormat="HH:mm"
-                        className="calendar-input" dateFormat="dd/MM/yyyy" placeholderText="Start Date" selected={newEvent.start}
-                        onChange={(start) => setNewEvent({ ...newEvent, start })} />
-                    <DatePicker popperPlacement="bottom"
-                        showTimeSelect
-                        timeFormat="HH:mm"
-                        className="calendar-input" dateFormat="dd/MM/yyyy"
-                        placeholderText="End Date" selected={newEvent.end} onChange={(end) => setNewEvent({ ...newEvent, end })} />
-                    <div className="button-wrapper-calendar">
-                        <Button title={'addNewEvent'}
-                            onClick={handleAddEvent}
-                            category={BUTTON_STYLE.Primary}
-                            type={BUTTON_TYPE.Default}
-                        />
-                    </div>
-                </div>
-                <Calendar localizer={localizer} events={allEvents} startAccessor="start" endAccessor="end" style={{ height: 500, margin: "50px" }} />
-            </div>
+            {loading ? <div className="blur">
+                <BeatLoader color="#ffffff" loading={loading} css={override} size={50}/>
+            </div> :
+                <>
+                    {subscription ?
+                        <div className="calendar-page">
+                            <div>
+                                <input className="calendar-input" type="text" placeholder="Add Title"
+                                    value={newEvent.title}
+                                    onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}/>
+                                <DatePicker popperPlacement="bottom"
+                                    showTimeSelect
+                                    timeFormat="HH:mm"
+                                    className="calendar-input" dateFormat="dd/MM/yyyy"
+                                    placeholderText="Start Date" selected={newEvent.start}
+                                    onChange={(start) => setNewEvent({ ...newEvent, start })}/>
+                                <DatePicker popperPlacement="bottom"
+                                    showTimeSelect
+                                    timeFormat="HH:mm"
+                                    className="calendar-input" dateFormat="dd/MM/yyyy"
+                                    placeholderText="End Date" selected={newEvent.end}
+                                    onChange={(end) => setNewEvent({ ...newEvent, end })}/>
+                                <div className="button-wrapper-calendar">
+                                    <Button title={'addNewEvent'}
+                                        onClick={handleAddEvent}
+                                        category={BUTTON_STYLE.Primary}
+                                        type={BUTTON_TYPE.Default}
+                                    />
+                                </div>
+                            </div>
+                            <Calendar localizer={localizer} events={allEvents} startAccessor="start"
+                                endAccessor="end" style={{ height: 500, margin: "50px" }}/>
+                        </div> : <NoAccess userName={currentUser?.displayName}/>}
+                </>
+            }
         </Layout>
     );
 };
