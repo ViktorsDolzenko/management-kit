@@ -36,16 +36,19 @@ export const SubscriptionPage = () => {
     const [subscription, setSubscription] = useState<Boolean>(false);
     const [loading, setLoading] = useState<any>(false);
 
+    // function to set issuer
     const handleCallback = ({ issuer } : any, isValid: any) => {
         if (isValid) {
             setIssuer(issuer);
         }
     };
 
+    // function to handle focus on input
     const handleInputFocus = ({ target } : any) => {
         setFocused(target.name);
     };
 
+    // function to handle input change data
     const handleInputChange = ({ target } : any) => {
         if (target.name === "number") {
             setNumber(formatCreditCardNumber(target.value));
@@ -59,6 +62,7 @@ export const SubscriptionPage = () => {
         }
     };
 
+    // function to submit fake payment to database and change variable to true
     const handleSubmit = () => {
         const userId = currentUser.uid;
         db.collection('users').doc(`${userId}`).update({
@@ -72,6 +76,7 @@ export const SubscriptionPage = () => {
             });
     };
 
+    // function to get subscribed user
     const getSubscribedUser = async () => {
         const userId = currentUser?.uid;
         const user = await db.collection("users").doc(`${userId}`).get();
@@ -80,6 +85,7 @@ export const SubscriptionPage = () => {
         setLoading(false);
     };
 
+    // dynamically set and check for current user
     useEffect(() => {
         setLoading(true);
         auth.onAuthStateChanged((user) => {
@@ -88,6 +94,7 @@ export const SubscriptionPage = () => {
         });
     }, [currentUser, subscription]);
 
+    // translation hook
     const { t } = useTranslation();
 
     return (
@@ -170,7 +177,7 @@ export const SubscriptionPage = () => {
                                 </form>
                             </div>
                         </div> : <div className="subscribed">
-                            <p>{t('phrases.alreadySub')}</p>
+                            <p style={{ color: "white" }}>{t('phrases.alreadySub')}</p>
                             <img src={crownImg} alt="crown"/>
                         </div>}
                 </>

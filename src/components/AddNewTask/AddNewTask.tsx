@@ -36,10 +36,12 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
     const [uploadInfo, setUploadInfo] = useState("");
     const [filesLength, setFilesLength] = useState(0);
 
+    // dynamically check for current user
     useEffect(() => {
         auth.onAuthStateChanged(setCurrentUser);
     }, [currentUser]);
 
+    // request to get user from database and return array of users
     const getUsers = async () => {
         const usersDb = await db.collection("users").get();
         const usersWithId = usersDb.docs.map((doc) => {
@@ -53,10 +55,12 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
         setAllUsers(usersWithId);
     };
 
+    // hook to get users on component mount
     useEffect(() => {
         getUsers();
     }, []);
 
+    // function to upload file to storage
     const uploadFiles = async (
         files: File[] | undefined
     ): Promise<uploadedFilesResponse[]> => {
@@ -94,6 +98,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
         return filesLinks;
     };
 
+    // submit function to get data from all inputs
     const onSubmit = async (data: any) => {
         const key = getTaskNewId(state.tasks);
         const filesUrls = await uploadFiles(data.files);
@@ -133,6 +138,7 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
         onClickClose();
     };
 
+    // custom styles for controls
     const customStyles = {
         control: (base: any) => ({
             ...base,
@@ -140,10 +146,12 @@ export const AddNewTask = ({ onClickClose, taskType }: AddNewTaskProps) => {
         })
     };
 
+    // function to get files count
     const handleChange = () => {
         setFilesLength(getValues("files").length);
     };
 
+    // translation hook
     const { t } = useTranslation();
 
     return (

@@ -44,6 +44,10 @@
     "signUp": "Sign Up",
     "Calendar": "Calendar",
     "addNewEvent": "Add new event",
-    "alreadySub": "You already subscribed, all our features are available for you."
+    "alreadySub": "You already subscribed, all our features are available for you.",
+    "Features": "Features",
+    "About": "About us",
+    "Address": "Office Address",
+    "phoneNumber": "Telephone number"
   }
 }

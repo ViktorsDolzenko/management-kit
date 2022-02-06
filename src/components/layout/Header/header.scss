@@ -129,7 +129,8 @@
     margin: 0;
   }
 
-  div + a {
+  div + div {
     margin-left: 10px;
+    margin-right: 10px;
   }
 }

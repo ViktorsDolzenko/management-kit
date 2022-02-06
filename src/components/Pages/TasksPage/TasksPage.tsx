@@ -12,6 +12,7 @@ import "./TasksPage.scss";
 import { useMediaQuery } from "react-responsive";
 import { getTasks, StorageContext } from "../../../context/storage";
 import { updateTasks } from "../../../context/actions";
+import { useTranslation } from "react-i18next";
 
 interface taskPageProps {
     currentUserTasks: boolean;
@@ -29,26 +30,32 @@ export const TasksPage = ({ currentUserTasks }: taskPageProps) => {
         query: "(min-device-width: 1224px)"
     });
 
+    // function to open dialog for task creation
     const taskCreationHandler = (taskType: TASK_TYPE) => {
         setTaskTypeForCreation(taskType);
         open(setIsOpenAddNewTask);
     };
 
+    // function to get all tasks from database
     const getAllTasks = async () => {
         const tasks = await getTasks();
         dispatch(updateTasks(tasks));
     };
 
+    // hook to get all tasks on component mount
     useEffect(() => {
         getAllTasks();
     }, []);
 
+    // check for opened task
     const isTaskOpened = state.tasks ?
         state.tasks.find((task) => task.isOpened) :
         false;
 
+    const { t } = useTranslation();
+
     return (
-        <Layout pageTitle="Tasks">
+        <Layout pageTitle={t('phrases.Tasks')}>
             <div className="Tasks">
                 <div className="Tasks__container">
                     <div className="Tasks__list">

@@ -18,6 +18,7 @@ export const Login = ({ onClickClose, onSignUpClick }: LoginProps) => {
 
     const [loginError, setLoginError] = useState("");
 
+    // submit function to get data from input and login
     const onSubmit = (data: any) => {
         const email = data.email;
         const password = data.password;
@@ -33,6 +34,7 @@ export const Login = ({ onClickClose, onSignUpClick }: LoginProps) => {
             });
     };
 
+    // function to open signup window
     const showSignUp = () => {
         onClickClose();
         onSignUpClick();

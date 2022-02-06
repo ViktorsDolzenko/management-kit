@@ -17,6 +17,7 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
     const [errorMessage, setErrorMessage] = useState<string>("");
     const { addToast } = useToasts();
 
+    //  get data from inputs and register new user
     const onSubmit = (data: any) => {
         const email = data.email;
         const password = data.password;

@@ -9,6 +9,7 @@ import "./chatPage.scss";
 export const ChatPage = () => {
     const [currentUser, setCurrentUser] = useState<any>(null);
 
+    // function to set current user
     useEffect(() => {
         auth.onAuthStateChanged((user) => setCurrentUser(user));
     }, [currentUser]);

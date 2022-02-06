@@ -11,10 +11,12 @@ export const EmptyPage = () => {
     const [timer, setTimer] = useState<string>("");
     const [currentUser, setCurrentUser] = useState<any>(null);
 
+    // hook to set current user
     useEffect(() => {
         auth.onAuthStateChanged(setCurrentUser);
     }, []);
 
+    // hook for interval timer
     useEffect(() => {
         let interval: any;
 

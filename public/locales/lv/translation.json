@@ -43,6 +43,10 @@
     "signUp": "Pierakstīties",
     "Calendar": "Kalendārs",
     "addNewEvent": "Pievienot jauno pasākumu",
-    "alreadySub": "Jūs jau esat abonējis, jums ir pieejamas visas mūsu funkcijas."
+    "alreadySub": "Jūs jau esat abonējis, jums ir pieejamas visas mūsu funkcijas.",
+    "Features": "Iespējas",
+    "About": "Par mums",
+    "Address": "Atrašanās vieta",
+    "phoneNumber": "Telefona numurs"
   }
 }

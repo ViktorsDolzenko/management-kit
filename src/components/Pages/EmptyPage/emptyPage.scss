@@ -4,7 +4,7 @@
   justify-content: center;
   height: 100%;
   width: 100%;
-  color: black;
+  color: white;
   font-family: "Courier New", Courier, monospace;
   font-size: 12px;
 
@@ -14,15 +14,12 @@
 
   &__title {
     text-align: center;
-    position: fixed;
-    top: 50%;
-    left: 50;
   }
 
   &__text {
     cursor: pointer;
     transition: 1s ease;
-    color: black;
+    color: white;
 
     &:hover {
       font-size: 50px;

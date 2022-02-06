@@ -50,14 +50,19 @@ export const FilesPage = () => {
 
     const { state, dispatch } = useContext(StorageContext);
 
+
+    // function to download file
     const downloadFunc = async (fileUrl: string, fileName: string) => {
         const downloadResult = await fetch(fileUrl);
         const blob = await downloadResult.blob();
         saveAs(blob, fileName);
     };
 
+
+    // filtering tasks which includes file(s)
     const tasksWithFiles = state.tasks.filter((task) => task.files);
 
+    // return array of all files and iterate
     // @ts-ignore
     const allFiles: ServerFileType[] = tasksWithFiles
         .map((task) => {
@@ -65,6 +70,7 @@ export const FilesPage = () => {
         })
         .flat();
 
+    // compare logic
     const compare = (
         array: ServerFileType[],
         value: SORT_BY,
@@ -90,8 +96,10 @@ export const FilesPage = () => {
         });
     };
 
+    // sorting array of files
     const sortedArray = compare(allFiles, sort.sortBy, sort.sortType);
 
+    // sorting handler
     const sorting = (sortBy: SORT_BY) => {
         setSort({
             sortBy,
@@ -100,11 +108,13 @@ export const FilesPage = () => {
         });
     };
 
+    // request to database to get all tasks
     const getAllTasks = async () => {
         const tasks = await getTasks();
         dispatch(updateTasks(tasks));
     };
 
+    // request to database to get users and check for permission
     const getUserInfo = async () => {
         const userUid = currentUser?.uid;
         const user = await db.collection("users").doc(`${userUid}`).get();
@@ -113,6 +123,7 @@ export const FilesPage = () => {
         setLoading(false);
     };
 
+    // dynamically checking for current user
     useEffect(() => {
         setLoading(true);
         auth.onAuthStateChanged((user) => {
@@ -122,16 +133,18 @@ export const FilesPage = () => {
         });
     }, [currentUser, subscription]);
 
+    // delete file function
     const deleteFile = async (taskId: number, file: ServerFileType) => {
         await deleteFileFromServer(taskId, file);
         await getAllTasks();
     };
 
+    // translation hook
     const { t } = useTranslation();
 
 
     return (
-        <Layout pageTitle="TodoEx Files">
+        <Layout pageTitle={t('phrases.Files')}>
             {loading ? <div className="blur">
                 <BeatLoader color="#ffffff" loading={loading} css={override} size={50}/>
             </div> :

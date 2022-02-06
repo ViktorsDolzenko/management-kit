@@ -9,13 +9,16 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 export const ChatRoom = () => {
     const [formValue, setFormValue] = useState("");
 
+    // request to get messages from collection
     const messageRef = db.collection("messages");
+    // order messages by query
     const messageQuery = messageRef.orderBy("createdAt").limitToLast(25);
     // @ts-ignore
     const [messages] = useCollectionData(messageQuery, { idField: "id" });
 
     const dummy = useRef<HTMLInputElement>(null);
 
+    // message sending function
     const sendMessage = async (evt: any) => {
         evt.preventDefault();
         const photoUrl = auth.currentUser?.photoURL;

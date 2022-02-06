@@ -19,10 +19,13 @@ export const Files = ({ files, taskId }: FileProps) => {
 
     const { dispatch } = useContext(StorageContext);
 
+    // hook to to set current user
+
     useEffect(() => {
         auth.onAuthStateChanged(setCurrentUser);
     }, []);
 
+    // get all tasks from database and update tasks
     const getAllTasks = async () => {
         const tasks = await getTasks();
         const preparedTasks = tasks.map((task) => {
@@ -34,6 +37,7 @@ export const Files = ({ files, taskId }: FileProps) => {
         dispatch(updateTasks(preparedTasks));
     };
 
+    // function to delete file from task
     const deleteFile = async (taskId: number, file: ServerFileType) => {
         await deleteFileFromServer(taskId, file);
         await getAllTasks();

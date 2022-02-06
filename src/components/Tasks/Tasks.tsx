@@ -19,26 +19,32 @@ interface tasksProps {
 export const Tasks = ({ onAddTaskClick, currentUserTasks }: tasksProps) => {
     const [currentUser, setCurrentUser] = useState<any>(null);
 
+    // translation hook
     const { t } = useTranslation();
 
+    // set current user on mount
     useEffect(() => {
         auth.onAuthStateChanged(setCurrentUser);
     }, []);
 
     const { state, dispatch } = useContext(StorageContext);
 
+    // filter tasks to get backlog tasks
     const preparedBackLogTasks = state.tasks.filter(
         (task) => task.type === TASK_TYPE.BACKLOG
     );
 
+    // filter tasks to get TO-DO tasks
     const preparedToDoTasks = state.tasks.filter(
         (task) => task.type === TASK_TYPE.TODO
     );
 
+    // get current user to-do tasks
     const currentUserTodoTasks = preparedToDoTasks.filter((item) => {
         return currentUser?.displayName === item.assign;
     });
 
+    // get current user backlog tasks
     const currentUserBackLogTasks = preparedBackLogTasks.filter((item) => {
         return currentUser?.displayName === item.assign;
     });

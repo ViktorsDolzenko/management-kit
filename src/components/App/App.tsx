@@ -11,9 +11,11 @@ import { SubscriptionPage } from "../Pages/SubscriptionPage";
 
 import "./app.scss";
 import { CalendarPage } from "../Pages/CalendarPage";
+import { AboutUsPage } from "../Pages/AboutUsPage";
 
 export const App = () => {
     return (
+        // react router to switch(render) pages in SPA(SINGLE PAGE APPLICATION)
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<TasksPage currentUserTasks={false}/>} />
@@ -23,8 +25,9 @@ export const App = () => {
                 <Route path="/my-tasks" element={<MyTasks/>} />
                 <Route path="/subscription" element={<SubscriptionPage/>} />
                 <Route path="/calendar" element={<CalendarPage/>} />
+                <Route path="/about" element={<AboutUsPage/>}/>
+                <Route path="/feature" element={<EmptyPage/>} />
                 <Route path="*" element={<NotFoundPage/>} />
-
             </Routes>
         </BrowserRouter>
     );

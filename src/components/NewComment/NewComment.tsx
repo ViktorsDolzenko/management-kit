@@ -23,10 +23,12 @@ export const NewComment = ({ taskId, comments, username }: newCommentProps) => {
     const { register, handleSubmit, reset } = useForm();
     const { dispatch } = useContext(StorageContext);
 
+    // set current user
     useEffect(() => {
         auth.onAuthStateChanged(setCurrentUser);
     });
 
+    // submit new message and sent it to database
     const onSubmit = async (data: any) => {
         await db
             .collection("tasks-collection")

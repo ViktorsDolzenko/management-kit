@@ -1,0 +1,29 @@
+.about-us {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__info {
+    margin: 50px;
+    color: white;
+
+    &--address {
+      margin-bottom: 20px;
+      span {
+        font-weight: bold;
+      }
+    }
+
+    &--phone {
+      padding-top: 20px;
+      span {
+        font-weight: bold;
+      }
+
+      a {
+        color: lightblue;
+      }
+    }
+  }
+}

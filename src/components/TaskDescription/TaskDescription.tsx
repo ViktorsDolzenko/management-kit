@@ -22,29 +22,35 @@ import { useTranslation } from "react-i18next";
 export const TaskDescription = () => {
     const [currentUser, setCurrentUser] = useState<any>(null);
 
+    // get users collection
     const getUser = db.collection("users");
     // @ts-ignore
     const [values] = useCollectionData(getUser, { idField: "id" });
 
+    // get user avatar
     const getAvatar = (userName: string) => {
         const foundedUser = values?.find((item) => item.userName === userName);
         return foundedUser?.avatarUrl ? `${foundedUser?.avatarUrl}?alt=media` : 'https://via.placeholder.com/50';
     };
 
+    // hook to set current user
     useEffect(() => {
         auth.onAuthStateChanged(setCurrentUser);
     }, []);
 
     const { state, dispatch } = useContext(StorageContext);
 
+    // open task in view mode
     const taskForView = state.tasks.find((task) => task.isOpened);
 
+    // delete task function
     const deleteTask = async (taskId: number) => {
         await deleteTaskFromServer(taskId);
         const newTasks = await getTasks();
         dispatch(updateTasks(newTasks));
     };
 
+    // translation hook
     const { t } = useTranslation();
 
     return (

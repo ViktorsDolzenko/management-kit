@@ -14,14 +14,17 @@ interface SideBarMenuProps {
 export const SideBarMenu = ({ items, title }: SideBarMenuProps) => {
     const [open, setOpen] = useState(false);
 
+    // function to show/hide menu on mobile
     const showList = () => {
         setOpen(!open);
     };
 
+    // media query hook
     const isDesktopOrLaptop = useMediaQuery({
         query: "(min-device-width: 1224px)"
     });
 
+    // translation hook
     const { t } = useTranslation();
 
     return (

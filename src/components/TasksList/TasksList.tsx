@@ -22,10 +22,12 @@ export const TasksList = ({
     onTaskSelect,
     onDoneChecked
 }: tasksListItemsType) => {
+    // get user collection
     const getUser = db.collection("users");
     // @ts-ignore
     const [values] = useCollectionData(getUser, { idField: "id" });
 
+    // get user avatars
     const getAvatar = (userName: string) => {
         const foundedUser = values?.find((item) => item.userName === userName);
         return foundedUser?.avatarUrl ? `${foundedUser?.avatarUrl}?alt=media` : 'https://via.placeholder.com/50';

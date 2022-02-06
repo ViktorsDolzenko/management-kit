@@ -11,6 +11,7 @@ import chatIcon from "assets/chat-button.svg";
 import "./header.scss";
 import Select from "react-select";
 import { useTranslation } from "react-i18next";
+import { FacebookIcon, FacebookShareButton, TwitterIcon, TwitterShareButton } from 'react-share';
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -27,14 +28,16 @@ export const Header = ({ onMenuClick, isOpenMenu }: HeaderProps) => {
         query: "(min-device-width: 768px)"
     });
 
+    // hook to switch media query
     const isTabletOrMobile = useMediaQuery({ query: "(max-width: 767px)" });
 
+    // translation hook
     const { i18n, t } = useTranslation();
 
+    // change language function
     const changeLanguage = (language: string) => {
         i18n.changeLanguage(language);
     };
-
 
     return (
         <header className="page-header">
@@ -57,10 +60,23 @@ export const Header = ({ onMenuClick, isOpenMenu }: HeaderProps) => {
                         <Select className="page-header__language-select" defaultValue={options[0]} menuPortalTarget={document.body} onChange={(e) => changeLanguage(e?.value)} options={options} />
                     }
                     <div className="navbar__buttons">
-                        <div data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-size="small">
-                            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
-                                className="fb-xfbml-parse-ignore">
-                                <Button title="share" /></a>
+                        <div>
+                            <FacebookShareButton
+                                url={'todoex.vercel.app'}
+                                quote={'ToDoex Nikita Sitov'}
+                                className="Demo__some-network__share-button"
+                            >
+                                <FacebookIcon size={32} round />
+                            </FacebookShareButton>
+                        </div>
+                        <div>
+                            <TwitterShareButton
+                                url={'todoex.vercel.app'}
+                                title={'ToDoex Nikita Sitov'}
+                                className="Demo__some-network__share-button"
+                            >
+                                <TwitterIcon size={32} round />
+                            </TwitterShareButton>
                         </div>
                         <Link to="/chat">
                             <Button

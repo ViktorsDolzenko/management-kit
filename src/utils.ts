@@ -4,6 +4,7 @@ import { getTasks } from "./context/storage";
 import { updateTasks } from "./context/actions";
 import { TAG_TYPE } from "./components/Tag/tagProps";
 
+// function to get generate new unique id
 export const getNewId = (comments: commentType[]) => {
     const sortedArray = comments
         .map((comment) => comment.id)
@@ -15,6 +16,7 @@ export const getNewId = (comments: commentType[]) => {
     return Math.floor(Math.random() * (500 - 100) + 100);
 };
 
+// function to generate unique task id
 export const getTaskNewId = (tasks: taskItemsType[]) => {
     if (tasks.length === 0) {
         return Math.floor(Math.random() * (500 - 100) + 100);
@@ -24,6 +26,7 @@ export const getTaskNewId = (tasks: taskItemsType[]) => {
     return Number(lastId) + 1;
 };
 
+// timer function to get count down
 export const countDownFunc = (timeLeft: any) => {
     const countDownDate = new Date("April 20, 2022 10:37").getTime();
     const now = new Date().getTime();

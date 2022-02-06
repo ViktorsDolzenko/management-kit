@@ -33,17 +33,21 @@ export const SideBar = ({
     const [subscription, setSubscription] = useState<Boolean>(false);
     const { state } = useContext(StorageContext);
 
+    // function to show logout button
     const showLogoutButton = () => {
         setShowLogout(!showLogout);
     };
+    // function to hide logout button
     const hideLogOutButton = () => {
         setShowLogout(false);
     };
 
+    // function to sign out
     const signOut = () => {
         auth.signOut().then();
     };
 
+    // function to get user avatar for database and update user profile
     const getAvatarUrl = async (userId: string): Promise<void> => {
         const user = await db.collection("users").doc(`${userId}`).get();
         const userField = user.data();
@@ -54,6 +58,7 @@ export const SideBar = ({
         }
     };
 
+    // get subscriber user function
     const getSubscribedUser = async () => {
         const userId = currentUser?.uid;
         const user = await db.collection("users").doc(`${userId}`).get();
@@ -61,6 +66,7 @@ export const SideBar = ({
         setSubscription(userField?.subscription);
     };
 
+    // hook to dynamically set user,update avatar, check for subscription
     useEffect(() => {
         auth.onAuthStateChanged(setCurrentUser);
         if (currentUser) {
@@ -69,12 +75,15 @@ export const SideBar = ({
         }
     }, [currentUser, subscription]);
 
+    // hook for media query
     const isDesktopOrLaptop = useMediaQuery({
         query: "(min-device-width: 1224px)"
     });
 
+    // get completed tasks count
     const getDoneTasksLength = state.tasks.filter((tasks) => tasks.done).length;
 
+    // upload profile img to storage
     const uploadProfileImg = async (file: File | undefined) => {
         if (!file) return;
         const imageFileName = file?.name;
@@ -95,6 +104,7 @@ export const SideBar = ({
         window.location.reload();
     };
 
+    // translation hook
     const { t } = useTranslation();
 
     return (
