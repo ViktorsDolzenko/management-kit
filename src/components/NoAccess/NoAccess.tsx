@@ -3,16 +3,18 @@ import React from "react";
 
 
 interface noAccessProps {
-    userName: string
+    userName: string,
+    text: string;
 }
 
-export const NoAccess = ({ userName }: noAccessProps) => {
+
+export const NoAccess = ({ userName, text }: noAccessProps) => {
     return (
         <div className="page-container__emptyContent">
             <div className="emptyPage">
                 <div className="emptyPage__title">
                     <h1>Welcome {userName ? userName : "Guest"}</h1>
-                    <h1>You do not have enough privileges to view this page, purchase a subscription to open the functionality.</h1>
+                    <h1>{text}</h1>
                     <hr className="emptyPage__divider" />
                     <Link to="/" className="emptyPage__text">
                         Back To HomePage

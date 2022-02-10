@@ -48,6 +48,12 @@
     "Features": "Features",
     "About": "About us",
     "Address": "Office Address",
-    "phoneNumber": "Telephone number"
+    "phoneNumber": "Telephone number",
+    "noAccess": "You do not have enough privileges to view this page, purchase a subscription to open the functionality.",
+    "reconstruction": "This page is under reconstruction",
+    "newTeam": "New Team",
+    "selectMembers": "Select members",
+    "addNewTeam": "Add new team",
+    "newTeamTitle": "New team title"
   }
 }

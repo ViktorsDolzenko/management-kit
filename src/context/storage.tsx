@@ -9,10 +9,18 @@ export interface taskExtend extends taskItemsType {
   isOpened?: number;
 }
 
+export interface ITeams {
+    title: string;
+    members: string[];
+    docId: string;
+}
+
 type StoreType = {
   tasks: taskExtend[];
+  teams: ITeams[];
   isShowLoginForm: boolean;
   isShowSignUpForm: boolean;
+  isShowNewTeamForm: boolean;
 };
 
 type Action = {
@@ -33,10 +41,17 @@ export const getTasks = async (): Promise<taskItemsType[]> => {
     });
 };
 
+export const getAllTeams = async (): Promise<any> => {
+    const teamsRequest = await db.collection("teams").get();
+    return teamsRequest.docs.map((item => item.data()));
+};
+
 const initialState: StoreType = {
     tasks: [],
+    teams: [],
     isShowLoginForm: false,
-    isShowSignUpForm: false
+    isShowSignUpForm: false,
+    isShowNewTeamForm: false
 };
 
 const StorageContext = createContext<{
@@ -75,6 +90,21 @@ const reducer = (state: StoreType, { type, payload }: Action) => {
             return {
                 ...state,
                 isShowSignUpForm: payload
+            };
+        case ActionType.SHOW_MODAL_NEW_TEAM_FORM:
+            return {
+                ...state,
+                isShowNewTeamForm: payload
+            };
+        case ActionType.UPDATE_TEAMS:
+            return {
+                ...state,
+                teams: [...state.teams, payload]
+            };
+        case ActionType.GET_TEAMS:
+            return {
+                ...state,
+                teams: payload
             };
 
         default:

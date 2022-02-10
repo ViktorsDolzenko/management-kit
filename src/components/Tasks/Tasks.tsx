@@ -71,10 +71,14 @@ export const Tasks = ({ onAddTaskClick, currentUserTasks }: tasksProps) => {
                         }
                     />
                 ) : (
-                    <div className="tasks__empty">
-                        <span>0 {t("phrases.tasksInBacklog")}</span>
+                    !currentUserTasks && <div className="tasks__empty">
+                        <span> 0 {t("phrases.tasksInBacklog")}</span>
                     </div>
                 )}
+                {currentUserTasks && currentUserBackLogTasks.length === 0 &&
+                <div className="tasks__empty">
+                    <span>0 {t("phrases.tasksInBacklog")}</span>
+                </div>}
             </div>
             <div className="tasks__container">
                 <div className="tasks__header">
@@ -96,10 +100,15 @@ export const Tasks = ({ onAddTaskClick, currentUserTasks }: tasksProps) => {
                         }
                     />
                 ) : (
-                    <div className="tasks__empty">
+                    !currentUserTasks && <div className="tasks__empty">
                         <span>0 {t("phrases.tasksInToDo")}</span>
                     </div>
+
                 )}
+                {currentUserTasks && currentUserTodoTasks.length === 0 &&
+                <div className="tasks__empty">
+                    <span>0 {t("phrases.tasksInToDo")}</span>
+                </div>}
             </div>
         </div>
     );

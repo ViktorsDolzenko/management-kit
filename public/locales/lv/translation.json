@@ -47,6 +47,13 @@
     "Features": "Iespējas",
     "About": "Par mums",
     "Address": "Atrašanās vieta",
-    "phoneNumber": "Telefona numurs"
+    "phoneNumber": "Telefona numurs",
+    "noAccess": "Jums nav pietiekamu privilēģiju, lai skatītu šo lapu, iegādājieties abonementu, lai atvērtu šo funkcionalitāti.",
+    "reconstruction": "Šī lapa atrodas rekonstrukcijas stadijā.",
+    "newTeam": "Jauna komanda",
+    "selectMembers": "Atlasiet dalībniekus",
+    "addTeam": "Pievienot dalībniekus",
+    "addNewTeam": "Pievienot jaunu komandu",
+    "newTeamTitle": "Jauns komandas nosaukums"
   }
 }

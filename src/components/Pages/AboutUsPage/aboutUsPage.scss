@@ -7,6 +7,9 @@
   &__info {
     margin: 50px;
     color: white;
+    @media (max-device-width: 767px)  {
+      color: black;
+    }
 
     &--address {
       margin-bottom: 20px;

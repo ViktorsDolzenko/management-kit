@@ -5,6 +5,8 @@ import "./sideBarMenu.scss";
 import { useMediaQuery } from "react-responsive";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { IconButton, Tooltip } from "@mui/material";
+import GroupsIcon from '@mui/icons-material/Groups';
 
 interface SideBarMenuProps {
   items: sidebarItemType[];
@@ -23,6 +25,11 @@ export const SideBarMenu = ({ items, title }: SideBarMenuProps) => {
     const isDesktopOrLaptop = useMediaQuery({
         query: "(min-device-width: 1224px)"
     });
+
+    // function to create tooltip from array
+    const getTitleForTooltip = (teams: any) => {
+        return teams.members?.map((item: any) => item).join('\n');
+    };
 
     // translation hook
     const { t } = useTranslation();
@@ -49,15 +56,15 @@ export const SideBarMenu = ({ items, title }: SideBarMenuProps) => {
                             {t(`${item.title}`)}
                             {isDesktopOrLaptop && (
                                 <div className="SidebarMenu__item--team">
-                                    {Boolean(item.team?.length) &&
-                    item.team?.map((person) => (
-                        <img
-                            className="SidebarMenu__item--team-image"
-                            src={person}
-                            alt={person}
-                            key={person}
-                        />
-                    ))}
+                                    {Boolean(item.members?.length) &&
+                                    <Tooltip title={
+                                        <div style={{ whiteSpace: 'pre-line' }}>{getTitleForTooltip(item)}</div>
+                                    }>
+                                        <IconButton>
+                                            <GroupsIcon style={{ color: 'white' }}/>
+                                        </IconButton>
+                                    </Tooltip>
+                                    }
                                 </div>
                             )}
                         </Link>

@@ -271,7 +271,7 @@ export const FilesPage = () => {
                                         </tbody>
                                     </table>
                                 </div> :
-                                <NoAccess userName={currentUser?.displayName}/>}
+                                <NoAccess userName={currentUser?.displayName} text={t("phrases.noAccess")}/>}
                         </div>
                     }
                 </>

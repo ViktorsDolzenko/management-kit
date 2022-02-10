@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { StorageContext } from "../../../context/storage";
+import { getAllTeams, StorageContext } from "../../../context/storage";
 
 import {
-    sideBarItemsMenu,
-    sideBarItemsTeams
+    sideBarItemsMenu
 } from "components/SideBarMenu/sideBarItems";
 import { SideBarMenu } from "components/SideBarMenu";
 import { Button, BUTTON_STYLE } from "components/Button";
@@ -15,6 +14,7 @@ import { simpleIcon } from "../../../const";
 import "./sideBar.scss";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { getTeams, showNewTeamForm } from "../../../context/actions";
 
 interface SidebarProps {
   onLoginClick: () => void;
@@ -31,7 +31,7 @@ export const SideBar = ({
     const [currentUser, setCurrentUser] = useState<any>(null);
     const [showLogout, setShowLogout] = useState(false);
     const [subscription, setSubscription] = useState<Boolean>(false);
-    const { state } = useContext(StorageContext);
+    const { state, dispatch } = useContext(StorageContext);
 
     // function to show logout button
     const showLogoutButton = () => {
@@ -45,6 +45,12 @@ export const SideBar = ({
     // function to sign out
     const signOut = () => {
         auth.signOut().then();
+    };
+
+    // open new team dialog
+
+    const openNewTeamDialog = () => {
+        dispatch(showNewTeamForm(true));
     };
 
     // function to get user avatar for database and update user profile
@@ -65,15 +71,6 @@ export const SideBar = ({
         const userField = user.data();
         setSubscription(userField?.subscription);
     };
-
-    // hook to dynamically set user,update avatar, check for subscription
-    useEffect(() => {
-        auth.onAuthStateChanged(setCurrentUser);
-        if (currentUser) {
-            getAvatarUrl(currentUser.uid);
-            getSubscribedUser();
-        }
-    }, [currentUser, subscription]);
 
     // hook for media query
     const isDesktopOrLaptop = useMediaQuery({
@@ -103,6 +100,22 @@ export const SideBar = ({
         });
         window.location.reload();
     };
+
+    const getTeamsArray = async () => {
+        const allTeams = await getAllTeams();
+        dispatch(getTeams(allTeams));
+    };
+
+
+    // hook to dynamically set user,update avatar, check for subscription
+    useEffect(() => {
+        auth.onAuthStateChanged(setCurrentUser);
+        if (currentUser) {
+            getAvatarUrl(currentUser.uid);
+            getSubscribedUser();
+        }
+        getTeamsArray();
+    }, [currentUser, subscription]);
 
     // translation hook
     const { t } = useTranslation();
@@ -197,9 +210,9 @@ export const SideBar = ({
                 </div>
             </div>
             <SideBarMenu items={sideBarItemsMenu} title="Menu" />
-            <SideBarMenu items={sideBarItemsTeams} title="Teams" />
+            <SideBarMenu items={state.teams} title="Teams" />
             {isDesktopOrLaptop && (
-                <Button category={BUTTON_STYLE.Danger} title="addTeam" />
+                <Button onClick={openNewTeamDialog} category={BUTTON_STYLE.Danger} title="addTeam" />
             )}
         </div>
     );

@@ -5,10 +5,13 @@ export const ActionType = {
     ADD_COMMENT: "ADD_COMMENT",
     DELETE_FILE: "DELETE_FILE",
     ADD_NEW_TASK: "ADD_NEW_TASK",
+    UPDATE_TEAMS: "ADD_NEW_TEAM",
     DELETE_TASK: "DELETE_TASK",
     UPDATE_TASKS: "UPDATE_TASKS",
+    GET_TEAMS: "GET_TEAMS",
     SHOW_MODAL_LOGIN_FORM: "SHOW_MODAL_LOGIN_FORM",
     SHOW_MODAL_SIGNUP_FORM: "SHOW_MODAL_SIGNUP_FORM",
+    SHOW_MODAL_NEW_TEAM_FORM: "SHOW_MODAL_NEW_TEAM_FORM",
     SORT_FILES: "SORT_FILES"
 };
 
@@ -38,6 +41,16 @@ export const updateTasks = (tasks: any) => ({
     payload: tasks
 });
 
+export const updateTeams = (team: any) => ({
+    type: ActionType.UPDATE_TEAMS,
+    payload: team
+});
+
+export const getTeams = (teams: any) => ({
+    type: ActionType.GET_TEAMS,
+    payload: teams
+});
+
 export const showLoginForm = (isShow: boolean) => ({
     type: ActionType.SHOW_MODAL_LOGIN_FORM,
     payload: isShow
@@ -45,5 +58,10 @@ export const showLoginForm = (isShow: boolean) => ({
 
 export const showSignUpForm = (isShow: boolean) => ({
     type: ActionType.SHOW_MODAL_SIGNUP_FORM,
+    payload: isShow
+});
+
+export const showNewTeamForm = (isShow: boolean) => ({
+    type: ActionType.SHOW_MODAL_NEW_TEAM_FORM,
     payload: isShow
 });

@@ -6,11 +6,12 @@ import { Login } from "components/Login";
 import { Header } from "components/layout/Header";
 import { SideBar } from "components/layout/SideBar";
 import { StorageContext } from "context/storage";
-import { showLoginForm, showSignUpForm } from "context/actions";
+import { showLoginForm, showNewTeamForm, showSignUpForm } from "context/actions";
 
 import "./style.scss";
 import { animateScroll as scroll } from "react-scroll/modules";
 import { useMediaQuery } from "react-responsive";
+import { NewTeam } from "../NewTeam";
 
 interface LayoutProps {
   children:
@@ -88,6 +89,9 @@ const Layout = ({ children, pageTitle = "TodoeXApp" }: LayoutProps) => {
             )}
             {state.isShowSignUpForm && (
                 <SignUp onClickClose={() => dispatch(showSignUpForm(false))} />
+            )}
+            {state.isShowNewTeamForm && (
+                <NewTeam onClickClose={() => dispatch(showNewTeamForm(false))}/>
             )}
         </div>
     );

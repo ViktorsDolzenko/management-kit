@@ -6,6 +6,7 @@ import { countDownFunc } from "utils";
 
 import "./emptyPage.scss";
 import { auth } from "Service/firebase";
+import { useTranslation } from "react-i18next";
 
 export const EmptyPage = () => {
     const [timer, setTimer] = useState<string>("");
@@ -27,13 +28,16 @@ export const EmptyPage = () => {
         return () => clearInterval(interval);
     }, [timer]);
 
+    // translation hook
+    const { t } = useTranslation();
+
     return (
         <Layout pageTitle="Not found">
             <div className="page-container__emptyContent">
                 <div className="emptyPage">
                     <div className="emptyPage__title">
                         <h1>Welcome {currentUser ? currentUser.displayName : "Guest"}</h1>
-                        <h1>This page is on reconstruction </h1>
+                        <h1>{t('phrases.reconstruction')}</h1>
                         <hr className="emptyPage__divider" />
                         <p>{timer}</p>
                         <Link to="/" className="emptyPage__text">
