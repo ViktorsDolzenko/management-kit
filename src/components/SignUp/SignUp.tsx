@@ -113,7 +113,7 @@ export const SignUp = ({ onClickClose }: SignUpProps) => {
 
                     <Button
                         category={BUTTON_STYLE.Basic}
-                        title="Sign Up"
+                        title="signUp"
                         type={BUTTON_TYPE.Submit}
                     />
                 </form>
